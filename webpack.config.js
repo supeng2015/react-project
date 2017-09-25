@@ -19,7 +19,7 @@ module.exports = {
       },
       {
         test: /\.css/,
-        loader: 'style!css',
+        loader: 'style-loader!css-loader',
       }, 
       { 
         test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, 
@@ -27,7 +27,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader:'style!css!sass'
+        loader:'style-loader!css-loader!sass-loader'
       }
     ]
   },
@@ -39,8 +39,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, 'public/reactStatic/dist'),
-    historyApiFallback: true,
-    hot: true
-  }
+      contentBase: path.resolve(__dirname, 'public/reactStatic/dist'),
+      historyApiFallback: true,
+      hot: true
+  },
 };
