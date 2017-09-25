@@ -12,7 +12,7 @@ router.get('/kibana',function(req,res,next){
     say : 'asdasd' 	
   });  
 })
-/*shanbei*/
+/*testdate*/
 router.get('/artical',function(req,res,next){
   res.json({data:[
     {

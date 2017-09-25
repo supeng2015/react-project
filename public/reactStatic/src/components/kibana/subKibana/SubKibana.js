@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {addMetrics,removeMetrics,addBucket} from '../../actions';
+import {addMetrics,removeMetrics,addBucket} from '../../../actions';
 import { connect } from 'react-redux';
 import FaCaretRight from "react-icons/lib/fa/caret-right";
 import FaClose from "react-icons/lib/fa/close";

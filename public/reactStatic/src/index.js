@@ -6,9 +6,9 @@ import { createLogger } from 'redux-logger';
 import {Provider} from 'react-redux';
 import reducers from './reducers';
 import routers from './routers';
-import kibana from './css/kibana.css';
 import base from './css/base.css';
-import metric from './css/metric.scss';
+import subKibana from './css/subKibana.scss';
+import subKibana2 from './css/subKibana2.scss';
 //import configs from './configs/config.js'
 const middleware = [ thunk ]
 //如果是开发环境打印日志

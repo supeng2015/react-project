@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {removeBucket} from '../../actions';
+import {removeBucket} from '../../../actions';
 import DateHistogram from "./DateHistogram";
 import Histogram from "./Histogram";
 import Range from "./Range";

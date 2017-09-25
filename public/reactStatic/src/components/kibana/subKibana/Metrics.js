@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {modefyMetrics,removeMetrics} from '../../actions';
+import {modefyMetrics,removeMetrics} from '../../../actions';
 import { connect } from 'react-redux';
 import TopHit from './TopHit';
 class Metric extends Component{

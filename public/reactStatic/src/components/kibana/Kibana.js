@@ -9,7 +9,7 @@ class Kibana extends Component{
       <section>
         <ul className="index-nav">
           <li><Link to="/kibana/subKibana/test1">test</Link></li>
-          <li><Link to="/kibana/subKibana/test2">test2</Link></li>
+          <li><Link to="/kibana/subKibana2/">test2</Link></li>
         </ul>
         <div className="main-box">
           <div className="main-box-two">{this.props.children}</div>
