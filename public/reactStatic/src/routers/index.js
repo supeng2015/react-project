@@ -2,9 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import App from '../components/App'; 
 import Kibana from '../components/kibana/Kibana'; 
-import App3 from '../components/App3'; 
-import Read from '../components/read/Read';
-import SubApp from '../components/SubApp';
 import SubKibana from '../components/kibana/SubKibana';
 //const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
 const history =  hashHistory;
@@ -32,8 +29,6 @@ const RouteConfig = (
       <Route path="kibana" component={Kibana}>
         <Route path="subKibana/:textId" component={SubKibana}/>    
       </Route>
-      <Route path="app3" Components={App3} />
-      <Route path="read" component={Read} />
       <Redirect from='*' to='/'  />//预设路由，全部户转到/下
     </Route>
   </Router>
