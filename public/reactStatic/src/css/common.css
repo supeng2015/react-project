@@ -1,0 +1,20 @@
+.header{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  position: fixed;
+  background: #f1f1f1;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content:space-between;
+}
+.header .header-child{
+  flex: 1;
+  text-align: center;	
+}
+.header .header-child.hl{
+
+}
+.header .header-child.hr{
+	
+}

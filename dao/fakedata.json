@@ -1,0 +1,10 @@
+{
+	hasForm :true,
+  form:[
+    {name:'productName',type:'text',value:'',child:{}},
+    {name:'productNum',type:'radio',value:'',child:{}},
+    {name:'productSell',type:'checkbox',value:'',child:{}},
+    {name:'productDescrib',type:'area',value:'',child:{}},
+  ]	
+}
+

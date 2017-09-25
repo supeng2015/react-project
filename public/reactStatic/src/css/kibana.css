@@ -1,0 +1,109 @@
+.pb10{  
+  padding-bottom: 1rem;
+}
+.sp-radio{color:#cb0000;}
+.sp-checkbox{color:#cb0000;}
+.main-box{
+  display: flex;
+  width: 100%;	
+}
+.main-box-two{
+  flex: 1;	
+}
+/* index-nav */
+.index-nav{
+  display: flex;
+  height: 2.5rem;
+  padding: 1rem;
+  background: #eee;
+}
+.index-nav li{
+	height: 2rem;
+  line-height: 2rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 5px;
+  margin-right: 1rem;
+  background: #fff;
+}
+/* board */
+.borad-pad{
+  padding: 0 1rem;  
+}
+.borad-heading{
+  color: #000;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  background: #b0b0b0;
+}
+.borad-heading2{
+  color: #666;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  background: #fff;
+}
+.borad-heading.w{
+  background: #fff;  
+}
+.borad-control-bar{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  display: flex; 
+  background: #ddd;   
+}
+.borad-control-bar nav{
+  flex: 1;
+}
+.borad-control-bar nav ul{
+  display: flex;  
+}
+.borad-control-bar nav ul li{
+  margin-right: 1rem; 
+}
+.borad-control-bar button{
+  width: 2rem; 
+  cursor: pointer;
+}
+.borad-control-bar button.go{
+  background: #a7cdd9;
+  color: #fff
+}
+.borad-control-bar button.stop{
+  background: #efefef;  
+}
+.every-item .every-item-neck{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  display: flex;    
+}
+.every-item .every-item-neck p{
+  flex: 1;  
+}
+.every-item .every-item-neck p button{
+  width: 2rem;
+  margin-right: 1rem; 
+  padding: 0.5rem 0;
+  background: #a7cdd9;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.every-item .every-item-neck.r{
+  width: 2rem;  
+}
+.choose-box{
+  background: #f4f4f4;
+  height: 2.5rem;
+  line-height: 2.5rem; 
+}
+.choose-box select{
+  width: 100%;  
+}
+.my-btn{
+  margin: 0.5rem 0;
+  background: #5b9db5;
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 3px;
+}
+
+

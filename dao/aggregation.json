@@ -1,0 +1,13 @@
+{
+	aggregation : [
+    {name:'count',field:null},
+    {name:'average',field:['age']},
+    {name:'sum',field:['age']},
+    {name:'median',field:["age"]},
+    {name:"min",field:["date","age"]},
+    {name:"max",field:["date","age"]},
+    {name:"uniqueCount",field:["date","age","_index"]},
+    {name:"topHit",field:["_score","date","_score"],aggreateWith:["Concatenate","max","min","sum"],size:"1",sortOn:["date","age","_index"],order:["asc","desc"]} 
+	]
+	customLabel : ""
+}

@@ -1,0 +1,46 @@
+{
+  "name": "allserve",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./node_modules/.bin/babel-node ./bin/www",
+    "dev" : "webpack-dev-server --open"
+  },
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.6.5",
+    "babel-core": "~6.10.4",
+    "babel-loader": "~6.2.4",
+    "babel-preset-react": "~6.11.1",
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "ejs": "~2.3.3",
+    "express": "~4.13.1",
+    "jquery": "^3.2.1",
+    "morgan": "~1.6.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.0",
+    "react-dom": "^15.5.0",
+    "react-icons": "^2.2.5",
+    "react-radio-group": "^3.0.2",
+    "react-redux": "^5.0.5",
+    "react-router": "^2.8.1",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0",
+    "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-preset-es2015": "~6.9.0",
+    "css-loader": "~0.23.1",
+    "html-webpack-plugin": "~2.22.0",
+    "node-sass": "^4.5.3",
+    "redux-logger": "^3.0.6",
+    "sass-loader": "^6.0.6",
+    "style-loader": "~0.13.1",
+    "url-loader": "^0.5.9",
+    "webpack": "~1.13.1",
+    "webpack-dev-server": "~1.14.1"
+  }
+}

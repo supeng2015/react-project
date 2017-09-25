@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/public/stylesheets/style.css'/>
+    <script src="/node_modules/react/dist/react.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/react-dom/dist/react-dom.js"></script>
+    <!-- <script src="/node_modules/babel-core/browser.js"></script> -->
+    <script src="/public/javascripts/reactMyCom.js" type="text/babel"></script>
+    
+  </head>
+  <body>
+    <h1>express</h1>
+    <div id="example"></div>
+    <div id="result"></div>
+    <script src="/public/javascripts/jsTest.js"></script>
+    <script type="text/babel">
+      let App = window.sp.App;
+      let Bpp = window.sp.Bpp;
+      ReactDOM.render(
+        <div>
+          <App/>
+          <Bpp/>
+        </div>,
+        document.getElementById('example')
+      );
+    </script>
+   
+  </body>
+</html>
