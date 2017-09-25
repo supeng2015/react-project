@@ -63,21 +63,25 @@ export const modefyBucket = (b,i) =>({
   b,
   i  
 })
-export const addFromTo = f =>({
-  type : 'ADD_FROMTO',
-  f   
-})
-export const removeFromTo = i =>({
-  type:'REMOVE_FROMTO',
-  i  
-})
-export const modefyFromTo = (f,i) =>({
-  type:'MODEFY_FROMT',
-  f,
-  i  
-})
-export const BucketAddFromTo = (f,Bindex,buckets,rangeFromTo) => dispatch=>{
-  dispatch(addFromTo(f));
-  buckets[Bindex].fromTo = [];
-  return dispatch(modefyBucket(buckets[Bindex],Bindex));   
-}
+// export const addFromTo = f =>({
+//   type : 'ADD_FROMTO',
+//   f   
+// })
+// export const removeFromTo = i =>({
+//   type:'REMOVE_FROMTO',
+//   i  
+// })
+// export const modefyFromTo = (f,i) =>({
+//   type:'MODEFY_FROMT',
+//   f,
+//   i  
+// })
+// export const BucketAddFromTo = (f,buckets,Bindex,rangeFromTo) => dispatch=>{
+//   dispatch(addFromTo(f));
+//   //buckets[Bindex].aggregation.fromTo = [...];
+//   return dispatch(modefyBucket(buckets[Bindex],Bindex));   
+// }
+// export const BucketRemoveFromTo = (i,buckets,Bindex) => dispatch=>{
+//   dispatch(removeFromTo(i));
+//   return dispatch(modefyBucket(buckets[Bindex],Bindex));   
+// }

@@ -1,41 +1,36 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
-import {modefyBucket,BucketAddFromTo} from '../../actions';
+import {modefyBucket} from '../../actions';
 class Range extends Component{
   constructor(){
-    super();
-    // this.state = {
-    //   fromTo : []  
-    // }  
+    super(); 
   }
   addFromTo(){
-    let {dispatch,buckets,Bindex,rangeFromTo} = this.props;
-    dispatch(BucketAddFromTo({from:"",to:""},buckets,rangeFromTo))
-    // dispatch(addFromTo({from:"",to:""}));
-    // buckets[Bindex].fromTo = [...rangeFromTo];
-    // dispatch(modefyBucket(buckets[Bindex],Bindex));
+    let {dispatch,buckets,Bindex} = this.props;
+    if(!buckets[Bindex].aggregation.fromTo){
+      buckets[Bindex].aggregation.fromTo = [];
+    }
+    buckets[Bindex].aggregation.fromTo = [...buckets[Bindex].aggregation.fromTo,{from:'',to:''}]
+    dispatch(modefyBucket(buckets[Bindex],Bindex));
   }
   removeFromTo(i){
-    let {dispatch,buckets,Bindex,rangeFromTo} = this.props;
-    // dispatch(removeFromTo(i));
-    // buckets[Bindex].fromTo = [...rangeFromTo];
-    // dispatch(modefyBucket(buckets[Bindex],Bindex));
+    let {dispatch,buckets,Bindex} = this.props;
+    buckets[Bindex].aggregation.fromTo = buckets[Bindex].aggregation.fromTo.filter((item, index) => index !== i)
+    dispatch(modefyBucket(buckets[Bindex],Bindex));
   }
   RangeModefyBucket(value,f,i){
-    let {Bindex,dispatch,buckets,rangeFromTo} = this.props;
-
+    let {Bindex,dispatch,buckets} = this.props;
     //field
     if(typeof(i)=="undefined"){
       buckets[Bindex].aggregation[f] = value; 
     }else{
-      rangeFromTo[i][f] = value; 
-      buckets[Bindex].fromTo = [...rangeFromTo];  
+      buckets[Bindex].aggregation.fromTo[i][f] = value;   
     }
     dispatch(modefyBucket(buckets[Bindex],Bindex));   
   }
   render(){
-    let {rangeFromTo} = this.props
-    //console.log(rangeFromTo)
+    let {buckets,Bindex} = this.props
+    let fromTo = buckets[Bindex].aggregation.fromTo ? buckets[Bindex].aggregation.fromTo:[];
     return(
       <div>
         <section>
@@ -48,10 +43,10 @@ class Range extends Component{
 
         <section className="range-box">
           <h3>from-to</h3>
-          {rangeFromTo.map((v,i)=>
+          {fromTo.map((v,i)=>
             <div key={i} className="range-input-box">
-              <div className="in"><input  onChange={(e)=>this.RangeModefyBucket(e.target.value,'from',i)}  type="number" /></div>
-              <div className="in"><input  onChange={(e)=>this.RangeModefyBucket(e.target.value,'to',i)} type="number" /></div>
+              <div className="in"><input value={v.from}   onChange={(e)=>this.RangeModefyBucket(e.target.value,'from',i)}  type="number" /></div>
+              <div className="in"><input value={v.to}  onChange={(e)=>this.RangeModefyBucket(e.target.value,'to',i)} type="number" /></div>
               <button onClick={()=>this.removeFromTo(i)}  className="my-btn">删除</button>
             </div>
           )}
@@ -63,10 +58,9 @@ class Range extends Component{
   }
 }
 const mapStateToProps = state => {
-  const {rangeFromTo,buckets} = state
+  const {buckets} = state
   return{
     buckets,
-    rangeFromTo
   }
 }
 Range = connect(mapStateToProps)(Range)

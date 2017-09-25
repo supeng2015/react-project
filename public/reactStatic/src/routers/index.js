@@ -14,13 +14,11 @@ class Roots extends Component{
     );
   }
 }
-
 // const App3 = (location, cb) => {
 //   require.ensure([], require => {
 //     cb(null, require('../components/App3').default)
 //   },'App3')
 // }
-
 const RouteConfig = (
   <Router history={history}>
     <Route path="/" component={Roots}>

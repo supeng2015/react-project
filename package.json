@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./node_modules/.bin/babel-node ./bin/www",
-    "dev" : "webpack-dev-server --open"
+    "dev" : "webpack-dev-server --open --port 3600"
   },
   "dependencies": {
     "babel": "^6.5.2",

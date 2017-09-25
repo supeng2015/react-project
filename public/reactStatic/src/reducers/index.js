@@ -32,20 +32,20 @@ const buckets = (state=[],action)=>{
       return state    
   }    
 }
-const rangeFromTo = (state=[],action)=>{
-  switch(action.type){
-    case 'ADD_FROMTO' :
-      return [...state,action.f]  
-    case 'REMOVE_FROMTO' :
-      return state.filter((item, index) => index !== action.i)
-    case 'MODEFY_FROMTO' :
-      return state.map((item,index)=>{if(index==action.i){return action.f}else{return item}})
-    default : 
-      return state    
-  }    
-}
+// const rangeFromTo = (state=[],action)=>{
+//   switch(action.type){
+//     case 'ADD_FROMTO' :
+//       return [...state,action.f]  
+//     case 'REMOVE_FROMTO' :
+//       return state.filter((item, index) => index !== action.i)
+//     case 'MODEFY_FROMTO' :
+//       return state.map((item,index)=>{if(index==action.i){return action.f}else{return item}})
+//     default : 
+//       return state    
+//   }    
+// }
 const rootReducer = combineReducers({
-  rangeFromTo,
+  //rangeFromTo,
   testReducer,
   metrics,
   buckets
