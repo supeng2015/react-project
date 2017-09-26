@@ -59,19 +59,44 @@
   flex: 1;  
 }
 /* index-nav */
-.index-nav{
+.app-index-box{
   display: flex;
-  height: 2.5rem;
+  width:46rem;
+  margin: 0 auto;    
+  justify-content:space-between;
+}
+.app-index-box section{
+  width: 20rem;
+  height: 20rem;
+  background: #f4f4f4;
+  margin: 10rem auto;
+}
+.index-icon-box{
+  text-align: center;
+  font-size: 10rem;
+  height: 15rem;
+  line-height: 15rem;    
+}
+.index-text-box{
+  text-align: center;
+  font-weight: bold;
+  height: 5rem;
+  line-height: 5rem;  
+}
+.index-nav{
   padding: 1rem;
-  background: #eee;
+  background: #f4f4f4;
+  padding-bottom: 0.5rem;
 }
 .index-nav li{
-  height: 2rem;
-  line-height: 2rem;
-  padding: 0.1rem 0.5rem;
-  border-radius: 5px;
-  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding: 0 0.5rem;
   background: #fff;
+}
+.index-nav li:hover{ 
+  background: #ddd;  
 }
 /* board */
 .borad-pad{

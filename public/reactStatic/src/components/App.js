@@ -1,10 +1,22 @@
 import React, {Component, PropTypes} from 'react';
-
+import { Link } from 'react-router';
+import NumIcon from 'react-icons/lib/fa/sort-numeric-asc';
 class App extends Component{
   render(){
     return(
-      <div>
-        这里是app
+      <div className="app-index-box">
+        <section> 
+          <div className="index-icon-box"><NumIcon/></div>
+          <div className="index-text-box">Metric</div>
+        </section> 
+        <section>
+          <ul className="index-nav">
+            <Link to="/kibana/subKibana/test1"><li>test</li></Link>
+            <Link to="/kibana/subKibana2/"><li>test2</li></Link>
+          </ul>
+        </section>
+         
+
         {this.props.children}
       </div>
     );

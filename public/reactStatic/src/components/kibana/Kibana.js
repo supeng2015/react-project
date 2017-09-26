@@ -7,10 +7,7 @@ class Kibana extends Component{
     let {kibanaGetResult} = this.props
     return(
       <section>
-        <ul className="index-nav">
-          <li><Link to="/kibana/subKibana/test1">test</Link></li>
-          <li><Link to="/kibana/subKibana2/">test2</Link></li>
-        </ul>
+        
         <div className="main-box">
           <div className="main-box-two">{this.props.children}</div>
           <div className="main-box-two">结果展示 : </div>
