@@ -59,9 +59,31 @@
   flex: 1;  
 }
 /* index-nav */
-.index-nav{
-  width:40rem; 
+.app-index-box{
+  display: flex;
+  width:46rem;
+  margin: 0 auto;    
+  justify-content:space-between;
+}
+.app-index-box section{
+  width: 20rem;
+  height: 20rem;
+  background: #f4f4f4;
   margin: 10rem auto;
+}
+.index-icon-box{
+  text-align: center;
+  font-size: 10rem;
+  height: 15rem;
+  line-height: 15rem;    
+}
+.index-text-box{
+  text-align: center;
+  font-weight: bold;
+  height: 5rem;
+  line-height: 5rem;  
+}
+.index-nav{
   padding: 1rem;
   background: #f4f4f4;
   padding-bottom: 0.5rem;
