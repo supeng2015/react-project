@@ -9,13 +9,13 @@ export const chooseAgg = agg => ({
 export const getAggType = agg =>dispatch=>{
   if(!agg){
     dispatch(receiveAggType(
-     {hasForm :false} 
-    )) 
-    return    
+     {hasForm :false}
+    ))
+    return
   }
   //return //fetch(`https://www.reddit.com/r/reactjs.json`)
   //.then(response => response.json())
-  //.then(json => 
+  //.then(json =>
   dispatch(receiveAggType(
     {
       hasForm :true,
@@ -24,7 +24,7 @@ export const getAggType = agg =>dispatch=>{
         {name:'productNum',type:'radio',options:['one','two'],value:'',child:{}},
         {name:'productSell',type:'checkbox',options:['A','B','C'],value:'',child:{}},
         {name:'productDescrib',type:'area',value:'',child:{}},
-      ] 
+      ]
     }
   ))//)
 }
@@ -39,27 +39,53 @@ export const postFinalResult = result => dispatch =>{
 }
 export const addMetrics = m =>({
   type:'ADD_METRICS',
-  m  
+  m
 })
 export const removeMetrics = i =>({
   type:'REMOVE_METRICS',
-  i  
+  i
 })
 export const modefyMetrics = (m,i) =>({
   type : 'MODEFY_METRICS',
   m,
-  i  
+  i
 })
 export const addBucket = b =>({
   type : 'ADD_BUCKET',
-  b   
+  b
 })
 export const removeBucket = i =>({
   type:'REMOVE_BUCKET',
-  i  
+  i
 })
 export const modefyBucket = (b,i) =>({
   type:'MODEFY_BUCKET',
   b,
-  i  
+  i
 })
+
+// bucket2的Action
+export const changeBucketType = (index,bucketData) => {
+    return {
+        type: 'CHANGE_BUCKET_TYPE',
+        index,
+        bucketData
+    }
+};
+
+export const modifyBucket2 = (index,key,value) => {
+  return {
+      type: 'MODIFY_BUCKET2',
+      index,
+      key,
+      value
+  }
+};
+
+export const addBucket2 = (bucketData) => {
+    return {
+        type: 'ADD_BUCKET2',
+        bucketData
+    }
+};
+
