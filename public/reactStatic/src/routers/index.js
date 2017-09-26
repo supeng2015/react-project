@@ -23,7 +23,7 @@ class Roots extends Component{
 const RouteConfig = (
   <Router history={history}>
     <Route path="/" component={Roots}>
-      <IndexRoute component={Kibana} />
+      <IndexRoute component={App} />
       <Route path="app" component={App}/>
       <Route path="kibana" component={Kibana}>
         <Route path="subKibana2" component={SubKibana2}/> 

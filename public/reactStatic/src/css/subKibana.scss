@@ -60,18 +60,21 @@
 }
 /* index-nav */
 .index-nav{
-  display: flex;
-  height: 2.5rem;
+  width:40rem; 
+  margin: 10rem auto;
   padding: 1rem;
-  background: #eee;
+  background: #f4f4f4;
+  padding-bottom: 0.5rem;
 }
 .index-nav li{
-  height: 2rem;
-  line-height: 2rem;
-  padding: 0.1rem 0.5rem;
-  border-radius: 5px;
-  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding: 0 0.5rem;
   background: #fff;
+}
+.index-nav li:hover{ 
+  background: #ddd;  
 }
 /* board */
 .borad-pad{
