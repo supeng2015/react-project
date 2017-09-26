@@ -1,42 +1,3 @@
-export const receiveAggType = aggType =>({
-  type : 'AGG_TYPE',
-  aggType
-})
-export const chooseAgg = agg => ({
-  type : 'CHOOSE_AGG',
-  agg
-})
-export const getAggType = agg =>dispatch=>{
-  if(!agg){
-    dispatch(receiveAggType(
-     {hasForm :false} 
-    )) 
-    return    
-  }
-  //return //fetch(`https://www.reddit.com/r/reactjs.json`)
-  //.then(response => response.json())
-  //.then(json => 
-  dispatch(receiveAggType(
-    {
-      hasForm :true,
-      form:[
-        {name:'productName',type:'text',value:'',child:{}},
-        {name:'productNum',type:'radio',options:['one','two'],value:'',child:{}},
-        {name:'productSell',type:'checkbox',options:['A','B','C'],value:'',child:{}},
-        {name:'productDescrib',type:'area',value:'',child:{}},
-      ] 
-    }
-  ))//)
-}
-export const receiveFinalResult = result =>({
-  type : 'GET_RESULT',
-  result
-})
-export const postFinalResult = result => dispatch =>{
-  return fetch(`http://localhost:3000/kibana`)
-  .then(response => response.json())
-  .then(json =>dispatch(receiveFinalResult(json)))
-}
 export const addMetrics = m =>({
   type:'ADD_METRICS',
   m  
@@ -63,3 +24,23 @@ export const modefyBucket = (b,i) =>({
   b,
   i  
 })
+export const requestPosts = reddit => ({
+  type: REQUEST_POSTS,
+  reddit
+})
+export const receivePosts = (reddit, json) => ({
+  type: RECEIVE_POSTS,
+  reddit,
+  posts: json.data.children.map(child => child.data),
+  receivedAt: Date.now()
+})
+export const invalidateReddit = reddit => ({
+  type: INVALIDATE_REDDIT,
+  reddit
+})
+const fetchPosts = reddit => dispatch => {
+  dispatch(requestPosts(reddit))
+  return fetch(`https://www.reddit.com/r/${reddit}.json`)
+    .then(response => response.json())
+    .then(json => dispatch(receivePosts(reddit, json)))
+}
