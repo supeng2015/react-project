@@ -1,0 +1,27 @@
+.form-item{
+  padding: 10px;
+  font-size: 12px;
+}
+
+.form-group{
+  margin-bottom: 15px;
+  h5{
+    padding: 4px 0;
+    font-weight: bold;
+  }
+  .form-control {
+    width: 100%;
+    height: 32px;
+    padding: 5px 15px;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ecf0f1;
+    border-radius: 4px;
+    box-shadow: none;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  .form-control, input {
+    border-width: 2px;
+    box-sizing: border-box;
+  }
+}

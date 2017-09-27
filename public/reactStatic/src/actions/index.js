@@ -1,29 +1,30 @@
 export const addMetrics = m =>({
   type:'ADD_METRICS',
-  m  
+  m
 })
 export const removeMetrics = i =>({
   type:'REMOVE_METRICS',
-  i  
+  i
 })
 export const modefyMetrics = (m,i) =>({
   type : 'MODEFY_METRICS',
   m,
-  i  
+  i
 })
 export const addBucket = b =>({
   type : 'ADD_BUCKET',
-  b   
+  b
 })
 export const removeBucket = i =>({
   type:'REMOVE_BUCKET',
-  i  
+  i
 })
 export const modefyBucket = (b,i) =>({
   type:'MODEFY_BUCKET',
   b,
-  i  
+  i
 })
+
 export const requestPosts = reddit => ({
   type: REQUEST_POSTS,
   reddit
@@ -44,3 +45,30 @@ const fetchPosts = reddit => dispatch => {
     .then(response => response.json())
     .then(json => dispatch(receivePosts(reddit, json)))
 }
+
+
+// bucket2的Action
+export const changeBucketType = (index,bucketData) => {
+    return {
+        type: 'CHANGE_BUCKET_TYPE',
+        index,
+        bucketData
+    }
+};
+
+export const modifyBucket2 = (index,key,value) => {
+  return {
+      type: 'MODIFY_BUCKET2',
+      index,
+      key,
+      value
+  }
+};
+
+export const addBucket2 = (bucketData) => {
+    return {
+        type: 'ADD_BUCKET2',
+        bucketData
+    }
+};
+
