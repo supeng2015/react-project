@@ -7,10 +7,9 @@ router.get('/', function(req, res, next) {
 });
 /*kibana*/
 router.get('/kibana',function(req,res,next){
-  res.json({
-    kind :'supeng',
-    say : 'asdasd' 	
-  });  
+  res.json(
+    {"responses":[{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":20,"max_score":0.0,"hits":[]},"status":200}]}
+  );  
 })
 /*testdate*/
 router.get('/artical',function(req,res,next){

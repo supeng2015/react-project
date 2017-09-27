@@ -32,7 +32,7 @@ export const requestPosts = kibana => ({
 export const receivePosts = (kibana, json) => ({
   type: 'RECEIVE_POSTS',
   kibana,
-  posts: json.data.map(child => child.data),
+  posts: json.responses.map(child => child),
   receivedAt: Date.now()
 })
 export const invalidateReddit = kibana => ({
@@ -41,7 +41,7 @@ export const invalidateReddit = kibana => ({
 })
 export const fetchPosts = kibana => dispatch => {
   dispatch(requestPosts(kibana))
-  return fetch(`http://localhost:3000/artical`)
+  return fetch(`http://localhost:3000/kibana`)
     .then(response => response.json())
     .then(json => dispatch(receivePosts(kibana, json)))
 }
