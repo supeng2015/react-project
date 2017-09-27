@@ -9,7 +9,7 @@ import {modifyBucket2} from "../../../../actions/index";
 import FromToInput from "../FromToInput/FromToInput";
 import bucketData from '../bucketData'
 import OrderGroup from "../OrderGroup/OrderGroup";
-import FilterInput from "../FilterInput/FilterInput";
+import FilterInputGroup from "../FilterInputGroup/FilterInputGroup";
 
 class Bucket extends React.Component{
     constructor(props){
@@ -85,9 +85,9 @@ class Bucket extends React.Component{
                 }
                 {
                     content.label
-                    ? <NormalInput title="Filter" data={''}
+                    ? <NormalInput title="Custom Label" data={''}
                                    changeHandle={this.debounceChange().bind(this, 'label')}/>
-                    : <FilterInput index={index} data={content.filter} changeHandle={()=>{console.log(111)}} />
+                    : <FilterInputGroup index={index} changeHandle={()=>{console.log(111)}} />
                 }
             </div>
         )

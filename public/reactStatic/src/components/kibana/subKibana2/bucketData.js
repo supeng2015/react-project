@@ -43,7 +43,7 @@ export default {
     },
     "Filter": {
         type: "Filter",
-        filter: []
+        filter: [{name:"filter",value:""}]
     },
     "Significant Terms": {
         type: "Significant Terms",
