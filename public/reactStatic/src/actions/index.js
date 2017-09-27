@@ -25,25 +25,25 @@ export const modefyBucket = (b,i) =>({
   i
 })
 
-export const requestPosts = reddit => ({
-  type: REQUEST_POSTS,
-  reddit
+export const requestPosts = kibana => ({
+  type: 'REQUEST_POSTS',
+  kibana
 })
-export const receivePosts = (reddit, json) => ({
-  type: RECEIVE_POSTS,
-  reddit,
-  posts: json.data.children.map(child => child.data),
+export const receivePosts = (kibana, json) => ({
+  type: 'RECEIVE_POSTS',
+  kibana,
+  posts: json.data.map(child => child.data),
   receivedAt: Date.now()
 })
-export const invalidateReddit = reddit => ({
-  type: INVALIDATE_REDDIT,
-  reddit
+export const invalidateReddit = kibana => ({
+  type: 'INVALIDATE_REDDIT',
+  kibana
 })
-const fetchPosts = reddit => dispatch => {
-  dispatch(requestPosts(reddit))
-  return fetch(`https://www.reddit.com/r/${reddit}.json`)
+export const fetchPosts = kibana => dispatch => {
+  dispatch(requestPosts(kibana))
+  return fetch(`http://localhost:3000/artical`)
     .then(response => response.json())
-    .then(json => dispatch(receivePosts(reddit, json)))
+    .then(json => dispatch(receivePosts(kibana, json)))
 }
 
 
