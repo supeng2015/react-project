@@ -26,7 +26,6 @@ const metrics = (state = [], action) => {
             return state
     }
 }
-<<<<<<< HEAD
 // const posts = (state = {
 //   isFetching: false,
 //   didInvalidate: false,
@@ -68,13 +67,7 @@ const postsByKibanaResult = (state = { }, action) => {
       return state
   }
 }
-const rootReducer = combineReducers({
-  testReducer,
-  metrics,
-  buckets,
-  //postsByKibanaResult
-})
-=======
+
 const buckets = (state = [], action) => {
     switch (action.type) {
         case 'ADD_BUCKET' :
@@ -127,5 +120,4 @@ const rootReducer = combineReducers({
     buckets,
     buckets2
 });
->>>>>>> a4c3d62a2a35836e7bc247afa24e5117fd4cf896
 export default rootReducer
