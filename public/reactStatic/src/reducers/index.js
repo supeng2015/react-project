@@ -1,4 +1,7 @@
 import {combineReducers} from 'redux'
+const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT';
+const REQUEST_POSTS = 'REQUEST_POSTS';
+const RECEIVE_POSTS = 'RECEIVE_POSTS';
 
 const testReducer = (state = 0, action) => {
     switch (action.type) {
@@ -26,6 +29,48 @@ const metrics = (state = [], action) => {
             return state
     }
 }
+const posts = (state = {
+  isFetching: false,
+  didInvalidate: false,
+  items: []
+}, action) => {
+  switch (action.type) {
+    case INVALIDATE_REDDIT:  //刷新
+      return {
+        ...state,
+        didInvalidate: true
+      }
+    case REQUEST_POSTS:  //通知reducer开始请求
+      return {
+        ...state,
+        isFetching: true,   //正在请求的标志为true 则在请求，为false则请求完毕 应用里来控制loading的现实和隐藏
+        didInvalidate: false
+      }
+    case RECEIVE_POSTS:  //通知reducer请求成功
+      return {
+        ...state,
+        isFetching: false,
+        didInvalidate: false,
+        items: action.posts,
+        lastUpdated: action.receivedAt
+      }
+    default:
+      return state
+  }
+}
+const postsByKibanaResult = (state = {}, action) => {
+  switch (action.type) {
+    case INVALIDATE_REDDIT:
+    case RECEIVE_POSTS:
+    case REQUEST_POSTS:
+      return {
+        ...state,[action.kibana]: posts(state[action.kibana], action)
+      }
+    default:
+      return state
+  }
+}
+
 const buckets = (state = [], action) => {
     switch (action.type) {
         case 'ADD_BUCKET' :
@@ -73,7 +118,7 @@ const buckets2 = (state = [{
 };
 
 const rootReducer = combineReducers({
-    //rangeFromTo,
+    postsByKibanaResult,
     testReducer,
     metrics,
     buckets,
