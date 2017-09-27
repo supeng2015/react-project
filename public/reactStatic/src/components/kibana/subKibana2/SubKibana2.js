@@ -2,58 +2,28 @@ import React, {Component, PropTypes} from 'react';
 import Bucket from './Bucket/Bucket'
 import {connect} from 'react-redux'
 import {addBucket2} from "../../../actions/index";
+import bucketConstructor from './bucketConstructor';
 
 class SubKibana2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            bucketArr: [{
-                types: ["Data Histogram", "Histogram", "Range"],
-                content: {
-                    "Data Histogram": {
-                        field: ["@timestamp", "uc_time"],
-                        interval: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"]
-                    },
-                    "Histogram": {
-                        field: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"],
-                        interval: ""
-                    },
-                    "Range": {
-                        field: [],
-                        FromTo: [[0, 1000]]
-                    }
-                }
-            }]
+            bucketArr: [bucketConstructor]
         }
     }
 
     addBucket(){
-        const bucketInitDate = {
-            types: ["Data Histogram", "Histogram", "Range"],
-            content: {
-                "Data Histogram": {
-                    field: ["@timestamp", "uc_time"],
-                    interval: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"]
-                },
-                "Histogram": {
-                    field: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"],
-                    interval: ""
-                },
-                "Range": {
-                    field: [],
-                    FromTo: [[0, 1000]]
-                }
-            }
-        };
+        const bucketInitDate = bucketConstructor;
         this.setState({
             bucketArr:[...this.state.bucketArr, bucketInitDate]
         });
+        // 添加store中的bucket
         this.props.addBucket(bucketInitDate)
     }
 
     render(){
         return (
-            <div>
+            <div className="form-item">
                 {
                     this.state.bucketArr.map((item, index)=>{
                         return <Bucket types={item.types} content={item.content} key={index} index={index}/>

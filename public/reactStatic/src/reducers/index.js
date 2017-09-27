@@ -49,7 +49,8 @@ const buckets = (state = [], action) => {
 const buckets2 = (state = [{
     type: "Data Histogram",
     field: "",
-    interval: ""
+    interval: "",
+    label: ""
 }], action) => {
     switch (action.type) {
         case 'CHANGE_BUCKET_TYPE':
