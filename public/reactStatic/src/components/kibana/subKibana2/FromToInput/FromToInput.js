@@ -61,8 +61,7 @@ class FromToInput extends React.Component {
     }
 
     render() {
-        let {index} = this.props;
-        let fromTo = this.props.buckets[index].fromTo;
+        let fromTo = this.props.buckets[this.props.index].fromTo;
         return (
             <div className="form-group">
                 <table className="form-group">
@@ -75,9 +74,9 @@ class FromToInput extends React.Component {
                         fromTo.map((item, index) => {
                             return (
                                 <tr key={index}>
-                                    <td><input type="text" className="form-control" value={fromTo[index].from}
+                                    <td><input type="number" className="form-control" min={0} value={fromTo[index].from}
                                                onChange={this.changeHandle.bind(this, index, 'from')}/></td>
-                                    <td><input type="text" className="form-control" value={fromTo[index].to}
+                                    <td><input type="number" className="form-control" min={0} value={fromTo[index].to}
                                                onChange={this.changeHandle.bind(this, index, 'to')}/></td>
                                     <td><Close onClick={this.deleteFromTo.bind(this, index)}/></td>
                                 </tr>
@@ -86,7 +85,7 @@ class FromToInput extends React.Component {
                     }
                     </tbody>
                 </table>
-                <button onClick={this.addFromTo.bind(this)}>Add Range</button>
+                <button className="button-primary" onClick={this.addFromTo.bind(this)}>Add Range</button>
             </div>
         )
     }

@@ -5,7 +5,7 @@ class UpDownInputGroup extends React.Component{
         return (
             <div className="form-group">
                 <h5>{this.props.title}</h5>
-                <input type="number" className="form-control" min="0"
+                <input type="number" className="form-control" min="0" value={this.props.value}
                        onChange={this.props.changeHandle}/>
             </div>
         )

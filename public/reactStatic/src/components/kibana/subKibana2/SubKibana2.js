@@ -19,7 +19,7 @@ class SubKibana2 extends Component {
             bucketArr: [...this.state.bucketArr, bucketInitDate]
         });
         // 添加store中的bucket
-        this.props.addBucket(bucketData["Data Histogram"])
+        this.props.addBucket(bucketData("Data Histogram"))
     }
 
     // 测试Bucket生成JSON，暂时不考虑多个Bucket的情况

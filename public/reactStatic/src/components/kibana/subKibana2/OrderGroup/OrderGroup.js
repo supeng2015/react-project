@@ -8,18 +8,18 @@ class OrderGroup extends React.Component {
     }
 
     render() {
-        const {index,data} = this.props;
+        const {index,data,value} = this.props;
         return (
             <div>
-                <DownInputGroup title="Order By" data={data.orderBy}
+                <DownInputGroup title="Order By" data={data.orderBy} value={value.orderBy}
                                 changeHandle={(e)=>{this.props.changeHandle(index, 'orderBy', e.target.value)}}/>
                 <div className="flex-box">
                     <div className="flex-box-half">
-                        <DownInputGroup title="Order" data={data.order}
+                        <DownInputGroup title="Order" data={data.order} value={value.order}
                                         changeHandle={(e)=>{this.props.changeHandle(index, 'order', e.target.value)}}/>
                     </div>
                     <div className="flex-box-half">
-                        <UpDownInputGroup title="Size" data={data.size}
+                        <UpDownInputGroup title="Size" data={data.size} value={value.size}
                                           changeHandle={(e)=>{this.props.changeHandle(index, 'size', e.target.value)}}/>
                     </div>
                 </div>

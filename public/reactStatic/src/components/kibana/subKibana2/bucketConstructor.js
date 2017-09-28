@@ -8,19 +8,19 @@ export default {
             label: true
         },
         "Histogram": {
-            field: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"],
+            field: ["--number--", "bytes", "machine.ram", "phpmemory"],
             interval: true,
             showEmpty: true,
             label: true
         },
         "Range": {
-            field: ["A","B","C"],
+            field: ["--number--", "bytes", "machine.ram", "phpmemory"],
             fromTo: true,
             label: true
         },
         "Data Range": {
             type: "Data Range",
-            field: ["A","B","C"],
+            field: ["--date--", "@timestamp", "relatedContent.article:modeified_time","relatedContent.article:published_time","utc_time"],
             fromTo: true,
             label: true
         },
@@ -33,8 +33,8 @@ export default {
         },
         "Terms": {
             type: "Terms",
-            field: ["A","B","C"],
-            orderBy: ["metric:Count", "Custom Metric", "Term"],
+            field: ["--date--", "@timestamp", "relatedContent.article:modeified_time","relatedContent.article:published_time","utc_time"],
+            orderBy: ["--orderBy--","metric:Count", "Custom Metric", "Term"],
             order: ["Descending", "Ascending"],
             size: true,
             label: true

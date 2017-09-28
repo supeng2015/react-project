@@ -43,13 +43,13 @@ class FilterInputGroup extends React.Component {
     }
 
     render() {
-        const {index} = this.props;
+        const {index,value} = this.props;
         const data = this.props.buckets[index].filter;
         return (
             <div>
                 {
                     data.map((item, index)=>{
-                        return <FilterInput key={index} data={item} index={index}
+                        return <FilterInput key={index} data={item} index={index} value={value[index]}
                                             changeValueHandle={this.changeValueHandle.bind(this, index)}
                                             changeNameHandle={(newName)=>(this.changeNameHandle.bind(this)(index, newName))}
                                             removeHandle={(index)=>{return this.removeHandle.bind(this, index)}}/>

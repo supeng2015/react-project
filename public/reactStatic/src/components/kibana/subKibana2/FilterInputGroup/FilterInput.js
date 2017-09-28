@@ -29,12 +29,12 @@ class FilterInput extends React.Component {
     }
 
     render() {
-        const {index} = this.props;
+        const {index,value} = this.props;
         return (
             <div>
                 <Close className="f-fr button-icon button-right button-warning" onClick={this.props.removeHandle(index)}/>
                 <FaPencil className="f-fr button-icon button-left button-normal" onClick={()=>{this.setState({hidden: false})}}/>
-                <NormalInput title={this.props.data.name}
+                <NormalInput title={this.props.data.name} value={value.value}
                              changeHandle={(e)=>{return this.props.changeValueHandle(e)}}/>
                 <div className={this.state.hidden ? "flex-box f-dpnone" : "flex-box"}>
                     <input type="text" className="form-control" value={this.state.newName} style={{flex: "10 1 auto"}}
