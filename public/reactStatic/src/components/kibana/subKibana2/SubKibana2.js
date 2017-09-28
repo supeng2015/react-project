@@ -3,7 +3,7 @@ import Bucket from './Bucket/Bucket'
 import {connect} from 'react-redux'
 import {addBucket2, addMetrics2} from "../../../actions/index";
 import Metrics from './Metrics/Metrics'
-import {addBucket2} from "../../../actions/index";
+import metricsArr from './metricsConstructor'
 import bucketConstructor from './bucketConstructor';
 import bucketData from './bucketData';
 
@@ -11,28 +11,23 @@ class SubKibana2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            metricsArr: [{
-                types: ['Count', 'Average', 'Sum'],
-                content: {
-                    'Count': {
-                        field: [],
-                        CustomLabel: ''
-                    },
-                    'Average': {
-                        field: ['age', 'number'],
-                        CustomLabel: ''
-                    },
-                    'Sum': {
-                        field: ['age', 'number'],
-                        CustomLabel: ''
-                    }
-                }
-            }]
+            metricsArr:[metricsArr],
+            bucketArr: [bucketConstructor]
         }
     }
 
+    addMetric() {
+        const metrics = this.state.metricsArr;
+        const metricInitData = metricsArr;
 
-    addBucket() {
+        this.setState({
+            metricsArr: [...metrics, metricInitData]
+        });
+        this.props.addMetric(metricInitData);
+
+    }
+
+    addBucket(){
         const bucketInitDate = bucketConstructor;
         this.setState({
             bucketArr: [...this.state.bucketArr, bucketInitDate]
@@ -59,23 +54,26 @@ class SubKibana2 extends Component {
     render() {
 
         return (
-            <div className="form-item">
-                {
-                    this.state.metricsArr.map((item, index) => {
-                        return <Metrics types={item.types} content={item.content} key={index} index={index}/>
-                    })
+            <div>
+                <div className="form-item">
+                    {
+                        this.state.metricsArr.map((item, index) => {
+                            console.log(item.types);
+                            return <Metrics types={item.types} content={item.content} key={index} index={index}/>
+                        })
+                    }
+                    <button onClick={this.addMetric.bind(this)}>Add Metrics</button>
+                </div>
 
-                }
-                <button onClick={this.addMetric.bind(this)}>Add Metrics</button>
-                )
-
-                {
-                    this.state.bucketArr.map((item, index) => {
-                        return <Bucket types={item.types} content={item.content} key={index} index={index}/>
-                    })
-                }
-                <button className="button-primary" onClick={this.addBucket.bind(this)}>Add Bucket</button>
-                <button onClick={this.testBucketJSON.bind(this)}>Test Bucket JSON</button>
+                <div className="form-item">
+                    {
+                        this.state.bucketArr.map((item, index) => {
+                            return <Bucket types={item.types} content={item.content} key={index} index={index}/>
+                        })
+                    }
+                    <button className="button-primary" onClick={this.addBucket.bind(this)}>Add Bucket</button>
+                    <button onClick={this.testBucketJSON.bind(this)}>Test Bucket JSON</button>
+                </div>
             </div>
         );
     }

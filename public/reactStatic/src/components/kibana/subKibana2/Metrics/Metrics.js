@@ -21,6 +21,7 @@ class Metrics extends Component {
     }
 
     render() {
+        //console.log(this.props);
         let content = this.props.content[this.state.nowType];
 
         return (
@@ -33,8 +34,6 @@ class Metrics extends Component {
                 {
                     content.CustomLabel === undefined ? '' : <CustomLab title='Custom Label'/>
                 }
-
-
             </div>
 
         )
