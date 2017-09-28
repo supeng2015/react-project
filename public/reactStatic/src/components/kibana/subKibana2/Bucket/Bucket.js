@@ -6,10 +6,12 @@ import NormalInput from '../NormalInput/NormalInput'
 import {connect} from 'react-redux'
 import {changeBucketType} from '../../../../actions'
 import {modifyBucket2} from "../../../../actions/index";
-import FromToInput from "../FromToInput/FromToInput";
+import FromToInputNum from "../FromToInput/FromToInputNum";
 import bucketData from '../bucketData'
 import OrderGroup from "../OrderGroup/OrderGroup";
 import FilterInputGroup from "../FilterInputGroup/FilterInputGroup";
+import FromToInput from "../FromToInput/FromToInput";
+import FromToInputNumChange from "../FromToInput/FromToInputNumChange";
 
 class Bucket extends React.Component{
     constructor(props){
@@ -61,7 +63,7 @@ class Bucket extends React.Component{
                         ?  <DownInputGroup title="Interval" data={content.interval}
                                            changeHandle={(e)=>{this.props.modifyBucket(index, 'interval', e.target.value)}}/>
                         :  <UpDownInputGroup title="Interval" data={content.interval}
-                                             changeHandle={(e)=>{this.props.modifyBucket(index, 'interval', e.target.value)}}/>)
+                                             changeHandle={(e)=>{this.debounceChange().bind(this, 'interval')}}/>)
                     : ""
                 }
                 {
@@ -74,9 +76,15 @@ class Bucket extends React.Component{
                     : ""
                 }
                 {
-                    content.fromTo
-                        ? <FromToInput index={index} name="fromTo"/>
-                        : ""
+                    this.state.nowType === "Range"
+                        ? <FromToInputNum index={index} name="fromTo"/>
+                        : (this.state.nowType === "Data Range"
+                            ? <FromToInput index={index} name="fromTo"/>
+                            : (this.state.nowType === "IPv4 Range"
+                                ? <FromToInputNumChange index={index} changeHandle={this.props.modifyBucket}/>
+                                : ""
+                           )
+                        )
                 }
                 {
                     content.orderBy
@@ -84,10 +92,15 @@ class Bucket extends React.Component{
                                       changeHandle={this.props.modifyBucket}/>: ""
                 }
                 {
+                    content.size && !content.order
+                        ? <UpDownInputGroup title="Size" data={content.size}
+                                            changeHandle={this.debounceChange().bind(this, 'size')}/> : ""
+                }
+                {
                     content.label
                     ? <NormalInput title="Custom Label" data={''}
                                    changeHandle={this.debounceChange().bind(this, 'label')}/>
-                    : <FilterInputGroup index={index} changeHandle={()=>{console.log(111)}} />
+                    : <FilterInputGroup index={index} />
                 }
             </div>
         )

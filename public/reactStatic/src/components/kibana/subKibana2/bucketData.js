@@ -11,7 +11,7 @@ export default {
         type: "Histogram",
         field: "",
         interval: "",
-        showEmpty: true,
+        showEmpty: false,
         label: ""
     },
     "Range":{
@@ -30,7 +30,7 @@ export default {
         type: "IPv4 Range",
         field: "",
         fromTo: [{from: 0, to: 0}],
-        mask: [],
+        mask: [""],
         label: ""
     },
     "Terms": {

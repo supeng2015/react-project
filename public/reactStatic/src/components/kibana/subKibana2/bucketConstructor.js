@@ -10,7 +10,7 @@ export default {
         "Histogram": {
             field: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"],
             interval: true,
-            showEmpty: false,
+            showEmpty: true,
             label: true
         },
         "Range": {
