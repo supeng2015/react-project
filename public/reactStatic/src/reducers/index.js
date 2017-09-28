@@ -90,6 +90,9 @@ const buckets = (state = [], action) => {
     }
 };
 
+//metrics2的reducer
+const metrics2=(state=[],action)=>{};
+
 // 新增bucket2的reducer
 const buckets2 = (state = [{
     type: "Data Histogram",

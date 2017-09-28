@@ -24,6 +24,14 @@ export const modefyBucket = (b,i) =>({
   b,
   i
 })
+//Metrics2的Action
+export const addMetrics2=(index,metricsData)=>{
+    return {
+        type:'ADD_METRICS2',
+        index,
+        metricsData
+    }
+}
 
 export const requestPosts = kibana => ({
   type: 'REQUEST_POSTS',
