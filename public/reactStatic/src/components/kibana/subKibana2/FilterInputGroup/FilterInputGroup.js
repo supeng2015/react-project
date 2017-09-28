@@ -55,7 +55,7 @@ class FilterInputGroup extends React.Component {
                                             removeHandle={(index)=>{return this.removeHandle.bind(this, index)}}/>
                     })
                 }
-                <button onClick={this.addHandle.bind(this)}>Add Filter</button>
+                <button className="mb-15" onClick={this.addHandle.bind(this)}>Add Filter</button>
             </div>
         )
     }
