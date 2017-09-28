@@ -3,6 +3,8 @@ import Bucket from './Bucket/Bucket'
 import {connect} from 'react-redux'
 import {addBucket2, addMetrics2} from "../../../actions/index";
 import Metrics from './Metrics/Metrics'
+import {addBucket2} from "../../../actions/index";
+import bucketConstructor from './bucketConstructor';
 
 class SubKibana2 extends Component {
     constructor(props) {
@@ -22,23 +24,6 @@ class SubKibana2 extends Component {
                     'Sum': {
                         field: ['age', 'number'],
                         CustomLabel: ''
-                    }
-                }
-            }],
-            bucketArr: [{
-                types: ["Data Histogram", "Histogram", "Range"],
-                content: {
-                    "Data Histogram": {
-                        field: ["@timestamp", "uc_time"],
-                        interval: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"]
-                    },
-                    "Histogram": {
-                        field: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"],
-                        interval: ""
-                    },
-                    "Range": {
-                        field: [],
-                        FromTo: [[0, 1000]]
                     }
                 }
             }]
@@ -70,34 +55,19 @@ class SubKibana2 extends Component {
         this.props.addMetric(metricInitData);
     }
 
-    addBucket() {
-        const bucketInitDate = {
-            types: ["Data Histogram", "Histogram", "Range"],
-            content: {
-                "Data Histogram": {
-                    field: ["@timestamp", "uc_time"],
-                    interval: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"]
-                },
-                "Histogram": {
-                    field: ["-- select a valid interval --", "Daily", "Monthly", "Yearly"],
-                    interval: ""
-                },
-                "Range": {
-                    field: [],
-                    FromTo: [[0, 1000]]
-                }
-            }
-        };
+    addBucket(){
+        const bucketInitDate = bucketConstructor;
         this.setState({
             bucketArr: [...this.state.bucketArr, bucketInitDate]
         });
+        // 添加store中的bucket
         this.props.addBucket(bucketInitDate)
     }
 
     render() {
 
         return (
-            <div>
+            <div className="form-item">
                 {
                     this.state.metricsArr.map((item, index) => {
                         return <Metrics types={item.types} content={item.content} key={index} index={index}/>

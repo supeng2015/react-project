@@ -2,8 +2,14 @@ import React from 'react'
 import DownInputGroup from '../DownInputGroup/DownInputGroup'
 import ChangeInput from '../ChangeInput/ChangeInput'
 import UpDownInputGroup from '../UpDownInputGroup/UpDownInputGroup'
+import NormalInput from '../NormalInput/NormalInput'
 import {connect} from 'react-redux'
 import {changeBucketType} from '../../../../actions'
+import {modifyBucket2} from "../../../../actions/index";
+import FromToInput from "../FromToInput/FromToInput";
+import bucketData from '../bucketData'
+import OrderGroup from "../OrderGroup/OrderGroup";
+import FilterInputGroup from "../FilterInputGroup/FilterInputGroup";
 
 class Bucket extends React.Component{
     constructor(props){
@@ -19,59 +25,69 @@ class Bucket extends React.Component{
         this.setState({
            nowType: bucketType
         });
+        // 改变初始化结构
+        this.props.changeBucketType(this.props.index,bucketData[bucketType]);
+    }
 
-        let bucketData = function () {
-            switch (bucketType){
-                case "Data Histogram":
-                    return {
-                        type: "Data Histogram",
-                        field: "",
-                        interval: "",
-                        label: ""
-                    };
-                case "Histogram":
-                    return {
-                        type: "Histogram",
-                        field: "",
-                        interval: "",
-                        showEmpty: false,
-                        label: ""
-                    };
-                case "Range":
-                    return {
-                        type: "Range",
-                        field: "",
-                        fromTo: [[0,1000]],
-                        label: ""
-                    };
-                default:
-                    return {
-                        type: "Data Histogram",
-                        field: "",
-                        interval: "",
-                        label: ""
-                    };
-            }
-        };
-        this.props.changeBucketType(this.props.index,bucketData());
+    debounceChange(){
+        let flag = null;
+        let {index} = this.props;
+        return function(name, e){
+            e.persist();
+            clearTimeout(flag);
+            flag = setTimeout(()=>{
+                this.props.modifyBucket(index, name, e.target.value)
+            },500)
+        }
     }
 
     render(){
-        let types = this.props.types;
+        let {index, types} = this.props;
         let nowType = this.state.nowType;
-        let content = this.props.content[nowType];
+        const content = this.props.content[nowType];
 
         return (
-            <div className="form-item">
+            <div>
                 <div className="sidebar-item-title">bucket</div>
                 <ChangeInput title="Aggregation" data={types} changeHandle={this.changeType.bind(this)}/>
-                <DownInputGroup title="Field" data={content.field} index={this.props.index} name="field"/>
                 {
-                    typeof(content.interval) === "undefined"
-                    ? ""
-                    : (typeof(content.interval) === "object"
-                        ?  <DownInputGroup title="Interval" data={content.interval} index={this.props.index} name="interval"/>
-                        :  <UpDownInputGroup title="Interval" data={content.interval} index={this.props.index} name="interval"/>)
+                    content.field
+                    ? <DownInputGroup title="Field" data={content.field}
+                                      changeHandle={(e)=>{this.props.modifyBucket(index, 'field', e.target.value)}}/> : ""
+                }
+                {
+                    content.interval
+                    ? (typeof(content.interval) === "object"
+                        ?  <DownInputGroup title="Interval" data={content.interval}
+                                           changeHandle={(e)=>{this.props.modifyBucket(index, 'interval', e.target.value)}}/>
+                        :  <UpDownInputGroup title="Interval" data={content.interval}
+                                             changeHandle={(e)=>{this.props.modifyBucket(index, 'interval', e.target.value)}}/>)
+                    : ""
+                }
+                {
+                    content.showEmpty
+                    ? <label>
+                            <input type="checkbox" name="showEmpty"
+                                   onChange={(e)=>{this.props.modifyBucket(index, 'showEmpty', e.target.checked)}}/>
+                            Show empty buckets
+                        </label>
+                    : ""
+                }
+                {
+                    content.fromTo
+                        ? <FromToInput index={index} name="fromTo"/>
+                        : ""
+                }
+                {
+                    content.orderBy
+                        ? <OrderGroup index={index} data={content}
+                                      changeHandle={this.props.modifyBucket}/>: ""
+                }
+                {
+                    content.label
+                    ? <NormalInput title="Custom Label" data={''}
+                                   changeHandle={this.debounceChange().bind(this, 'label')}/>
+                    : <FilterInputGroup index={index} changeHandle={()=>{console.log(111)}} />
                 }
             </div>
         )
@@ -79,16 +95,16 @@ class Bucket extends React.Component{
 }
 
 function mapStateToProps(state){
-    let bucketData = state.buckets2;
-    return {
-        bucketData
-    }
+    return {}
 }
 
 function mapDispatchToProps(dispatch){
     return {
         changeBucketType: (index, bucketDate)=>{
             dispatch(changeBucketType(index, bucketDate))
+        },
+        modifyBucket:(index, key, value) =>{
+            dispatch(modifyBucket2(index, key, value))
         }
     }
 }
