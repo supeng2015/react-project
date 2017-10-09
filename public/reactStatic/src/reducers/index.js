@@ -94,11 +94,15 @@ const postsByKibanaResult = (state = {}, action) => {
 
 
 
+//metrics2的reducer
+const metrics2=(state=[],action)=>{};
+
 // 新增bucket2的reducer
 const buckets2 = (state = [{
     type: "Data Histogram",
     field: "",
-    interval: ""
+    interval: "",
+    label: ""
 }], action) => {
     switch (action.type) {
         case 'CHANGE_BUCKET_TYPE':

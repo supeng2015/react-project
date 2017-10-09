@@ -1,3 +1,6 @@
+table{
+  text-align: left;
+}
 .form-item{
   padding: 10px;
   font-size: 12px;
@@ -6,22 +9,97 @@
 .form-group{
   margin-bottom: 15px;
   h5{
+    font-size: 12px;
     padding: 4px 0;
     font-weight: bold;
   }
-  .form-control {
+}
+.form-control {
+  width: 100%;
+  height: 32px;
+  padding: 5px 15px;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ecf0f1;
+  border-radius: 4px;
+  box-shadow: none;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.form-control, input {
+  border-width: 2px;
+  box-sizing: border-box;
+}
+button{
+  padding: 4px 12px 5px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  height: 30px;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  &.full-width{
     width: 100%;
-    height: 32px;
-    padding: 5px 15px;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ecf0f1;
-    border-radius: 4px;
-    box-shadow: none;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
-  .form-control, input {
-    border-width: 2px;
-    box-sizing: border-box;
+}
+.flex-box{
+  display: flex;
+  .flex-box-half{
+    flex: 1 1 auto;
   }
+}
+.f-dpnone{
+  display: none;
+}
+.f-fr{
+  float: right;
+}
+.button-icon{
+  padding: 4px 6px;
+  font-size: 12px;
+  color: #ffffff;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  &.button-left{
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+  }
+  &.button-right{
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+  }
+}
+.button-normal{
+  background-color: #eff0f0;
+  color: #5b5b5b;
+  &:hover{
+    background-color: #adaeae;
+    color: #ffffff;
+  }
+}
+.button-warning{
+  background-color: #d76051;
+  &:hover{
+    background-color: #a52e1f;
+  }
+}
+.button-primary{
+  background-color: #00B7FF;
+  color: #ffffff;
+  &:hover{
+    background-color: #0081ad;
+  }
+}
+.button-correct{
+  background-color: #27ff18;
+  &:hover{
+    background-color: #398f37;
+  }
+}
+.mb-15{
+  margin-bottom: 15px;
 }
