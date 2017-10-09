@@ -29,6 +29,26 @@ const metrics = (state = [], action) => {
             return state
     }
 }
+const buckets = (state = [], action) => {
+    switch (action.type) {
+        case 'ADD_BUCKET' :
+            return [...state, action.b]
+        case 'REMOVE_BUCKET' :
+            return state.filter((item, index) => index !== action.i)
+        case 'MODEFY_BUCKET' :
+            return state.map((item, index) => {
+                if (index == action.i) {
+                    return action.b
+                } else {
+                    return item
+                }
+            })
+        default :
+            return state
+    }
+};
+
+//发送json组合获取返回的结果
 const posts = (state = {
   isFetching: false,
   didInvalidate: false,
@@ -71,24 +91,8 @@ const postsByKibanaResult = (state = {}, action) => {
   }
 }
 
-const buckets = (state = [], action) => {
-    switch (action.type) {
-        case 'ADD_BUCKET' :
-            return [...state, action.b]
-        case 'REMOVE_BUCKET' :
-            return state.filter((item, index) => index !== action.i)
-        case 'MODEFY_BUCKET' :
-            return state.map((item, index) => {
-                if (index == action.i) {
-                    return action.b
-                } else {
-                    return item
-                }
-            })
-        default :
-            return state
-    }
-};
+
+
 
 // 新增bucket2的reducer
 const buckets2 = (state = [{
