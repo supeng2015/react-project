@@ -47,11 +47,6 @@ class Percents extends Component {
     };
 
     render() {
-        //console.log('***'+JSON.stringify(this.props.metrics[0].Percents));
-        //[{"field":["age","num"],"Percents":[1,5,25,50,75,95,99],"CustomLabel":""}]
-        //const {index, name} = this.props;
-        //console.log('this.state:: '+JSON.stringify(this.props.metrics[index]));
-        //console.log('this.props:: ' + JSON.stringify(this.props));
         return (
             <div className='form-group'>
                 <h5>{this.props.name}</h5>
@@ -71,10 +66,8 @@ class Percents extends Component {
                 </table>
                 <button onClick={this.addPercent.bind(this)}>Add</button>
             </div>
-
         )
     }
-
 }
 
 const mapStateToProps = (state) => {
