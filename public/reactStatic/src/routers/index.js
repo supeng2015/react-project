@@ -26,8 +26,8 @@ const RouteConfig = (
       <IndexRoute component={App} />
       <Route path="app" component={App}/>
       <Route path="kibana" component={Kibana}>
-        <Route path="subKibana2" component={SubKibana2}/> 
-        <Route path="subKibana/:textId" component={SubKibana}/>    
+        <Route path="subKibana2" component={SubKibana2}/>
+        <Route path="subKibana/:textId" component={SubKibana}/>
       </Route>
       <Redirect from='*' to='/'  />//预设路由，全部户转到/下
     </Route>

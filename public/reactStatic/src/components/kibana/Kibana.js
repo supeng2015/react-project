@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import {fetchPosts} from '../../actions';
+import Charts from "./charts/Charts";
 
 class Kibana extends Component{
   componentDidMount() {    //组件装配前
@@ -21,6 +22,7 @@ class Kibana extends Component{
         <div className="main-box">
           <div className="main-box-two">{this.props.children}</div>
           <div className="main-box-two">
+            <Charts />
             <ul className="kibana-result-box">
               {result.map((v,i)=>
                 <li key={i}>
