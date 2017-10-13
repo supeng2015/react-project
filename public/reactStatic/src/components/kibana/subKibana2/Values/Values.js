@@ -45,8 +45,6 @@ class Values extends Component {
     };
 
     render() {
-        //console.log("###" + JSON.stringify(this.props.metrics[this.props.index]));
-        //[{"field":["age","num"],"CustomLabel":"","Values":[]}]
         let len = this.props.metrics[this.props.index].Values.length;
         return (
             <div className='form-group'>
@@ -65,12 +63,9 @@ class Values extends Component {
                                     <td><Close onClick={this.delPercent.bind(this, index)}/></td>
                                 </tr>
                             )
-
                         })
                     }
-
                     </tbody>
-
                 </table>
                 <button onClick={this.addValue.bind(this, len)}>Add</button>
 

@@ -8,7 +8,6 @@ import Values from '../Values/Values'
 import {modifyMetrics2, changeMetricsType} from '../../../../actions/index'
 import metricsData from '../metricsData'
 
-
 class Metrics extends Component {
 
     constructor(props) {
@@ -34,9 +33,6 @@ class Metrics extends Component {
     render() {
         const {index} = this.props;
         let constructor = this.props.content[this.state.nowType];
-        // let store = this.props.metrics;
-        // console.log('此时store中的值： ' + JSON.stringify(store));
-
         return (
             <div className='Metrics'>
                 <div className='title'>
@@ -61,7 +57,6 @@ class Metrics extends Component {
                         <CustomLab title='Custom Label' changeHandle={this.change.bind(this, 'CustomLabel')}/>
                 }
             </div>
-
         )
     }
 }
@@ -70,8 +65,8 @@ const mapStateToProps = (state) => {
     return {
         metrics: state.metrics2
     }
-
 };
+
 const mapDispatchToProps = (dispatch) => {
     return {
         changeMetricsType: (index, metricsData) => {

@@ -70,7 +70,8 @@ class SubKibana2 extends Component {
     }
 
     render() {
-        console.log('Subkibana此时store中的值： ' + JSON.stringify(this.props.metricsData));
+        console.log('Metrics的store中的值： ' + JSON.stringify(this.props.metricsData));
+        console.log('Bucket的store中的值： ' + JSON.stringify(this.props.allBucketData));
         return (
             <div>
                 <div className="form-item">

@@ -92,9 +92,6 @@ const postsByKibanaResult = (state = {}, action) => {
     }
 }
 
-
-
-
 //metrics2的reducer
 const metrics2 = (state = [{type: 'Count', CustomLabel: ''}], action) => {
 
