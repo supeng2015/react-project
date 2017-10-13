@@ -52,7 +52,7 @@ class Bucket extends React.Component{
         let {index, types} = this.props;
         let nowType = this.state.nowType;
         const content = this.props.content[nowType];
-        let bucket = this.props.buckets[index];
+        let bucket = this.props.buckets2[index];
 
         return (
             <div>
@@ -116,7 +116,8 @@ class Bucket extends React.Component{
 
 function mapStateToProps(state){
     return {
-        buckets: state.buckets2
+
+        buckets2:state.buckets2
     }
 }
 

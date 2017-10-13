@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux'
+
 const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT';
 const REQUEST_POSTS = 'REQUEST_POSTS';
 const RECEIVE_POSTS = 'RECEIVE_POSTS';
@@ -50,52 +51,78 @@ const buckets = (state = [], action) => {
 
 //发送json组合获取返回的结果
 const posts = (state = {
-  isFetching: false,
-  didInvalidate: false,
-  items: []
+    isFetching: false,
+    didInvalidate: false,
+    items: []
 }, action) => {
-  switch (action.type) {
-    case INVALIDATE_REDDIT:  //刷新
-      return {
-        ...state,
-        didInvalidate: true
-      }
-    case REQUEST_POSTS:  //通知reducer开始请求
-      return {
-        ...state,
-        isFetching: true,   //正在请求的标志为true 则在请求，为false则请求完毕 应用里来控制loading的现实和隐藏
-        didInvalidate: false
-      }
-    case RECEIVE_POSTS:  //通知reducer请求成功
-      return {
-        ...state,
-        isFetching: false,
-        didInvalidate: false,
-        items: action.posts,
-        lastUpdated: action.receivedAt
-      }
-    default:
-      return state
-  }
+    switch (action.type) {
+        case INVALIDATE_REDDIT:  //刷新
+            return {
+                ...state,
+                didInvalidate: true
+            }
+        case REQUEST_POSTS:  //通知reducer开始请求
+            return {
+                ...state,
+                isFetching: true,   //正在请求的标志为true 则在请求，为false则请求完毕 应用里来控制loading的现实和隐藏
+                didInvalidate: false
+            }
+        case RECEIVE_POSTS:  //通知reducer请求成功
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                items: action.posts,
+                lastUpdated: action.receivedAt
+            }
+        default:
+            return state
+    }
 }
 const postsByKibanaResult = (state = {}, action) => {
-  switch (action.type) {
-    case INVALIDATE_REDDIT:
-    case RECEIVE_POSTS:
-    case REQUEST_POSTS:
-      return {
-        ...state,[action.kibana]: posts(state[action.kibana], action)
-      }
-    default:
-      return state
-  }
+    switch (action.type) {
+        case INVALIDATE_REDDIT:
+        case RECEIVE_POSTS:
+        case REQUEST_POSTS:
+            return {
+                ...state, [action.kibana]: posts(state[action.kibana], action)
+            }
+        default:
+            return state
+    }
 }
 
 
 
 
 //metrics2的reducer
-const metrics2=(state=[],action)=>{};
+const metrics2 = (state = [{type: 'Count', CustomLabel: ''}], action) => {
+
+    switch (action.type) {
+        case 'MODIFY_METRICS2':
+            const newState = [...state];
+            //更新此时这个metrics下key(例如为Percents)的新数据为新传入的value
+            newState[action.index][action.key] = action.value;
+            return newState;
+        case 'ADD_METRICS2':
+            console.log('reducer新的数据：'+JSON.stringify([...state, action.metricsData]));
+            return [...state, action.metricsData];
+        case 'CHANGE_METRICS_TYPE':
+            //遍历state，遍历完会重新组合生成一个新的state
+            return state.map((item, index) => {
+                if (index === action.index) {
+                    return action.metricsData;
+                } else {
+                    return item;
+                }
+            });
+        case 'DEL_METRICS2':
+            state.splice(action.index,1);
+            return state;
+        default:
+            return state;
+    }
+};
 
 // 新增bucket2的reducer
 const buckets2 = (state = [{
@@ -106,16 +133,16 @@ const buckets2 = (state = [{
 }], action) => {
     switch (action.type) {
         case 'CHANGE_BUCKET_TYPE':
-            return state.map((item,index)=>{
-                if(index === action.index){
+            return state.map((item, index) => {
+                if (index === action.index) {
                     return action.bucketData;
-                }else{
+                } else {
                     return item;
                 }
             });
         case 'MODIFY_BUCKET2':
             const newState = [...state];
-            newState[action.index][action.key]=action.value;
+            newState[action.index][action.key] = action.value;
             return newState;
         case 'ADD_BUCKET2':
             return [...state, action.bucketData];
@@ -129,6 +156,7 @@ const rootReducer = combineReducers({
     testReducer,
     metrics,
     buckets,
-    buckets2
+    buckets2,
+    metrics2
 });
 export default rootReducer

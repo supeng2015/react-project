@@ -1,33 +1,51 @@
 import React, {Component, PropTypes} from 'react';
 import Bucket from './Bucket/Bucket'
 import {connect} from 'react-redux'
-import {addBucket2, addMetrics2} from "../../../actions/index";
+import {addBucket2, addMetrics2,delMetrics2} from "../../../actions/index";
 import Metrics from './Metrics/Metrics'
-import metricsArr from './metricsConstructor'
+import metricsConstructor from './metricsConstructor'
+import metricsData from './metricsData'
 import bucketConstructor from './bucketConstructor';
 import bucketData from './bucketData';
+import Close from 'react-icons/lib/fa/close'
+
 
 class SubKibana2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            metricsArr:[metricsArr],
+            metricsArr: [metricsConstructor],
             bucketArr: [bucketConstructor]
         }
     }
 
     addMetric() {
         const metrics = this.state.metricsArr;
-        const metricInitData = metricsArr;
+        const metricInitData = metricsConstructor;
 
         this.setState({
             metricsArr: [...metrics, metricInitData]
         });
-        this.props.addMetric(metricInitData);
+        //将此时新加的数据的index设置为当前数据长度
+        this.props._addMetric(this.state.metricsArr,metricsData['Count']);
+        //console.log('addMetric::'+JSON.stringify(this.state.metricsArr));
+    }
+
+    delMetrics(metricsIndex){
+        //console.log('metricsIndex: '+metricsIndex)
+        let metricsArr = this.state.metricsArr;
+        const newArr = metricsArr.filter((item, index) => {
+            return index !== metricsIndex
+        });
+        this.setState({
+            metricsArr: newArr
+        });
+        this.props.modifyMetrics(metricsIndex);
+        //console.log('newArr:'+JSON.stringify(newArr));
 
     }
 
-    addBucket(){
+    addBucket() {
         const bucketInitDate = bucketConstructor;
         this.setState({
             bucketArr: [...this.state.bucketArr, bucketInitDate]
@@ -52,14 +70,19 @@ class SubKibana2 extends Component {
     }
 
     render() {
-
+        console.log('Subkibana此时store中的值： ' + JSON.stringify(this.props.metricsData));
         return (
             <div>
                 <div className="form-item">
                     {
                         this.state.metricsArr.map((item, index) => {
-                            console.log(item.types);
-                            return <Metrics types={item.types} content={item.content} key={index} index={index}/>
+                            //console.log(item.types);
+                            return (
+                                <div>
+                                    <Close onClick={this.delMetrics.bind(this,index)}/>
+                                    <Metrics types={item.types} content={item.content} key={index} index={index}/>
+                                </div>
+                            )
                         })
                     }
                     <button onClick={this.addMetric.bind(this)}>Add Metrics</button>
@@ -82,20 +105,24 @@ class SubKibana2 extends Component {
 
 function mapStateToProps(state) {
     return {
-        allBucketData: state.buckets2
+        allBucketData: state.buckets2,
+        metricsData: state.metrics2
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addMetric: (metricsData) => {
-            dispatch(addMetrics2(metricsData))
+        _addMetric: (index,metricsData) => {
+            dispatch(addMetrics2(index,metricsData))
         },
         addBucket: (bucketData) => {
             dispatch(addBucket2(bucketData))
+        },
+        modifyMetrics: (index) => {
+            dispatch(delMetrics2(index))
         }
     }
-}
+};
 
 export default connect(
     mapStateToProps,
