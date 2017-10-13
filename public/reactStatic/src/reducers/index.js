@@ -146,6 +146,10 @@ const buckets2 = (state = [{
             return newState;
         case 'ADD_BUCKET2':
             return [...state, action.bucketData];
+        case 'DEL_BUCKET2':
+            return state.filter((item, index) => {
+                return action.index !== index
+            });
         default:
             return state
     }

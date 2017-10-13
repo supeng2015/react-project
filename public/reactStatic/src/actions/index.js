@@ -103,3 +103,9 @@ export const addBucket2 = (bucketData) => {
     }
 };
 
+export const delBucket2 = (index) => {
+    return {
+        type: 'DEL_BUCKET2',
+        index
+    }
+};

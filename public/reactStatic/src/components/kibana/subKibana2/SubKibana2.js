@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import Bucket from './Bucket/Bucket'
 import {connect} from 'react-redux'
-import {addBucket2, addMetrics2,delMetrics2} from "../../../actions/index";
+import {addBucket2, addMetrics2,delMetrics2,delBucket2} from "../../../actions/index";
 import Metrics from './Metrics/Metrics'
 import metricsConstructor from './metricsConstructor'
 import metricsData from './metricsData'
@@ -15,7 +15,7 @@ class SubKibana2 extends Component {
         super(props);
         this.state = {
             metricsArr: [metricsConstructor],
-            bucketArr: [bucketConstructor]
+            bucketArr: [bucketConstructor()]
         }
     }
 
@@ -46,12 +46,24 @@ class SubKibana2 extends Component {
     }
 
     addBucket() {
-        const bucketInitDate = bucketConstructor;
+        const bucketInitDate = bucketConstructor();
         this.setState({
             bucketArr: [...this.state.bucketArr, bucketInitDate]
         });
         // 添加store中的bucket
         this.props.addBucket(bucketData("Data Histogram"))
+    }
+
+    delBucket(bucketIndex){
+        let bucketArr = this.state.bucketArr;
+        const newArr = bucketArr.filter((item, index) => {
+            return bucketIndex !== index;
+        });
+
+        this.setState({
+            bucketArr: newArr
+        });
+        this.props.delBucket(bucketIndex);
     }
 
     // 测试Bucket生成JSON，暂时不考虑多个Bucket的情况
@@ -78,8 +90,8 @@ class SubKibana2 extends Component {
                         this.state.metricsArr.map((item, index) => {
                             //console.log(item.types);
                             return (
-                                <div>
-                                    <Close onClick={this.delMetrics.bind(this,index)}/>
+                                <div key={index}>
+                                    <Close className="f-fr button-icon button-warning" onClick={this.delMetrics.bind(this,index)}/>
                                     <Metrics types={item.types} content={item.content} key={index} index={index}/>
                                 </div>
                             )
@@ -91,7 +103,12 @@ class SubKibana2 extends Component {
                 <div className="form-item">
                     {
                         this.state.bucketArr.map((item, index) => {
-                            return <Bucket types={item.types} content={item.content} key={index} index={index}/>
+                            return (
+                                <div key={index}>
+                                    <Close className="f-fr button-icon button-warning" onClick={this.delBucket.bind(this, index)}/>
+                                    <Bucket types={item.types} content={item.content} key={index} index={index} delBucket={this.delBucket.bind(this)}/>
+                                </div>
+                            )
                         })
                     }
                     <button className="button-primary" onClick={this.addBucket.bind(this)}>Add Bucket</button>
@@ -120,6 +137,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         modifyMetrics: (index) => {
             dispatch(delMetrics2(index))
+        },
+        delBucket: (index)=>{
+            dispatch(delBucket2(index))
         }
     }
 };
