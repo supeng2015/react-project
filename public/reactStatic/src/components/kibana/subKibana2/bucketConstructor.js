@@ -26,7 +26,7 @@ export default {
         },
         "IPv4 Range": {
             type: "IPv4 Range",
-            field: ["A","B","C"],
+            field: ["--field--","A","B","C"],
             fromTo: true,
             mask: true,
             label: true
@@ -45,7 +45,7 @@ export default {
         },
         "Significant Terms": {
             type: "Significant Terms",
-            field: ["A","B","C"],
+            field: ["--field--","A","B","C"],
             size: true,
             label: true
         }
