@@ -79,9 +79,9 @@ class SubKibana2 extends Component {
                         this.state.metricsArr.map((item, index) => {
                             //console.log(item.types);
                             return (
-                                <div>
+                                <div key={index}>
                                     <Close onClick={this.delMetrics.bind(this,index)}/>
-                                    <Metrics types={item.types} content={item.content} key={index} index={index}/>
+                                    <Metrics types={item.types} content={item.content}  index={index}/>
                                 </div>
                             )
                         })
