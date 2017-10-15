@@ -28,7 +28,13 @@ module.exports = {
       {
         test: /\.scss$/,
         loader:'style-loader!css-loader!sass-loader'
+      },
+      {
+        test: /\.(png|jpg)$/,
+        exclude: /^node_modules$/,
+        loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]',
       }
+
     ]
   },
   plugins: [

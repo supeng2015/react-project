@@ -90,7 +90,15 @@ const postsByKibanaResult = (state = {}, action) => {
       return state
   }
 }
-
+//登录用户信息
+const user=(state={},action)=>{
+  switch(action.type){
+    case 'LOGIN' :
+      return action.user
+    default :
+      return state        
+  }    
+}
 
 
 
@@ -125,6 +133,7 @@ const buckets2 = (state = [{
 };
 
 const rootReducer = combineReducers({
+    user,
     postsByKibanaResult,
     testReducer,
     metrics,

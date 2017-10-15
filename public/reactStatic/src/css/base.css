@@ -8,6 +8,12 @@ body,div,span,header,footer,nav,section,aside,article,ul, li, a, p, h1, h2, h3, 
   border: none;
   -webkit-tap-highlight-color:transparent;
 }
+button{
+  cursor: pointer;  
+}
+input{
+  background: none;  
+}
 body{
   color:#666;	
 }

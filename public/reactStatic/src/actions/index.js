@@ -24,13 +24,16 @@ export const modefyBucket = (b,i) =>({
   b,
   i
 })
-//Metrics2的Action
-export const addMetrics2=(index,metricsData)=>{
-    return {
-        type:'ADD_METRICS2',
-        index,
-        metricsData
-    }
+//userInfo
+const userInfo = (user)=>({
+  type : "LOGIN",
+  user
+})
+export const fetchUserInfo = user => dispatch =>{
+  //dispatch(userInfo(user))
+  return fetch(`http://localhost:3000/userInfo`)
+  .then(response => response.json())
+  .then(json => dispatch(userInfo(json)))    
 }
 
 export const requestPosts = kibana => ({
@@ -54,6 +57,14 @@ export const fetchPosts = kibana => dispatch => {
     .then(json => dispatch(receivePosts(kibana, json)))
 }
 
+//Metrics2的Action
+export const addMetrics2=(index,metricsData)=>{
+    return {
+        type:'ADD_METRICS2',
+        index,
+        metricsData
+    }
+}
 
 // bucket2的Action
 export const changeBucketType = (index,bucketData) => {

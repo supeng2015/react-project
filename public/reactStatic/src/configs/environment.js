@@ -1,0 +1,1 @@
+global.serverEvn= "http://192.168.2.106:3000";

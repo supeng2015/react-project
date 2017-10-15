@@ -29,7 +29,7 @@ class subKibana extends Component{
     return(
       <div>
         <section className="pb10">
-          <h3 className="borad-heading borad-pad">{params.textId}</h3>
+          
           <div className="borad-control-bar">
             <nav className="borad-pad">
             	<ul>

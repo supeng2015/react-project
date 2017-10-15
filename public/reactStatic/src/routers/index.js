@@ -1,9 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
-import App from '../components/App'; 
+import App from '../components/App';
+import Login from '../components/user/Login'; 
 import Kibana from '../components/kibana/Kibana'; 
 import SubKibana from '../components/kibana/subKibana/SubKibana';
 import SubKibana2 from '../components/kibana/subKibana2/SubKibana2';
+
 //const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
 const history =  hashHistory;
 class Roots extends Component{
@@ -25,6 +27,7 @@ const RouteConfig = (
     <Route path="/" component={Roots}>
       <IndexRoute component={App} />
       <Route path="app" component={App}/>
+      <Route path="login" component={Login}/>
       <Route path="kibana" component={Kibana}>
         <Route path="subKibana2" component={SubKibana2}/> 
         <Route path="subKibana/:textId" component={SubKibana}/>    

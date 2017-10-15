@@ -11,6 +11,16 @@ router.get('/kibana',function(req,res,next){
     {"responses":[{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":20,"max_score":0.0,"hits":[]},"status":200}]}
   );  
 })
+/*userInfo*/
+router.get('/userInfo',function(req,res,next){
+  res.json({
+    status : true,
+    data:{
+      userName:"sp",
+      power:1 
+    }  
+  })  
+})
 /*testdate*/
 router.get('/artical',function(req,res,next){
   res.json({data:[
@@ -78,8 +88,6 @@ router.get('/artical',function(req,res,next){
       w:322,
       r:76
     }
-
-
   ]})
 })
 module.exports = router;
