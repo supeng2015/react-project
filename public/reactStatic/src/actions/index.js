@@ -35,7 +35,7 @@ export const fetchUserInfo = user => dispatch =>{
   return fetch(`http://localhost:3000/userInfo`)
   .then(response => response.json())
   .then(json => dispatch(userInfo(json)))    
-
+}
 //Metrics2的Action
 export const changeMetricsType = (index, metricsData) => {
     return {
@@ -44,14 +44,7 @@ export const changeMetricsType = (index, metricsData) => {
         metricsData
     }
 };
-export const addMetrics2 = (index, metricsData) => {
-    console.log('action中的添加数据是：' + metricsData);
-    return {
-        type: 'ADD_METRICS2',
-        index,
-        metricsData
-    }
-};
+
 export const modifyMetrics2 = (index, key, value) => {
     return {
         type: 'MODIFY_METRICS2',

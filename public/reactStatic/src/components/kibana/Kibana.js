@@ -25,8 +25,8 @@ class Kibana extends Component{
         
         <div className="main-box">
           <div className="main-box-two">
-            <Route path="/kibana/subKibana" component={SubKibana}/>
-            <Route path="/kibana/subKibana2" component={SubKibana2}/>
+         
+            <SubKibana2/>
           </div>
           <div className="main-box-two">
             <Charts />
