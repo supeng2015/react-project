@@ -2,8 +2,11 @@ import React, {Component, PropTypes} from 'react';
 import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {fetchPosts} from '../../actions';
+
 import SubKibana from './subKibana/SubKibana';
 import SubKibana2 from './subKibana2/SubKibana2';
+
+import Charts from "./charts/Charts";
 
 class Kibana extends Component{
   componentDidMount() {    //组件装配前
@@ -26,6 +29,7 @@ class Kibana extends Component{
             <Route path="/kibana/subKibana2" component={SubKibana2}/>
           </div>
           <div className="main-box-two">
+            <Charts />
             <ul className="kibana-result-box">
               {result.map((v,i)=>
                 <li key={i}>

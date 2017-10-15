@@ -6,7 +6,7 @@ class CustomLab extends Component {
         return (
             <div className='form-group'>
                 <h5>{this.props.title}</h5>
-                <input type="text" className='form-control'/>
+                <input type="text" className='form-control' onChange={this.props.changeHandle}/>
             </div>
         )
     }
