@@ -13,11 +13,13 @@ class Login extends Component{
     dispatch(fetchUserInfo(user))
   }
   componentWillReceiveProps(nextProps){
-    console.log(nextProps)
-    let {user,history} = nextProps
+    let {user,history} = nextProps;
     if(user.status){
-      localStorage.userInfo = user.data
+      localStorage.userInfo = user.data;
+      localStorage.isLogin = true;
       history.push('/app');
+    }else{
+      alert('登录失败或网络异常')  
     } 
   }
   render(){

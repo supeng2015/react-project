@@ -4,20 +4,9 @@ import App from '../components/App';
 import Login from '../components/user/Login'; 
 import Kibana from '../components/kibana/Kibana'; 
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true
-    setTimeout(cb, 100) // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false
-    setTimeout(cb, 100)
-  }
-}
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    fakeAuth.isAuthenticated ? (
+    localStorage.isLogin ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{

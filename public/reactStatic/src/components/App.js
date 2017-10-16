@@ -26,16 +26,3 @@ class App extends Component{
   }
 }
 export default App
-// <div className="app-index-box">
-
-   //      <section> 
-   //        <div className="index-icon-box"><NumIcon/></div>
-   //        <div className="index-text-box">Metric</div>
-   //      </section> 
-   //      <section>
-   //        <ul className="index-nav">
-   //          <Link to="/kibana/subKibana"><li>index</li></Link>
-   //          <Link to="/kibana/subKibana2"><li>index2</li></Link>
-   //        </ul>
-   //      </section>
-   //    </div>

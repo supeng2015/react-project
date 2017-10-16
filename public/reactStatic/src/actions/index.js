@@ -31,10 +31,21 @@ const userInfo = (user)=>({
   user
 })
 export const fetchUserInfo = user => dispatch =>{
-  //dispatch(userInfo(user))
   return fetch(`http://localhost:3000/userInfo`)
-  .then(response => response.json())
-  .then(json => dispatch(userInfo(json)))    
+  .then(response => {
+    return response.json()
+  })
+  .catch(function(e) {
+    dispatch(userInfo({
+      data : null,
+      status : false    
+    }))
+  })
+  .then(json => {
+    if(json){
+      dispatch(userInfo(json))    
+    }
+  })    
 }
 //Metrics2的Action
 export const changeMetricsType = (index, metricsData) => {
