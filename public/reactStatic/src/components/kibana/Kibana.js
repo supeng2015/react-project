@@ -1,26 +1,33 @@
 import React, {Component, PropTypes} from 'react';
-import { Link } from 'react-router';
+import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {fetchPosts} from '../../actions';
+
+import SubKibana from './subKibana/SubKibana';
+import SubKibana2 from './subKibana2/SubKibana2';
+
 import Charts from "./charts/Charts";
 
 class Kibana extends Component{
   componentDidMount() {    //组件装配前
- 
     const { dispatch} = this.props
     //dispatch(getpiaoGet('asd'))
     dispatch(fetchPosts('kibana'))
   }
   render(){
-    let {postsByKibanaResult} = this.props
+    let {postsByKibanaResult,match} = this.props
     let result = []
     if(postsByKibanaResult.kibana){
       result = postsByKibanaResult.kibana.items   
     }
     return(
       <section>
+        
         <div className="main-box">
-          <div className="main-box-two">{this.props.children}</div>
+          <div className="main-box-two">
+         
+            <SubKibana2/>
+          </div>
           <div className="main-box-two">
             <Charts />
             <ul className="kibana-result-box">

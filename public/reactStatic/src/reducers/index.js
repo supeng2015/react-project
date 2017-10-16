@@ -92,6 +92,19 @@ const postsByKibanaResult = (state = {}, action) => {
     }
 }
 
+//登录用户信息
+const user=(state={},action)=>{
+  switch(action.type){
+    case 'LOGIN' :
+      return action.user
+    default :
+      return state        
+  }    
+}
+
+
+
+
 //metrics2的reducer
 const metrics2 = (state = [{type: 'Count', CustomLabel: ''}], action) => {
 
@@ -143,12 +156,17 @@ const buckets2 = (state = [{
             return newState;
         case 'ADD_BUCKET2':
             return [...state, action.bucketData];
+        case 'DEL_BUCKET2':
+            return state.filter((item, index) => {
+                return action.index !== index
+            });
         default:
             return state
     }
 };
 
 const rootReducer = combineReducers({
+    user,
     postsByKibanaResult,
     testReducer,
     metrics,

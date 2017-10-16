@@ -85,7 +85,7 @@ class FromToInput extends React.Component {
                     }
                     </tbody>
                 </table>
-                <button className="button-primary" onClick={this.addFromTo.bind(this)}>Add Range</button>
+                <button onClick={this.addFromTo.bind(this)}>Add Range</button>
             </div>
         )
     }

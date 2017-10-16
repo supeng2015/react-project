@@ -25,6 +25,17 @@ export const modefyBucket = (b, i) => ({
     i
 })
 
+//userInfo
+const userInfo = (user)=>({
+  type : "LOGIN",
+  user
+})
+export const fetchUserInfo = user => dispatch =>{
+  //dispatch(userInfo(user))
+  return fetch(`http://localhost:3000/userInfo`)
+  .then(response => response.json())
+  .then(json => dispatch(userInfo(json)))    
+}
 //Metrics2的Action
 export const changeMetricsType = (index, metricsData) => {
     return {
@@ -33,14 +44,7 @@ export const changeMetricsType = (index, metricsData) => {
         metricsData
     }
 };
-export const addMetrics2 = (index, metricsData) => {
-    console.log('action中的添加数据是：' + metricsData);
-    return {
-        type: 'ADD_METRICS2',
-        index,
-        metricsData
-    }
-};
+
 export const modifyMetrics2 = (index, key, value) => {
     return {
         type: 'MODIFY_METRICS2',
@@ -55,6 +59,7 @@ export const delMetrics2 = (index) => {
         index
     }
 };
+
 
 export const requestPosts = kibana => ({
     type: 'REQUEST_POSTS',
@@ -77,6 +82,14 @@ export const fetchPosts = kibana => dispatch => {
         .then(json => dispatch(receivePosts(kibana, json)))
 }
 
+//Metrics2的Action
+export const addMetrics2=(index,metricsData)=>{
+    return {
+        type:'ADD_METRICS2',
+        index,
+        metricsData
+    }
+}
 
 // bucket2的Action
 export const changeBucketType = (index, bucketData) => {
@@ -103,3 +116,9 @@ export const addBucket2 = (bucketData) => {
     }
 };
 
+export const delBucket2 = (index) => {
+    return {
+        type: 'DEL_BUCKET2',
+        index
+    }
+};

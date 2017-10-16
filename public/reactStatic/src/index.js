@@ -5,10 +5,14 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import {Provider} from 'react-redux';
 import reducers from './reducers';
-import routers from './routers';
-import base from './css/base.css';
-import subKibana from './css/subKibana.scss';
-import subKibana2 from './css/subKibana2.scss';
+//import routers from './routers/index';
+import R4 from './routers/router4';
+import './css/base.css';
+import './css/user.scss';
+import './css/common.scss';
+import './css/subKibana.scss';
+import './css/subKibana2.scss';
+import './configs/environment.js'
 //import configs from './configs/config.js'
 const middleware = [ thunk ]
 //如果是开发环境打印日志
@@ -21,7 +25,7 @@ const store = createStore(
 )
 ReactDOM.render(
 	<Provider store={store}>
-    {routers}   
+    <R4/>   
   </Provider>, 
   document.getElementById('root')
 );
