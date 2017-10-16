@@ -12,15 +12,15 @@ class Metrics extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
+        /*this.state = {
             nowType: 'Count'
-        }
+        }*/
     }
 
     changeType(e) {
-        this.setState({
+        /*this.setState({
             nowType: e.target.value
-        });
+        });*/
         //切换选项时将该选项下的数据传入store中
         this.props.changeMetricsType(this.props.index, metricsData[e.target.value]);
     }
@@ -32,15 +32,15 @@ class Metrics extends Component {
 
     render() {
         const {index} = this.props;
-        let constructor = this.props.content[this.state.nowType];
+        let constructor = this.props.content[this.props.thisType];
+
         return (
             <div className='Metrics'>
                 <div className='title'>
                     <span>Metrics</span>
-
                 </div>
 
-                <Aggregation title='Aggregation' types={this.props.types} changeHandle={this.changeType.bind(this)}/>
+                <Aggregation title='Aggregation' types={this.props.types} thisType={this.props.thisType} changeHandle={this.changeType.bind(this)}/>
                 {
                     constructor.field === undefined ? '' : <MetricsField name='Field' constructor={constructor}
                                                                          changeHandle={this.change.bind(this, 'field')}/>
