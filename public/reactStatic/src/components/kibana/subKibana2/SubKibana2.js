@@ -32,16 +32,18 @@ class SubKibana2 extends Component {
     }
 
     delMetrics(metricsIndex){
-        //console.log('metricsIndex: '+metricsIndex)
+        console.log('metricsIndex: '+metricsIndex);
         let metricsArr = this.state.metricsArr;
         const newArr = metricsArr.filter((item, index) => {
             return index !== metricsIndex
         });
+        this.props.DelMetrics(metricsIndex);
         this.setState({
             metricsArr: newArr
         });
-        this.props.modifyMetrics(metricsIndex);
-        //console.log('newArr:'+JSON.stringify(newArr));
+        console.log('this.state.metricsArr '+newArr);
+
+        console.log('thisType: '+JSON.stringify(this.props.metricsData));
 
     }
 
@@ -70,18 +72,21 @@ class SubKibana2 extends Component {
     }
 
     render() {
-        console.log('Metrics的store中的值： ' + JSON.stringify(this.props.metricsData));
-        console.log('Bucket的store中的值： ' + JSON.stringify(this.props.allBucketData));
+        //console.log('Metrics的store中的值： ' + JSON.stringify(this.props.metricsData));
+        //console.log('Bucket的store中的值： ' + JSON.stringify(this.props.allBucketData));
+        //let metricsArr = this.state.metricsArr;
+        console.log('metricsData '+this.props.metricsData);
         return (
             <div>
                 <div className="form-item">
                     {
                         this.state.metricsArr.map((item, index) => {
                             //console.log(item.types);
+
                             return (
                                 <div key={index}>
                                     <Close onClick={this.delMetrics.bind(this,index)}/>
-                                    <Metrics types={item.types} content={item.content}  index={index}/>
+                                    <Metrics types={item.types} content={item.content} thisType={this.props.metricsData[index].type} index={index}/>
                                 </div>
                             )
                         })
@@ -119,7 +124,7 @@ const mapDispatchToProps = (dispatch) => {
         addBucket: (bucketData) => {
             dispatch(addBucket2(bucketData))
         },
-        modifyMetrics: (index) => {
+        DelMetrics: (index) => {
             dispatch(delMetrics2(index))
         }
     }

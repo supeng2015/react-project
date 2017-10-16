@@ -102,7 +102,7 @@ const metrics2 = (state = [{type: 'Count', CustomLabel: ''}], action) => {
             newState[action.index][action.key] = action.value;
             return newState;
         case 'ADD_METRICS2':
-            console.log('reducer新的数据：'+JSON.stringify([...state, action.metricsData]));
+            //console.log('reducer新的数据：'+JSON.stringify([...state, action.metricsData]));
             return [...state, action.metricsData];
         case 'CHANGE_METRICS_TYPE':
             //遍历state，遍历完会重新组合生成一个新的state
