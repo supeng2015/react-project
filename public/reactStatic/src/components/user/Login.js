@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import {fetchUserInfo} from '../../actions';
 import { connect } from 'react-redux';
+import Auth from './Auth';
 class Login extends Component{
   doLogin(){
     let {userName,userPass} = this.refs;  
@@ -16,7 +17,7 @@ class Login extends Component{
     let {user,history} = nextProps;
     if(user.status){
       localStorage.userInfo = user.data;
-      localStorage.isLogin = true;
+      Auth.login();
       history.push('/app');
     }else{
       alert('登录失败或网络异常')  

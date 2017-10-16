@@ -1,9 +1,11 @@
 import React, {Component, PropTypes} from 'react';
-import {BrowserRouter as Router,Route,Link} from 'react-router-dom'
+import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import NumIcon from 'react-icons/lib/fa/sort-numeric-asc';
 import ReactLogo from '../images/tt002.png';
+import Auth from './user/Auth';
 class App extends Component{
   render(){
+    let {history} = this.props; 
     return(
       <div className="app-box">
         {/*头部*/}
@@ -11,7 +13,9 @@ class App extends Component{
           <div className="logo"><img src={ReactLogo}/></div>
           <div className="user-operation">
             <div>用户名</div> 
-            <div>退出</div>
+            <button onClick={()=>Auth.logout(function(h){
+              history.push('/login');
+            },history)}>退出</button>
           </div>
         </section>
         {/*主体*/}

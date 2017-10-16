@@ -6,7 +6,7 @@ import Kibana from '../components/kibana/Kibana';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    localStorage.isLogin ? (
+    localStorage.isLogin!='false' ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{
@@ -21,6 +21,7 @@ const RouteConfig = () => (
     <div>
       <Switch>
         <Route path="/login" component={Login}/>
+        
         <Route path="/kibana" component={Kibana}/>
         <PrivateRoute path="/app" component={App}/> 
         <Redirect from='*' to='/app'  /> 
