@@ -6,6 +6,9 @@ import {fetchPosts} from '../../actions';
 import SubKibana from './subKibana/SubKibana';
 import SubKibana2 from './subKibana2/SubKibana2';
 import Histogram from "./charts/Histogram/Histogram";
+import LineChart from "./charts/LineChart/LineChart";
+import PieChart from "./charts/PieChart/PieChart";
+import AreaChart from "./charts/AreaChart/AreaChart";
 
 
 class Kibana extends Component{
@@ -29,6 +32,10 @@ class Kibana extends Component{
           </div>
           <div className="main-box-two">
             <Histogram type="xAxis"/>
+            <Histogram type="yAxis"/>
+            <LineChart/>
+            <AreaChart/>
+            <PieChart/>
             <ul className="kibana-result-box">
               {result.map((v,i)=>
                 <li key={i}>
