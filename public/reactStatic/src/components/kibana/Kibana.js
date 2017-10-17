@@ -5,18 +5,18 @@ import {fetchPosts} from '../../actions';
 
 import SubKibana from './subKibana/SubKibana';
 import SubKibana2 from './subKibana2/SubKibana2';
+import Histogram from "./charts/Histogram/Histogram";
 
-import Charts from "./charts/Charts";
 
 class Kibana extends Component{
   componentDidMount() {    //组件装配前
-    const { dispatch} = this.props
+    const { dispatch} = this.props;
     //dispatch(getpiaoGet('asd'))
     dispatch(fetchPosts('kibana'))
   }
   render(){
-    let {postsByKibanaResult,match} = this.props
-    let result = []
+    let {postsByKibanaResult,match} = this.props;
+    let result = [];
     if(postsByKibanaResult.kibana){
       result = postsByKibanaResult.kibana.items   
     }
@@ -25,11 +25,10 @@ class Kibana extends Component{
         
         <div className="main-box">
           <div className="main-box-two">
-         
             <SubKibana2/>
           </div>
           <div className="main-box-two">
-            <Charts />
+            <Histogram type="xAxis"/>
             <ul className="kibana-result-box">
               {result.map((v,i)=>
                 <li key={i}>
@@ -48,7 +47,7 @@ const mapStateToProps = state => {
   return{
     postsByKibanaResult : state.postsByKibanaResult  
   } 
-}
-Kibana = connect(mapStateToProps)(Kibana)
+};
+Kibana = connect(mapStateToProps)(Kibana);
 
 export default Kibana

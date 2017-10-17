@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./node_modules/.bin/babel-node ./bin/www",
+    "start": "node ./bin/www",
     "dev": "webpack-dev-server --open --port 3600"
   },
   "dependencies": {
@@ -30,7 +30,9 @@
     "react-router-redux": "^4.0.8",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "superagent": "^3.6.3",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
