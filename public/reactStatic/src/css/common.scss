@@ -1,5 +1,58 @@
-.app-header{
-  height: 2.5rem;
-  display:flex;
+.app-index{
   width: 100%;
+  height: 100%;
+  display:flex;
 }
+.app-index-left{
+  color: #1c1c1c;
+  width: 18rem;
+  overflow: hidden;
+  min-height: 100vh;
+  background: #eaeaea;
+  nav ul{
+    margin: 0 1rem;
+    font-size: 0.8rem;
+  }
+  nav ul li{
+  	text-align: center;
+    background: #2a61ae;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 3px;
+  }
+  .function-list{
+    margin: 1rem;	
+  }
+  .function-list ul li{
+    margin: 0.5rem;	
+  }
+  .user-operation{ 
+  	height: 3rem;
+  	line-height: 3rem;
+  	.logo{
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50px;
+      overflow: hidden;
+      img{
+        width: 100%;	
+      }	
+    }
+    display:flex;
+    margin:1rem;
+    .user-name{
+      flex :1;  
+    }
+    .exit-button{
+      width: 3rem;
+      text-align: center;
+      font-size: 0.7rem;
+      border-radius: 3px;
+    }
+  }
+}
+.app-index-right{
+	flex :1;
+  min-height: 100vh;
+}
+
