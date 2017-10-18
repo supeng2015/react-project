@@ -21,21 +21,24 @@ class Kibana extends Component{
     let {postsByKibanaResult,match} = this.props;
     let result = [];
     if(postsByKibanaResult.kibana){
-      result = postsByKibanaResult.kibana.items   
+      result = postsByKibanaResult.kibana.items;
     }
+    const type = match.params.type;
+    const charts = {
+      "Area": <AreaChart/>,
+        "HorizontalBar":<Histogram type="yAxis"/>,
+        "Line":<LineChart/>,
+        "Pie":<PieChart/>,
+        "VerticalBar":<Histogram type="xAxis"/>
+    };
     return(
       <section>
-        
         <div className="main-box">
           <div className="main-box-two">
             <SubKibana2/>
           </div>
           <div className="main-box-two">
-            <Histogram type="xAxis"/>
-            <Histogram type="yAxis"/>
-            <LineChart/>
-            <AreaChart/>
-            <PieChart/>
+            {charts[type]}
             <ul className="kibana-result-box">
               {result.map((v,i)=>
                 <li key={i}>

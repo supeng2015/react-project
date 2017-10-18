@@ -26,7 +26,7 @@ module.exports = {
         loader:'style-loader!css-loader!sass-loader'
       },
       {
-        test: /\.(png|jpg)$/,
+        test: /\.(png|jpg|svg)$/,
         exclude: /^node_modules$/,
         loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]',
       }

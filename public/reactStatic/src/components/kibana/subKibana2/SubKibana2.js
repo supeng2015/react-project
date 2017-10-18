@@ -68,12 +68,6 @@ class SubKibana2 extends Component {
         this.props.delBucket(bucketIndex);
     }
 
-    // 测试Bucket生成JSON，暂时不考虑多个Bucket的情况
-    testBucketJSON() {
-        let bucketData = this.props.allBucketData;
-        this.createJson(bucketData);
-    }
-
     submitData() {
         this.mergeJson()
         // fetch('http://localhost:3000/test')
@@ -150,7 +144,6 @@ class SubKibana2 extends Component {
                         })
                     }
                     <button className="button-primary" onClick={this.addBucket.bind(this)}>Add Bucket</button>
-                    <button onClick={this.testBucketJSON.bind(this)}>Test Bucket JSON</button>
                 </div>
                 <button onClick={this.submitData.bind(this)}>Submit Data</button>
             </div>
