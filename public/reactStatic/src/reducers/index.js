@@ -106,7 +106,7 @@ const user=(state={},action)=>{
 
 
 //metrics2的reducer
-const metrics2 = (state = [{type: 'Count', CustomLabel: ''}], action) => {
+const metrics2 = (state = [{type: 'Count', label: ''}], action) => {
 
     switch (action.type) {
         case 'MODIFY_METRICS2':

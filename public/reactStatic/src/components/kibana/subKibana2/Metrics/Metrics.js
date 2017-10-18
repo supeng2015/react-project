@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Aggregation from '../Aggregation/Aggregation'
-import CustomLab from '../CustomLab/CustomLab'
 import MetricsField from '../MetricsField/MetricsField'
 import Percents from '../Percents/Percents'
 import Values from '../Values/Values'
 import {modifyMetrics2, changeMetricsType} from '../../../../actions/index'
 import metricsData from '../metricsData'
+import NormalInput from "../NormalInput/NormalInput";
 
 class Metrics extends Component {
 
@@ -53,8 +53,8 @@ class Metrics extends Component {
                     constructor.Values === undefined ? '' : <Values name='Values' index={index}/>
                 }
                 {
-                    constructor.CustomLabel === undefined ? '' :
-                        <CustomLab title='Custom Label' changeHandle={this.change.bind(this, 'CustomLabel')}/>
+                    constructor.label === undefined ? '' :
+                        <NormalInput title='Custom Label' changeHandle={this.change.bind(this, 'label')} value={this.props.metrics.label}/>
                 }
             </div>
         )

@@ -70,26 +70,47 @@ class SubKibana2 extends Component {
 
     // 测试Bucket生成JSON，暂时不考虑多个Bucket的情况
     testBucketJSON() {
-        let bucketData = this.props.allBucketData[0];
-        let obj = {};
-        for (let key in bucketData) {
-            if (bucketData.hasOwnProperty(key)) {
-                if (key !== "type" && key !== "label") {
-                    obj[key] = bucketData[key]
-                }
-            }
-        }
-        let result = {aggs: {[bucketData.label]: {[bucketData.type]: obj}}};
-        console.log(JSON.stringify(result))
+        let bucketData = this.props.allBucketData;
+        this.createJson(bucketData);
     }
 
     submitData() {
-        fetch('http://localhost:3000/test')
-            .then((response) => {
-                return response.json();
-            }).then((res) => {
-            console.log(res);
-        })
+        this.mergeJson()
+        // fetch('http://localhost:3000/test')
+        //     .then((response) => {
+        //         return response.json();
+        //     }).then((res) => {
+        //     console.log(res);
+        // })
+    }
+
+    // 合并json数据
+    mergeJson(){
+        let metricsData = this.props.metricsData;
+        let bucketsData = this.props.allBucketData;
+        let metricsJson = this.createJson(metricsData);
+        let bucketsJson = this.createJson(bucketsData);
+        let labelName = this.props.allBucketData[0].label;
+
+        bucketsJson.aggs[labelName].aggs=metricsJson.aggs;
+        console.log(bucketsJson);
+    }
+
+    // 提取对应的数据
+    createJson(dateArray){
+        for(let i = 0; i < dateArray.length; i++){
+            let obj = {};
+            for (let key in dateArray[i]) {
+                if (dateArray[i].hasOwnProperty(key)) {
+                    if (key !== "type" && key !== "label") {
+                        obj[key] = dateArray[i][key]
+                    }
+                }
+            }
+            let result = {aggs: {[dateArray[i].label]: {[dateArray[i].type]: obj}}};
+            console.log(JSON.stringify(result));
+            return result;
+        }
     }
 
     render() {

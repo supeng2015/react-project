@@ -2,54 +2,54 @@ export default (()=>{
     return{
         'Count': {
             type:'Count',
-            CustomLabel: ''
+            label: ''
         },
         'Average': {
             type:'Average',
             field: '',
-            CustomLabel: ''
+            label: ''
         },
         'Sum': {
             type:'Sum',
             field: '',
-            CustomLabel: ''
+            label: ''
         },
         'Median':{
             type:'Median',
             field: '',
-            CustomLabel: ''
+            label: ''
         },
         'Min':{
             type:'Min',
             field: '',
-            CustomLabel: ''
+            label: ''
         },
         'Max':{
             type:'Max',
             field: '',
-            CustomLabel: ''
+            label: ''
         },
         'Standard Deviation':{
             type:'Standard Deviation',
             field: '',
-            CustomLabel: ''
+            label: ''
         },
         'Unique Count':{
             type:'Unique Count',
             field: '',
-            CustomLabel: ''
+            label: ''
         },
         'Percentiles':{
             type:'Percentiles',
             field: '',
             Percents:[1,5,25,50,75,95,99],
-            CustomLabel: ''
+            label: ''
         },
         'Percentile Ranks':{
             type:'Percentile Ranks',
             field: '',
             Values:[],
-            CustomLabel: ''
+            label: ''
         }
     }
 })()

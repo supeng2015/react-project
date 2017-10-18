@@ -2,46 +2,45 @@ export default {
     types: ['Count', 'Average', 'Sum', 'Median', 'Min', 'Max', 'Standard Deviation', 'Unique Count', 'Percentiles', 'Percentile Ranks'],
     content: {
         'Count': {
-            CustomLabel: ''
+            label: ''
         },
         'Average': {
             field: ['--','age', 'number'],
-            CustomLabel: ''
+            label: ''
         },
         'Sum': {
             field: ['--','age', 'number'],
-            CustomLabel: ''
+            label: ''
         },
         'Median': {
             field: ['--','age', 'number'],
-            CustomLabel: ''
+            label: ''
         },
         'Min': {
             field: ['--','postDate', 'age', 'num'],
-            CustomLabel: ''
+            label: ''
         },
         'Max': {
             field: ['--','postDate', 'age', 'num'],
-            CustomLabel: ''
+            label: ''
         },
         'Standard Deviation': {
             field: ['--','age', 'number'],
-            CustomLabel: ''
+            label: ''
         },
         'Unique Count': {
             field: ['--','postDate', 'age', 'num'],
-            CustomLabel: ''
+            label: ''
         },
         'Percentiles': {
             field: ['--','age', 'number'],
             Percents: '',
-            CustomLabel: ''
+            label: ''
         },
         'Percentile Ranks': {
             field: ['--','age', 'number'],
             Values: true,
-            CustomLabel: ''
+            label: ''
         }
-
     }
 }
