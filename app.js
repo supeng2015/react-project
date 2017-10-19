@@ -36,7 +36,11 @@ app.use(express.static(path.join(__dirname)));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/test', require("./process/test"));
+app.use('/sendAgg', require("./dao/sendAgg"));
+app.use('/getAllData', require("./dao/getAllData"));
+app.use('/getField', require("./dao/getField"));
+app.use('/getIndex', require("./dao/getIndex"));
+app.use('/getType', require("./dao/getType"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

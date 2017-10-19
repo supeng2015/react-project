@@ -53,7 +53,8 @@
 .sp-checkbox{color:#cb0000;}
 .main-box{
   display: flex;
-  width: 100%;  
+  flex-flow: row wrap;
+  width: 100%;
 }
 .main-box-two{
   flex: 1;  

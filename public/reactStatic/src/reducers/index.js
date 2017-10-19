@@ -136,7 +136,7 @@ const metrics2 = (state = [{type: 'Count', label: ''}], action) => {
 
 // 新增bucket2的reducer
 const buckets2 = (state = [{
-    type: "Data Histogram",
+    type: "Date Histogram",
     field: "",
     interval: "",
     label: ""

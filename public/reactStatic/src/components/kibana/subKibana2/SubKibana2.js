@@ -14,17 +14,48 @@ class SubKibana2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            metricsArr: [metricsConstructor],
-            bucketArr: [bucketConstructor()]
+            metricsArr: [],
+            bucketArr: [],
+            field: {}
         }
     }
 
+    // 动态添加Field
+    addField(constructor){
+        const content = constructor.content;
+        for(let key in content){
+            if(content[key]["field"] && content.hasOwnProperty(key)){
+                content[key]["field"] = this.state.field;
+            }
+        }
+        return constructor;
+    }
+
+    componentDidMount(){
+        // 获取field数据
+        fetch('http://localhost:3000/getField?index=test1&type=test1')
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                this.setState({
+                    field: res
+                });
+                // 动态添加field对象
+                const constructorM = this.addField(metricsConstructor());
+                const constructorB = this.addField(bucketConstructor());
+                this.setState({
+                    metricsArr: [constructorM],
+                    bucketArr: [constructorB]
+                })
+            })
+    }
+
     addMetric() {
-        const metrics = this.state.metricsArr;
-        const metricInitData = metricsConstructor;
+        const metricInitData = this.addField(metricsConstructor());
 
         this.setState({
-            metricsArr: [...metrics, metricInitData]
+            metricsArr: [...this.state.metricsArr, metricInitData]
         });
         //将此时新加的数据的index设置为当前数据长度
         this.props._addMetric(this.state.metricsArr, metricsData['Count']);
@@ -48,12 +79,12 @@ class SubKibana2 extends Component {
     }
 
     addBucket() {
-        const bucketInitDate = bucketConstructor();
+        const bucketInitDate = this.addField(bucketConstructor());
         this.setState({
             bucketArr: [...this.state.bucketArr, bucketInitDate]
         });
         // 添加store中的bucket
-        this.props.addBucket(bucketData("Data Histogram"))
+        this.props.addBucket(bucketData("Date Histogram"))
     }
 
     delBucket(bucketIndex) {
@@ -122,7 +153,7 @@ class SubKibana2 extends Component {
                             return (
                                 <div key={index}>
                                     <Close className="f-fr button-icon button-warning" onClick={this.delMetrics.bind(this,index)}/>
-                                    <Metrics types={item.types} content={item.content} thisType={this.props.metricsData[index].type} index={index}/>
+                                    <Metrics types={item.types} content={item.content} index={index}/>
                                 </div>
                             )
                         })
@@ -135,8 +166,7 @@ class SubKibana2 extends Component {
                         this.state.bucketArr.map((item, index) => {
                             return (
                                 <div key={index}>
-                                    <Close className="f-fr button-icon button-warning"
-                                           onClick={this.delBucket.bind(this, index)}/>
+                                    <Close className="f-fr button-icon button-warning" onClick={this.delBucket.bind(this, index)}/>
                                     <Bucket types={item.types} content={item.content} key={index} index={index}
                                             delBucket={this.delBucket.bind(this)}/>
                                 </div>

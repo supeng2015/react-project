@@ -1,8 +1,8 @@
 export default function (type) {
     switch (type){
-        case "Data Histogram":
+        case "Date Histogram":
             return {
-                type: "Data Histogram",
+                type: "Date Histogram",
                 field: "",
                 interval: "",
                 label: ""
@@ -22,9 +22,9 @@ export default function (type) {
                 fromTo: [{from: 0, to: 0}],
                 label: ""
             };
-        case "Data Range":
+        case "Date Range":
             return {
-                type: "Data Range",
+                type: "Date Range",
                 field: "",
                 fromTo: [{from: 0, to: 0}],
                 label: ""
@@ -60,7 +60,7 @@ export default function (type) {
             };
         default:
             return {
-                type: "Data Histogram",
+                type: "Date Histogram",
                 field: "",
                 interval: "",
                 label: ""

@@ -5,6 +5,7 @@ import HomePage from './HomePage/HomePage';
 import Auth from './user/Auth';
 import {Route, Link, Switch} from 'react-router-dom'
 import ChartListPage from "./kibana/charts/ChartListPage/ChartListPage";
+import IndexType from "./IndexType/IndexType";
 
 class App extends Component {
     render() {
@@ -38,6 +39,7 @@ class App extends Component {
                 </div>
                 {/*右边内容*/}
                 <div className="app-index-right">
+                    <IndexType/>
                     <Switch>
                         <Route exact path="/app" component={HomePage}/>
                         <Route path="/app/visualize/:type" component={Kibana}/>
