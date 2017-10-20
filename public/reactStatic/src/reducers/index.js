@@ -165,12 +165,16 @@ const buckets2 = (state = [{
     }
 };
 
-const indexType = (state={indexValue:'',typeValue:''},action) => {
+const indexType = (state={indexValue:'',typeValue:'',indexArray:[],typeArray:[]},action) => {
     switch (action.type){
         case 'UPDATE_INDEX':
             return {...state, indexValue:action.indexValue};
         case 'UPDATE_TYPE':
             return {...state, typeValue:action.typeValue};
+        case 'UPDATE_INDEXARRAY':
+            return {...state, indexArray:action.indexArray};
+        case 'UPDATE_TYPEARRAY':
+            return {...state, typeArray:action.typeArray};
         default:
             return state;
     }

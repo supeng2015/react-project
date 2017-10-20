@@ -12,6 +12,9 @@ class ChartListPage extends React.Component {
                 {name:"Line",src: require("../../../../images/chartsIcon/Line.svg"),href: "/app/visualize/Line"},
                 {name:"Pie",src: require("../../../../images/chartsIcon/Pie.svg"),href: "/app/visualize/Pie"},
                 {name:"Vertical Bar",src: require("../../../../images/chartsIcon/VerticalBar.svg"),href: "/app/visualize/VerticalBar"}
+            ],
+            "list2":[
+                {name:"Metric",src: require("../../../../images/chartsIcon/Metric.svg"),href: "/app/visualize/Metric"}
             ]
         }
     }
@@ -20,6 +23,7 @@ class ChartListPage extends React.Component {
         return (
             <div className="char-list">
                 <ChartsListRow title="Basic Charts" chartLists={this.state.list1}/>
+                <ChartsListRow title="Data" chartLists={this.state.list2}/>
             </div>
         )
     }

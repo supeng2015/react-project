@@ -4,15 +4,11 @@ import Type from "./Type/Type";
 import "./indexType.scss"
 import TypeFilter from "./Type/TypeFilter";
 import {connect} from "react-redux";
-import {updateIndex,updateType} from '../../actions'
+import {updateIndex,updateType,updateIndexArray,updateTypeArray} from '../../actions'
 
 class IndexType extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            index: [],
-            type: []
-        }
     }
 
     // http请求，获取Type
@@ -21,9 +17,7 @@ class IndexType extends React.Component {
             .then((response)=>{
                 return response.json();
             }).then((res)=>{
-            this.setState({
-                type: res
-            });
+            this.props.updateTypeArray(res);
             this.props.updateTypeValue(res[0])
         })
     }
@@ -34,9 +28,7 @@ class IndexType extends React.Component {
                 return response.json();
             })
             .then((res) => {
-                this.setState({
-                    index: res
-                });
+                this.props.updateIndexArray(res);
                 this.props.updateIndexValue(res[0]);
                 return Promise.resolve("");
             })
@@ -57,14 +49,13 @@ class IndexType extends React.Component {
     }
 
     render() {
-        let indexValue = this.props.indexType.indexValue;
-        let typeValue = this.props.indexType.typeValue;
+        let {indexValue,typeValue,indexArray,typeArray} = this.props.indexType;
 
         return (
             <div className="index-type-container">
-                <Index value={indexValue} data={this.state.index}
+                <Index value={indexValue} data={indexArray}
                        changeHandle={this.changeIndex.bind(this)}/>
-                <Type value={typeValue} data={this.state.type} changeHandle={this.changeType.bind(this)}/>
+                <Type value={typeValue} data={typeArray} changeHandle={this.changeType.bind(this)}/>
                 <div className="type-filter-container">
                     <TypeFilter/>
                     <button>Add a filter +</button>
@@ -87,6 +78,12 @@ function mapDispatchToProps(dispatch) {
         },
         updateTypeValue: (typeValue) => {
             dispatch(updateType(typeValue))
+        },
+        updateIndexArray: (indexArray) => {
+            dispatch(updateIndexArray(indexArray))
+        },
+        updateTypeArray: (typeArray) => {
+            dispatch(updateTypeArray(typeArray))
         }
     }
 }

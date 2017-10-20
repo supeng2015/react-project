@@ -6,6 +6,7 @@ import Histogram from "./charts/Histogram/Histogram";
 import LineChart from "./charts/LineChart/LineChart";
 import PieChart from "./charts/PieChart/PieChart";
 import AreaChart from "./charts/AreaChart/AreaChart";
+import Metric from "./charts/Metric/Metric";
 
 class Kibana extends Component {
     componentDidMount() {    //组件装配前
@@ -26,7 +27,8 @@ class Kibana extends Component {
             "HorizontalBar": <Histogram type="yAxis"/>,
             "Line": <LineChart/>,
             "Pie": <PieChart/>,
-            "VerticalBar": <Histogram type="xAxis"/>
+            "VerticalBar": <Histogram type="xAxis"/>,
+            "Metric": <Metric/>
         };
         return (
             <section>

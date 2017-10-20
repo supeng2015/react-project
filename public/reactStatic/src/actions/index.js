@@ -142,9 +142,23 @@ export const updateIndex = (indexValue) => {
     }
 };
 
+export const updateIndexArray = (indexArray) => {
+    return {
+        type: 'UPDATE_INDEXARRAY',
+        indexArray
+    }
+};
+
 export const updateType = (typeValue) => {
     return {
         type: 'UPDATE_TYPE',
         typeValue
+    }
+};
+
+export const updateTypeArray = (typeArray) => {
+    return {
+        type: 'UPDATE_TYPEARRAY',
+        typeArray
     }
 };
