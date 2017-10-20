@@ -7,43 +7,43 @@ const RECEIVE_POSTS = 'RECEIVE_POSTS';
 const testReducer = (state = 0, action) => {
     switch (action.type) {
         case 'TEST' :
-            return 1
+            return 1;
         default :
             return state
     }
-}
+};
 const metrics = (state = [], action) => {
     switch (action.type) {
         case 'ADD_METRICS' :
-            return [...state, action.m]
+            return [...state, action.m];
         case 'REMOVE_METRICS' :
-            return state.filter((item, index) => index !== action.i)
+            return state.filter((item, index) => index !== action.i);
         case 'MODEFY_METRICS' :
             return state.map((item, index) => {
-                if (index == action.i) {
+                if (index === action.i) {
                     return action.m
                 } else {
                     return item
                 }
-            })
+            });
         default :
             return state
     }
-}
+};
 const buckets = (state = [], action) => {
     switch (action.type) {
         case 'ADD_BUCKET' :
-            return [...state, action.b]
+            return [...state, action.b];
         case 'REMOVE_BUCKET' :
-            return state.filter((item, index) => index !== action.i)
+            return state.filter((item, index) => index !== action.i);
         case 'MODEFY_BUCKET' :
             return state.map((item, index) => {
-                if (index == action.i) {
+                if (index === action.i) {
                     return action.b
                 } else {
                     return item
                 }
-            })
+            });
         default :
             return state
     }
@@ -60,13 +60,13 @@ const posts = (state = {
             return {
                 ...state,
                 didInvalidate: true
-            }
+            };
         case REQUEST_POSTS:  //通知reducer开始请求
             return {
                 ...state,
                 isFetching: true,   //正在请求的标志为true 则在请求，为false则请求完毕 应用里来控制loading的现实和隐藏
                 didInvalidate: false
-            }
+            };
         case RECEIVE_POSTS:  //通知reducer请求成功
             return {
                 ...state,
@@ -74,11 +74,11 @@ const posts = (state = {
                 didInvalidate: false,
                 items: action.posts,
                 lastUpdated: action.receivedAt
-            }
+            };
         default:
             return state
     }
-}
+};
 const postsByKibanaResult = (state = {}, action) => {
     switch (action.type) {
         case INVALIDATE_REDDIT:
@@ -86,21 +86,21 @@ const postsByKibanaResult = (state = {}, action) => {
         case REQUEST_POSTS:
             return {
                 ...state, [action.kibana]: posts(state[action.kibana], action)
-            }
+            };
         default:
             return state
     }
-}
+};
 
 //登录用户信息
 const user=(state={},action)=>{
   switch(action.type){
     case 'LOGIN' :
-      return action.user
+      return action.user;
     default :
       return state        
   }    
-}
+};
 
 
 
@@ -136,7 +136,7 @@ const metrics2 = (state = [{type: 'Count', label: ''}], action) => {
 
 // 新增bucket2的reducer
 const buckets2 = (state = [{
-    type: "Data Histogram",
+    type: "Date Histogram",
     field: "",
     interval: "",
     label: ""
@@ -165,6 +165,17 @@ const buckets2 = (state = [{
     }
 };
 
+const indexType = (state={indexValue:'',typeValue:''},action) => {
+    switch (action.type){
+        case 'UPDATE_INDEX':
+            return {...state, indexValue:action.indexValue};
+        case 'UPDATE_TYPE':
+            return {...state, typeValue:action.typeValue};
+        default:
+            return state;
+    }
+};
+
 const rootReducer = combineReducers({
     user,
     postsByKibanaResult,
@@ -172,6 +183,7 @@ const rootReducer = combineReducers({
     metrics,
     buckets,
     buckets2,
-    metrics2
+    metrics2,
+    indexType
 });
 export default rootReducer

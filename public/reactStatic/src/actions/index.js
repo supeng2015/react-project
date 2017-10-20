@@ -133,3 +133,18 @@ export const delBucket2 = (index) => {
         index
     }
 };
+
+// indexType的action
+export const updateIndex = (indexValue) => {
+    return {
+        type: 'UPDATE_INDEX',
+        indexValue
+    }
+};
+
+export const updateType = (typeValue) => {
+    return {
+        type: 'UPDATE_TYPE',
+        typeValue
+    }
+};

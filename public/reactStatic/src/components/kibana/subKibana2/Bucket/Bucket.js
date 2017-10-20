@@ -16,17 +16,11 @@ import FromToInputNumChange from "../FromToInput/FromToInputNumChange";
 class Bucket extends React.Component{
     constructor(props){
         super(props);
-        // this.state = {
-        //     nowType: "Data Histogram"
-        // }
     }
 
     changeType(e){
         let bucketType = e.target.value;
         console.log(bucketType);
-        // this.setState({
-        //    nowType: bucketType
-        // });
         // 改变初始化结构
         this.props.changeBucketType(this.props.index,bucketData(bucketType));
     }
@@ -48,6 +42,29 @@ class Bucket extends React.Component{
         this.props.modifyBucket(index, name, e.target.value)
     }
 
+    filterField(content){
+        let type = content.fieldType;
+        let field = content.field;
+        console.log(field);
+        let result = ["--" + content.fieldType + "--"];
+        for(let key in field){
+            if(field.hasOwnProperty(key)){
+                switch (type){
+                    case "number":
+                        if(field[key] === "long" || field[key] === "int"){
+                            result.push(key);
+                        }
+                        break;
+                    default:
+                        if(field[key] === type){
+                            result.push(key);
+                        }
+                }
+            }
+        }
+        return result;
+    }
+
     render(){
         let {index, types} = this.props;
         let bucket = this.props.buckets2[index];
@@ -60,7 +77,7 @@ class Bucket extends React.Component{
                 <ChangeInput title="Aggregation" data={types} nowType={bucket.type} changeHandle={this.changeType.bind(this)}/>
                 {
                     content.field
-                    ? <DownInputGroup title="Field" data={content.field} value={bucket.field}
+                    ? <DownInputGroup title="Field" data={this.filterField.bind(this)(content)} value={bucket.field}
                                       changeHandle={(e)=>{this.props.modifyBucket(index, 'field', e.target.value)}}/> : ""
                 }
                 {
@@ -84,7 +101,7 @@ class Bucket extends React.Component{
                 {
                     nowType === "Range"
                         ? <FromToInputNum index={index} name="fromTo" data={content.fromTo} value={bucket.fromTo}/>
-                        : (nowType === "Data Range"
+                        : (nowType === "Date Range"
                             ? <FromToInput index={index} name="fromTo" data={content.fromTo} value={bucket.fromTo}/>
                             : (nowType === "IPv4 Range"
                                 ? <FromToInputNumChange index={index} data={content.fromTo} value={bucket.fromTo}

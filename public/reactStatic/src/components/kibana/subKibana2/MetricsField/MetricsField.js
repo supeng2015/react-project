@@ -20,10 +20,4 @@ class MetricsField extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-
-};
-const mapDispatchToProps = () => {
-
-};
 export default connect()(MetricsField)

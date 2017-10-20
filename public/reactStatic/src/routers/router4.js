@@ -1,8 +1,7 @@
 import React from 'react'
-import {BrowserRouter as Router,Route,Link,Redirect,Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import App from '../components/App';
-import Login from '../components/user/Login'; 
-import Kibana from '../components/kibana/Kibana'; 
+import Login from '../components/user/Login';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
@@ -15,17 +14,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       }}/>
     )
   )}/>
-)
+);
+
 const RouteConfig = () => (
   <Router>
     <div>
       <Switch>
         <Route path="/login" component={Login}/>
-        
-        <Route path="/kibana" component={Kibana}/>
-        <PrivateRoute path="/app" component={App}/> 
-        <Redirect from='*' to='/app'  /> 
-      </Switch>   
+        {/*<Route path="/kibana" component={Kibana}/>*/}
+        <PrivateRoute path="/app" component={App}/>
+        <Redirect from='*' to='/app'/>
+      </Switch>
     </div>
   </Router>
 )

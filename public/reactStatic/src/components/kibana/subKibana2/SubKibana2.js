@@ -14,17 +14,48 @@ class SubKibana2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            metricsArr: [metricsConstructor],
-            bucketArr: [bucketConstructor()]
+            metricsArr: [],
+            bucketArr: [],
+            field: {}
         }
     }
 
+    // 动态添加Field
+    addField(constructor) {
+        const content = constructor.content;
+        for (let key in content) {
+            if (content[key]["field"] && content.hasOwnProperty(key)) {
+                content[key]["field"] = this.state.field;
+            }
+        }
+        return constructor;
+    }
+
+    componentDidMount() {
+        // 获取field数据
+        fetch('http://localhost:3000/getField?index=test1&type=test1')
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                this.setState({
+                    field: res
+                });
+                // 动态添加field对象
+                const constructorM = this.addField(metricsConstructor());
+                const constructorB = this.addField(bucketConstructor());
+                this.setState({
+                    metricsArr: [constructorM],
+                    bucketArr: [constructorB]
+                })
+            })
+    }
+
     addMetric() {
-        const metrics = this.state.metricsArr;
-        const metricInitData = metricsConstructor;
+        const metricInitData = this.addField(metricsConstructor());
 
         this.setState({
-            metricsArr: [...metrics, metricInitData]
+            metricsArr: [...this.state.metricsArr, metricInitData]
         });
         //将此时新加的数据的index设置为当前数据长度
         this.props._addMetric(this.state.metricsArr, metricsData['Count']);
@@ -41,19 +72,19 @@ class SubKibana2 extends Component {
         this.setState({
             metricsArr: newArr
         });
-        console.log('this.state.metricsArr '+newArr);
+        console.log('this.state.metricsArr ' + newArr);
 
-        console.log('thisType: '+JSON.stringify(this.props.metricsData));
+        console.log('thisType: ' + JSON.stringify(this.props.metricsData));
 
     }
 
     addBucket() {
-        const bucketInitDate = bucketConstructor();
+        const bucketInitDate = this.addField(bucketConstructor());
         this.setState({
             bucketArr: [...this.state.bucketArr, bucketInitDate]
         });
         // 添加store中的bucket
-        this.props.addBucket(bucketData("Data Histogram"))
+        this.props.addBucket(bucketData("Date Histogram"))
     }
 
     delBucket(bucketIndex) {
@@ -68,38 +99,44 @@ class SubKibana2 extends Component {
         this.props.delBucket(bucketIndex);
     }
 
-    // 测试Bucket生成JSON，暂时不考虑多个Bucket的情况
-    testBucketJSON() {
-        let bucketData = this.props.allBucketData;
-        this.createJson(bucketData);
-    }
-
     submitData() {
-        this.mergeJson()
-        // fetch('http://localhost:3000/test')
-        //     .then((response) => {
-        //         return response.json();
-        //     }).then((res) => {
-        //     console.log(res);
-        // })
+        let submitObj = this.mergeJson();
+        submitObj.index = this.props.indexType.indexValue;
+        submitObj.type = this.props.indexType.typeValue;
+
+        fetch('http://localhost:3000/sendAgg', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(submitObj)
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                console.log(res);
+            })
     }
 
     // 合并json数据
-    mergeJson(){
-        //metricsData:::[{"type":"Count","label":"1"}]
+    mergeJson() {
+        let result = {};
         let metricsData = this.props.metricsData;
         let bucketsData = this.props.allBucketData;
         let metricsJson = this.createJson(metricsData);
         let bucketsJson = this.createJson(bucketsData);
         let labelName = this.props.allBucketData[0].label;
 
-        bucketsJson.aggs[labelName].aggs=metricsJson.aggs;
-        console.log(bucketsJson);
+        bucketsJson.aggs[labelName].aggs = metricsJson.aggs;
+        result.json = bucketsJson;
+        result.baseAgg = labelName;
+        return result;
     }
 
     // 提取对应的数据
-    createJson(dateArray){
-        for(let i = 0; i < dateArray.length; i++){
+    createJson(dateArray) {
+        for (let i = 0; i < dateArray.length; i++) {
             let obj = {};
             for (let key in dateArray[i]) {
                 if (dateArray[i].hasOwnProperty(key)) {
@@ -115,7 +152,10 @@ class SubKibana2 extends Component {
     }
 
     render() {
-        console.log('thisType: '+JSON.stringify(this.props.metricsData));
+        //console.log('Metrics的store中的值： ' + JSON.stringify(this.props.metricsData));
+        //console.log('Bucket的store中的值： ' + JSON.stringify(this.props.allBucketData));
+        //let metricsArr = this.state.metricsArr;
+        console.log('metricsData ' + this.props.metricsData);
         return (
             <div>
                 <div className="form-item">
@@ -123,8 +163,9 @@ class SubKibana2 extends Component {
                         this.state.metricsArr.map((item, index) => {
                             return (
                                 <div key={index}>
-                                    <Close className="f-fr button-icon button-warning" onClick={this.delMetrics.bind(this,index)}/>
-                                    <Metrics types={item.types} content={item.content} thisType={this.props.metricsData[index].type} index={index}/>
+                                    <Close className="f-fr button-icon button-warning"
+                                           onClick={this.delMetrics.bind(this, index)}/>
+                                    <Metrics types={item.types} content={item.content} index={index}/>
                                 </div>
                             )
                         })
@@ -146,7 +187,6 @@ class SubKibana2 extends Component {
                         })
                     }
                     <button className="button-primary" onClick={this.addBucket.bind(this)}>Add Bucket</button>
-                    <button onClick={this.testBucketJSON.bind(this)}>Test Bucket JSON</button>
                 </div>
                 <button onClick={this.submitData.bind(this)}>Submit Data</button>
             </div>
@@ -158,7 +198,8 @@ class SubKibana2 extends Component {
 function mapStateToProps(state) {
     return {
         allBucketData: state.buckets2,
-        metricsData: state.metrics2
+        metricsData: state.metrics2,
+        indexType: state.indexType
     }
 }
 

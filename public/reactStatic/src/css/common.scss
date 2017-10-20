@@ -21,10 +21,13 @@
     border-radius: 3px;
   }
   .function-list{
-    margin: 1rem;	
-  }
-  .function-list ul li{
-    margin: 0.5rem;	
+    margin: 1rem;
+    ul li{
+      margin: 0.5rem;
+      a{
+        color: #5b5b5b;
+      }
+    }
   }
   .user-operation{ 
   	height: 3rem;
@@ -53,6 +56,6 @@
 }
 .app-index-right{
 	flex :1;
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
