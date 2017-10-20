@@ -86,6 +86,7 @@ class SubKibana2 extends Component {
 
     // 合并json数据
     mergeJson(){
+        //metricsData:::[{"type":"Count","label":"1"}]
         let metricsData = this.props.metricsData;
         let bucketsData = this.props.allBucketData;
         let metricsJson = this.createJson(metricsData);
@@ -114,17 +115,12 @@ class SubKibana2 extends Component {
     }
 
     render() {
-        //console.log('Metrics的store中的值： ' + JSON.stringify(this.props.metricsData));
-        //console.log('Bucket的store中的值： ' + JSON.stringify(this.props.allBucketData));
-        //let metricsArr = this.state.metricsArr;
-        console.log('metricsData '+this.props.metricsData);
+        console.log('thisType: '+JSON.stringify(this.props.metricsData));
         return (
             <div>
                 <div className="form-item">
                     {
                         this.state.metricsArr.map((item, index) => {
-                            //console.log(item.types);
-
                             return (
                                 <div key={index}>
                                     <Close className="f-fr button-icon button-warning" onClick={this.delMetrics.bind(this,index)}/>
