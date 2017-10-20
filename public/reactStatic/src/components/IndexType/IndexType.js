@@ -3,27 +3,28 @@ import Index from "./Index/Index";
 import Type from "./Type/Type";
 import "./indexType.scss"
 import TypeFilter from "./Type/TypeFilter";
+import {connect} from "react-redux";
+import {updateIndex,updateType} from '../../actions'
 
 class IndexType extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            indexValue: '',
             index: [],
-            typeValue: '',
             type: []
         }
     }
 
+    // http请求，获取Type
     fetchType(indexValue){
         fetch('http://localhost:3000/getType?index=' + indexValue)
             .then((response)=>{
                 return response.json();
             }).then((res)=>{
             this.setState({
-                typeValue: res[0],
                 type: res
-            })
+            });
+            this.props.updateTypeValue(res[0])
         })
     }
 
@@ -34,37 +35,36 @@ class IndexType extends React.Component {
             })
             .then((res) => {
                 this.setState({
-                    indexValue: res[0],
                     index: res
                 });
+                this.props.updateIndexValue(res[0]);
                 return Promise.resolve("");
             })
             .then(()=>{
-                this.fetchType(this.state.indexValue);
+                this.fetchType(this.props.indexType.indexValue);
             })
     }
 
     changeIndex(e) {
-        this.setState({
-            indexValue: e.target.value
-        });
+        this.props.updateIndexValue(e.target.value);
         setTimeout(()=>{
-            this.fetchType(this.state.indexValue);
+            this.fetchType(this.props.indexType.indexValue);
         },0)
     }
 
     changeType(e) {
-        this.setState({
-            typeValue: e.target.value
-        })
+        this.props.updateTypeValue(e.target.value);
     }
 
     render() {
+        let indexValue = this.props.indexType.indexValue;
+        let typeValue = this.props.indexType.typeValue;
+
         return (
             <div className="index-type-container">
-                <Index value={this.state.indexValue} data={this.state.index}
+                <Index value={indexValue} data={this.state.index}
                        changeHandle={this.changeIndex.bind(this)}/>
-                <Type value={this.state.typeValue} data={this.state.type} changeHandle={this.changeType.bind(this)}/>
+                <Type value={typeValue} data={this.state.type} changeHandle={this.changeType.bind(this)}/>
                 <div className="type-filter-container">
                     <TypeFilter/>
                     <button>Add a filter +</button>
@@ -74,4 +74,24 @@ class IndexType extends React.Component {
     }
 }
 
-export default IndexType
+function mapStateToProps(state){
+    return {
+        indexType: state.indexType
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        updateIndexValue: (indexValue) => {
+            dispatch(updateIndex(indexValue))
+        },
+        updateTypeValue: (typeValue) => {
+            dispatch(updateType(typeValue))
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(IndexType)
