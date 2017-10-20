@@ -161,8 +161,6 @@ class SubKibana2 extends Component {
                 <div className="form-item">
                     {
                         this.state.metricsArr.map((item, index) => {
-                            //console.log(item.types);
-
                             return (
                                 <div key={index}>
                                     <Close className="f-fr button-icon button-warning"
