@@ -162,3 +162,10 @@ export const updateTypeArray = (typeArray) => {
         typeArray
     }
 };
+
+export const updateContent = (contentObj) => {
+    return {
+        type: 'UPDATE_CONTENT',
+        contentObj
+    }
+};

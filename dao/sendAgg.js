@@ -21,7 +21,7 @@ router.post('/', function (req, res, next) {
     //             console.log(err);
     //             res.send({status: "error"})
     //         } else {
-    //             res.send(res1.text);
+    //             res.send(res1.data);
     //         }
     //     });
     res.send({"56":"1","14":"1","26":"1","28":"1","50":"4"})

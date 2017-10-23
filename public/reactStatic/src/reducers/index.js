@@ -180,6 +180,15 @@ const indexType = (state={indexValue:'',typeValue:'',indexArray:[],typeArray:[]}
     }
 };
 
+const content = (state='',action) => {
+    switch (action.type){
+        case 'UPDATE_CONTENT':
+            return action.contentObj;
+        default:
+            return state;
+    }
+};
+
 const rootReducer = combineReducers({
     user,
     postsByKibanaResult,
@@ -188,6 +197,7 @@ const rootReducer = combineReducers({
     buckets,
     buckets2,
     metrics2,
-    indexType
+    indexType,
+    content
 });
 export default rootReducer
