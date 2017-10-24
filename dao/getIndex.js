@@ -10,7 +10,6 @@ router.get('/', function (req, res) {
     //             console.log(err);
     //             res.send({status: "error"})
     //         } else {
-    //             console.log(typeof res1.text);
     //             res.send(res1.text);
     //         }
     //     });

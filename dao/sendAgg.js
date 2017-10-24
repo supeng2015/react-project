@@ -13,18 +13,18 @@ router.post('/', function (req, res, next) {
     // });
     console.log(JSON.stringify(req.body));
 
-    // request
-    //     .get('http://192.168.2.249:8080/RESTfulES/agg?' + data2)
-    //     // .get('http://192.168.2.249:8080/RESTfulES/index/content?indice=test1')
-    //     .end(function (err, res1) {
-    //         if (err || !res1.ok) {
-    //             console.log(err);
-    //             res.send({status: "error"})
-    //         } else {
-    //             res.send(res1.data);
-    //         }
-    //     });
-    res.send({"56":"1","14":"1","26":"1","28":"1","50":"4"})
+    request
+        .get('http://192.168.2.249:8080/RESTfulES/agg?' + data2)
+        // .get('http://192.168.2.249:8080/RESTfulES/index/content?indice=test1')
+        .end(function (err, res1) {
+            if (err || !res1.ok) {
+                console.log(err);
+                res.send({status: "error"})
+            } else {
+                res.send(res1.data);
+            }
+        });
+    // res.send({"56":"1","14":"1","26":"1","28":"1","50":"4"})
 });
 
 module.exports = router;

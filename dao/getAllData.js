@@ -5,10 +5,10 @@ const request = require('superagent');
 router.get('/', function (req, res, next) {
     let indexes = req.query.indexes;
     let type = req.query.type;
-    console.log(indexes)
+    console.log(indexes);
     // request
-    //     // .get('http://192.168.2.249:8080/RESTfulES/index/content?indexes=' + indexes +'&type=' + type)
-    //     .get('http://192.168.2.249:8080/RESTfulES/index/content?indexes=test2,.kibana,index1,test1&type=test1')
+    //     .get('http://192.168.2.249:8080/RESTfulES/index/content?indexes=' + indexes +'&type=' + type)
+    //     // .get('http://192.168.2.249:8080/RESTfulES/index/content?indexes=test2,.kibana,index1,test1&type=test1')
     //     .end(function (err, res1) {
     //         if (err || !res1.ok) {
     //             console.log(err);

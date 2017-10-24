@@ -20,7 +20,11 @@ class IndexType extends React.Component {
                     return response.json();
                 })
                 .then((res) => {
-                    this.props.updateContent(res);
+                    if(res.status !== 'error'){
+                        this.props.updateContent(res);
+                    }else{
+                        alert("获取Content网络错误")
+                    }
                 })
         // },0)
     }
@@ -32,9 +36,13 @@ class IndexType extends React.Component {
                 return response.json();
             })
             .then((res) => {
-                this.props.updateTypeArray(res);
-                this.props.updateTypeValue(res[0]);
-                return Promise.resolve("");
+                if(res.status !== 'error'){
+                    this.props.updateTypeArray(res);
+                    this.props.updateTypeValue(res[0]);
+                    return Promise.resolve("");
+                }else{
+                    alert("获取Type网络错误");
+                }
             })
             .then(()=>{
                 this.fetchContent();
@@ -47,9 +55,13 @@ class IndexType extends React.Component {
                 return response.json();
             })
             .then((res) => {
-                this.props.updateIndexArray(res);
-                this.props.updateIndexValue(res[0]);
-                return Promise.resolve("");
+                if(res.status !== 'error'){
+                    this.props.updateIndexArray(res);
+                    this.props.updateIndexValue(res[0]);
+                    return Promise.resolve("");
+                }else{
+                    alert("获取Index网络错误");
+                }
             })
             .then(() => {
                 this.fetchType(this.props.indexType.indexValue);
@@ -60,13 +72,15 @@ class IndexType extends React.Component {
         this.props.updateIndexValue(e.target.value);
         setTimeout(() => {
             this.fetchType(this.props.indexType.indexValue);
+            this.fetchContent();
         }, 0)
     }
 
     changeType(e) {
         this.props.updateTypeValue(e.target.value);
-        // 这里还没测试
-        this.fetchContent();
+        setTimeout(() => {
+            this.fetchContent();
+        },0)
     }
 
     render() {
