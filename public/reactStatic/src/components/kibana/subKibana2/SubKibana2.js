@@ -38,16 +38,20 @@ class SubKibana2 extends Component {
                 return response.json();
             })
             .then((res) => {
-                this.setState({
-                    field: res
-                });
-                // 动态添加field对象
-                const constructorM = this.addField(metricsConstructor());
-                const constructorB = this.addField(bucketConstructor());
-                this.setState({
-                    metricsArr: [constructorM],
-                    bucketArr: [constructorB]
-                })
+                if (res.status !== "error") {
+                    this.setState({
+                        field: res
+                    });
+                    // 动态添加field对象
+                    const constructorM = this.addField(metricsConstructor());
+                    const constructorB = this.addField(bucketConstructor());
+                    this.setState({
+                        metricsArr: [constructorM],
+                        bucketArr: [constructorB]
+                    })
+                } else {
+                    alert("获取Field网络错误");
+                }
             })
     }
 
@@ -155,41 +159,45 @@ class SubKibana2 extends Component {
         //console.log('Metrics的store中的值： ' + JSON.stringify(this.props.metricsData));
         //console.log('Bucket的store中的值： ' + JSON.stringify(this.props.allBucketData));
         //let metricsArr = this.state.metricsArr;
-        console.log('metricsData ' + this.props.metricsData);
+        // console.log('metricsData ' + this.props.metricsData);
         return (
-            <div>
-                <div className="form-item">
-                    {
-                        this.state.metricsArr.map((item, index) => {
-                            return (
-                                <div key={index}>
-                                    <Close className="f-fr button-icon button-warning"
-                                           onClick={this.delMetrics.bind(this, index)}/>
-                                    <Metrics types={item.types} content={item.content} index={index}/>
-                                </div>
-                            )
-                        })
-                    }
-                    <button onClick={this.addMetric.bind(this)}>Add Metrics</button>
-                </div>
+            Object.keys(this.state.field).length
+            ? <div>
+                    <div className="form-item">
+                        {
+                            this.state.metricsArr.map((item, index) => {
+                                return (
+                                    <div key={index}>
+                                        <Close className="f-fr button-icon button-warning"
+                                               onClick={this.delMetrics.bind(this, index)}/>
+                                        <Metrics types={item.types} content={item.content} index={index}/>
+                                    </div>
+                                )
+                            })
+                        }
+                        <button onClick={this.addMetric.bind(this)}>Add Metrics</button>
+                    </div>
 
-                <div className="form-item">
-                    {
-                        this.state.bucketArr.map((item, index) => {
-                            return (
-                                <div key={index}>
-                                    <Close className="f-fr button-icon button-warning"
-                                           onClick={this.delBucket.bind(this, index)}/>
-                                    <Bucket types={item.types} content={item.content} key={index} index={index}
-                                            delBucket={this.delBucket.bind(this)}/>
-                                </div>
-                            )
-                        })
-                    }
-                    <button className="button-primary" onClick={this.addBucket.bind(this)}>Add Bucket</button>
+                    <div className="form-item">
+                        {
+                            this.state.bucketArr.map((item, index) => {
+                                return (
+                                    <div key={index}>
+                                        <Close className="f-fr button-icon button-warning"
+                                               onClick={this.delBucket.bind(this, index)}/>
+                                        <Bucket types={item.types} content={item.content} key={index} index={index}
+                                                delBucket={this.delBucket.bind(this)}/>
+                                    </div>
+                                )
+                            })
+                        }
+                        <button className="button-primary" onClick={this.addBucket.bind(this)}>Add Bucket</button>
+                    </div>
+                    <button onClick={this.submitData.bind(this)}>Submit Data</button>
                 </div>
-                <button onClick={this.submitData.bind(this)}>Submit Data</button>
-            </div>
+            : <div>
+                    <div className="form-item">Field加载中</div>
+                </div>
         );
     }
 }
