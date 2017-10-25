@@ -180,6 +180,14 @@ const indexType = (state={indexValue:'',typeValue:'',indexArray:[],typeArray:[]}
     }
 };
 
+const addMetricsData=(state={count:0},action)=>{
+    switch(action.type){
+        case 'ADD_METRICS_PANEL_DATA':
+            return {...action.data};
+        default:
+            return state;
+    }
+};
 const rootReducer = combineReducers({
     user,
     postsByKibanaResult,
@@ -188,6 +196,7 @@ const rootReducer = combineReducers({
     buckets,
     buckets2,
     metrics2,
-    indexType
+    indexType,
+    addMetricsData
 });
 export default rootReducer

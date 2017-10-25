@@ -7,7 +7,6 @@ class Aggregation extends Component {
     }
 
     render() {
-        console.log('thisType####: '+this.props.thisType);
         return (
             <div className='form-group'>
                 <h5>{this.props.title}</h5>

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import Bucket from './Bucket/Bucket'
 import {connect} from 'react-redux'
-import {addBucket2, addMetrics2, delMetrics2, delBucket2} from "../../../actions/index";
+import {addBucket2, addMetrics2, delMetrics2, delBucket2,addMetricsData} from "../../../actions/index";
 import Metrics from './Metrics/Metrics'
 import metricsConstructor from './metricsConstructor'
 import metricsData from './metricsData'
@@ -59,7 +59,6 @@ class SubKibana2 extends Component {
         });
         //将此时新加的数据的index设置为当前数据长度
         this.props._addMetric(this.state.metricsArr, metricsData['Count']);
-        //console.log('addMetric::'+JSON.stringify(this.state.metricsArr));
     }
 
     delMetrics(metricsIndex) {
@@ -72,10 +71,6 @@ class SubKibana2 extends Component {
         this.setState({
             metricsArr: newArr
         });
-        console.log('this.state.metricsArr ' + newArr);
-
-        console.log('thisType: ' + JSON.stringify(this.props.metricsData));
-
     }
 
     addBucket() {
@@ -115,7 +110,20 @@ class SubKibana2 extends Component {
                 return response.json();
             })
             .then((res) => {
-                console.log(res);
+                let bbb=res.replace(/"/g,'');
+                let temp=bbb.substring(1,bbb.length-1);
+                let temp1=temp.split(',');
+                let temp2=[];
+                for(let i in temp1){
+                    let q=temp1[i].split(':');
+                    temp2.push(q);
+                }
+                let arr=[];
+                for(let i in temp2){
+                    let obj={[temp2[i][0]]:temp2[i][1]};
+                    arr.push(obj);
+                }
+                this.props.addMetricsData(arr);
             })
     }
 
@@ -152,10 +160,6 @@ class SubKibana2 extends Component {
     }
 
     render() {
-        //console.log('Metrics的store中的值： ' + JSON.stringify(this.props.metricsData));
-        //console.log('Bucket的store中的值： ' + JSON.stringify(this.props.allBucketData));
-        //let metricsArr = this.state.metricsArr;
-        console.log('metricsData ' + this.props.metricsData);
         return (
             <div>
                 <div className="form-item">
@@ -199,7 +203,7 @@ function mapStateToProps(state) {
     return {
         allBucketData: state.buckets2,
         metricsData: state.metrics2,
-        indexType: state.indexType
+        indexType: state.indexType,
     }
 }
 
@@ -216,6 +220,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         delBucket: (index) => {
             dispatch(delBucket2(index))
+        },
+        addMetricsData:(data)=>{
+            dispatch(addMetricsData(data));
         }
     }
 };
