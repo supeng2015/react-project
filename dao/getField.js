@@ -3,6 +3,7 @@ const router = express.Router();
 const request = require('superagent');
 
 router.get('/', function (req, res, next) {
+
     let index = req.query.index;
     let type = req.query.type;
     request

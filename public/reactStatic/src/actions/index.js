@@ -26,26 +26,26 @@ export const modefyBucket = (b, i) => ({
 })
 
 //userInfo
-const userInfo = (user)=>({
-  type : "LOGIN",
-  user
+const userInfo = (user) => ({
+    type: "LOGIN",
+    user
 })
-export const fetchUserInfo = user => dispatch =>{
-  return fetch(`http://localhost:3000/userInfo`)
-  .then(response => {
-    return response.json()
-  })
-  .catch(function(e) {
-    dispatch(userInfo({
-      data : null,
-      status : false    
-    }))
-  })
-  .then(json => {
-    if(json){
-      dispatch(userInfo(json))    
-    }
-  })    
+export const fetchUserInfo = user => dispatch => {
+    return fetch(`http://localhost:3000/userInfo`)
+        .then(response => {
+            return response.json()
+        })
+        .catch(function (e) {
+            dispatch(userInfo({
+                data: null,
+                status: false
+            }))
+        })
+        .then(json => {
+            if (json) {
+                dispatch(userInfo(json))
+            }
+        })
 }
 //Metrics2的Action
 export const changeMetricsType = (index, metricsData) => {
@@ -66,7 +66,7 @@ export const modifyMetrics2 = (index, key, value) => {
 };
 export const delMetrics2 = (index) => {
     return {
-        type:'DEL_METRICS2',
+        type: 'DEL_METRICS2',
         index
     }
 };
@@ -94,9 +94,9 @@ export const fetchPosts = kibana => dispatch => {
 }
 
 //Metrics2的Action
-export const addMetrics2=(index,metricsData)=>{
+export const addMetrics2 = (index, metricsData) => {
     return {
-        type:'ADD_METRICS2',
+        type: 'ADD_METRICS2',
         index,
         metricsData
     }
