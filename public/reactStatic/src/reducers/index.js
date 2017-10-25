@@ -180,14 +180,25 @@ const indexType = (state={indexValue:'',typeValue:'',indexArray:[],typeArray:[]}
     }
 };
 
+<<<<<<< HEAD
 const addMetricsData=(state={count:0},action)=>{
     switch(action.type){
         case 'ADD_METRICS_PANEL_DATA':
             return {...action.data};
+=======
+const content = (state='',action) => {
+    switch (action.type){
+        case 'UPDATE_CONTENT':
+            return action.contentObj;
+>>>>>>> af4cac49e59a8a4bef917fd102a889592f940487
         default:
             return state;
     }
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> af4cac49e59a8a4bef917fd102a889592f940487
 const rootReducer = combineReducers({
     user,
     postsByKibanaResult,
@@ -197,6 +208,10 @@ const rootReducer = combineReducers({
     buckets2,
     metrics2,
     indexType,
+<<<<<<< HEAD
     addMetricsData
+=======
+    content
+>>>>>>> af4cac49e59a8a4bef917fd102a889592f940487
 });
 export default rootReducer

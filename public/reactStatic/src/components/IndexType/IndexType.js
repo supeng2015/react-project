@@ -4,22 +4,49 @@ import Type from "./Type/Type";
 import "./indexType.scss"
 import TypeFilter from "./Type/TypeFilter";
 import {connect} from "react-redux";
-import {updateIndex,updateType,updateIndexArray,updateTypeArray} from '../../actions'
+import {updateIndex, updateType, updateIndexArray, updateTypeArray, updateContent} from '../../actions'
 
 class IndexType extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    // http请求，获取content
+    fetchContent(){
+        let {indexArray, typeValue} = this.props.indexType;
+        // setTimeout(()=>{
+            fetch('http://localhost:3000/getAllData?indexes='+ indexArray.toString() +'&type=' + typeValue)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if(res.status !== 'error'){
+                        this.props.updateContent(res);
+                    }else{
+                        alert("获取Content网络错误")
+                    }
+                })
+        // },0)
+    }
+
     // http请求，获取Type
-    fetchType(indexValue){
+    fetchType(indexValue) {
         fetch('http://localhost:3000/getType?index=' + indexValue)
-            .then((response)=>{
+            .then((response) => {
                 return response.json();
-            }).then((res)=>{
-            this.props.updateTypeArray(res);
-            this.props.updateTypeValue(res[0])
-        })
+            })
+            .then((res) => {
+                if(res.status !== 'error'){
+                    this.props.updateTypeArray(res);
+                    this.props.updateTypeValue(res[0]);
+                    return Promise.resolve("");
+                }else{
+                    alert("获取Type网络错误");
+                }
+            })
+            .then(()=>{
+                this.fetchContent();
+            })
     }
 
     componentDidMount() {
@@ -28,28 +55,36 @@ class IndexType extends React.Component {
                 return response.json();
             })
             .then((res) => {
-                this.props.updateIndexArray(res);
-                this.props.updateIndexValue(res[0]);
-                return Promise.resolve("");
+                if(res.status !== 'error'){
+                    this.props.updateIndexArray(res);
+                    this.props.updateIndexValue(res[0]);
+                    return Promise.resolve("");
+                }else{
+                    alert("获取Index网络错误");
+                }
             })
-            .then(()=>{
+            .then(() => {
                 this.fetchType(this.props.indexType.indexValue);
             })
     }
 
     changeIndex(e) {
         this.props.updateIndexValue(e.target.value);
-        setTimeout(()=>{
+        setTimeout(() => {
             this.fetchType(this.props.indexType.indexValue);
-        },0)
+            this.fetchContent();
+        }, 0)
     }
 
     changeType(e) {
         this.props.updateTypeValue(e.target.value);
+        setTimeout(() => {
+            this.fetchContent();
+        },0)
     }
 
     render() {
-        let {indexValue,typeValue,indexArray,typeArray} = this.props.indexType;
+        let {indexValue, typeValue, indexArray, typeArray} = this.props.indexType;
 
         return (
             <div className="index-type-container">
@@ -65,7 +100,7 @@ class IndexType extends React.Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         indexType: state.indexType
     }
@@ -84,6 +119,9 @@ function mapDispatchToProps(dispatch) {
         },
         updateTypeArray: (typeArray) => {
             dispatch(updateTypeArray(typeArray))
+        },
+        updateContent: (contentObj) => {
+            dispatch(updateContent(contentObj))
         }
     }
 }

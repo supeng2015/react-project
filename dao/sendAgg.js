@@ -11,7 +11,7 @@ router.post('/', function (req, res, next) {
         type: "test1",
         baseAgg: "lable"
     });
-    console.log(('data2: '+data2));
+    console.log(('data2: ' + data2));
 
     request
         .get('http://192.168.2.249:8080/RESTfulES/agg?' + data2)
@@ -21,12 +21,11 @@ router.post('/', function (req, res, next) {
                 console.log(err);
                 res.send({status: "error"})
             } else {
-                let data=JSON.stringify(res1.text);
+                let data = JSON.stringify(res1.text);
                 res.send(data);
             }
         });
     //res.send(JSON.stringify('{"56":"1","14":"1","26":"1","28":"1","50":"4","count":"213"}'));
-    //res.send([{"56":"1"},{"14":"1"},{"26":"1"},{"28":"1"},{"50":"4"}])
 });
 
 module.exports = router;

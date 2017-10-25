@@ -4,13 +4,13 @@ const request = require('superagent');
 
 router.get('/', function (req, res) {
     // request
-    //     .get('http://192.168.2.249:8080/RESTfulES/index/types?index=' + req.body.index)
+    //     .get('http://192.168.2.249:8080/RESTfulES/index/types?index=' + req.query.index)
     //     .end(function (err, res1) {
     //         if (err || !res1.ok) {
     //             console.log(err);
     //             res.send({status: "error"})
     //         } else {
-    //             res.send(res1.data);
+    //             res.send(res1.text);
     //         }
     //     });
     switch(req.query.index){
@@ -24,7 +24,6 @@ router.get('/', function (req, res) {
             res.send(['type3-1','type3-2','type3-3']);
             break;
     }
-
 });
 
 module.exports = router;
