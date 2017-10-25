@@ -162,14 +162,6 @@ export const updateTypeArray = (typeArray) => {
         typeArray
     }
 };
-<<<<<<< HEAD
-export const addMetricsData = (data) => {
-    return{
-        type:'ADD_METRICS_PANEL_DATA',
-        data
-    }
-};
-=======
 
 export const updateContent = (contentObj) => {
     return {
@@ -177,4 +169,3 @@ export const updateContent = (contentObj) => {
         contentObj
     }
 };
->>>>>>> af4cac49e59a8a4bef917fd102a889592f940487

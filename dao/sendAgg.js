@@ -11,7 +11,6 @@ router.post('/', function (req, res, next) {
         type: "test1",
         baseAgg: "lable"
     });
-    console.log(('data2: ' + data2));
 
     request
         .get('http://192.168.2.249:8080/RESTfulES/agg?' + data2)
