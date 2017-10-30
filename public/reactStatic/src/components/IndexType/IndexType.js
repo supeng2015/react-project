@@ -4,28 +4,48 @@ import Type from "./Type/Type";
 import "./indexType.scss"
 import TypeFilter from "./Type/TypeFilter";
 import {connect} from "react-redux";
-import {updateIndex, updateType, updateIndexArray, updateTypeArray, updateContent} from '../../actions'
+import {updateIndex, updateType, updateIndexArray, updateTypeArray, updateContent, updateField} from '../../actions'
+import {withRouter} from 'react-router-dom';
+import {updateBucketField, updateMetricField} from "../../actions/index";
 
 class IndexType extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    // http请求，field
+    fetchField() {
+        let {indexValue, typeValue} = this.props.indexType;
+        // setTimeout(()=>{
+        fetch('http://localhost:3000/getField?index=' + indexValue + '&type=' + typeValue)
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                if (res.status !== 'error') {
+                    this.props.updateField(res);
+                } else {
+                    alert("获取Field网络错误");
+                }
+            });
+        // },0)
+    }
+
     // http请求，获取content
-    fetchContent(){
+    fetchContent() {
         let {indexArray, typeValue} = this.props.indexType;
         // setTimeout(()=>{
-            fetch('http://localhost:3000/getAllData?indexes='+ indexArray.toString() +'&type=' + typeValue)
-                .then((response) => {
-                    return response.json();
-                })
-                .then((res) => {
-                    if(res.status !== 'error'){
-                        this.props.updateContent(res);
-                    }else{
-                        alert("获取Content网络错误")
-                    }
-                })
+        fetch('http://localhost:3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                if (res.status !== 'error') {
+                    this.props.updateContent(res);
+                } else {
+                    alert("获取Content网络错误")
+                }
+            })
         // },0)
     }
 
@@ -36,15 +56,15 @@ class IndexType extends React.Component {
                 return response.json();
             })
             .then((res) => {
-                if(res.status !== 'error'){
+                if (res.status !== 'error') {
                     this.props.updateTypeArray(res);
                     this.props.updateTypeValue(res[0]);
                     return Promise.resolve("");
-                }else{
+                } else {
                     alert("获取Type网络错误");
                 }
             })
-            .then(()=>{
+            .then(() => {
                 this.fetchContent();
             })
     }
@@ -55,32 +75,131 @@ class IndexType extends React.Component {
                 return response.json();
             })
             .then((res) => {
-                if(res.status !== 'error'){
+                if (res.status !== 'error') {
                     this.props.updateIndexArray(res);
                     this.props.updateIndexValue(res[0]);
                     return Promise.resolve("");
-                }else{
+                } else {
                     alert("获取Index网络错误");
+                    return Promise.reject("");
                 }
             })
             .then(() => {
-                this.fetchType(this.props.indexType.indexValue);
+                // this.fetchType(this.props.indexType.indexValue);
+                // this.fetchField()
+                fetch('http://localhost:3000/getType?index=' + this.props.indexType.indexValue)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((res) => {
+                        if (res.status !== 'error') {
+                            this.props.updateTypeArray(res);
+                            this.props.updateTypeValue(res[0]);
+                            return Promise.resolve("");
+                        } else {
+                            alert("获取Type网络错误");
+                            return Promise.reject("");
+                        }
+                    })
+                    .then(() => {
+                        let {indexArray, typeValue} = this.props.indexType;
+                        // setTimeout(()=>{
+                        fetch('http://localhost:3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((res) => {
+                                if (res.status !== 'error') {
+                                    this.props.updateContent(res);
+                                    return Promise.resolve("");
+                                } else {
+                                    alert("获取Content网络错误");
+                                    return Promise.reject("");
+                                }
+                            })
+                            .then(()=>{
+                                this.fetchField();
+                            })
+                    })
             })
     }
 
     changeIndex(e) {
+        const {location} = this.props;
         this.props.updateIndexValue(e.target.value);
         setTimeout(() => {
-            this.fetchType(this.props.indexType.indexValue);
-            this.fetchContent();
+            // this.fetchType(this.props.indexType.indexValue);
+            // 获取Type
+            fetch('http://localhost:3000/getType?index=' + this.props.indexType.indexValue)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if (res.status !== 'error') {
+                        // 更新Type
+                        this.props.updateTypeArray(res);
+                        this.props.updateTypeValue(res[0]);
+                        return Promise.resolve("");
+                    } else {
+                        alert("获取Type网络错误");
+                    }
+                })
+                .then(() => {
+                    // 获取Content
+                    this.fetchContent();
+                    if (location.pathname === "/app") {
+                        this.fetchContent();
+                        this.fetchField();
+                    } else {
+                        // 获取Field
+                        let {indexValue, typeValue} = this.props.indexType;
+                        fetch('http://localhost:3000/getField?index=' + indexValue + '&type=' + typeValue)
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((res) => {
+                                // 更新Field
+                                if (res.status !== 'error') {
+                                    this.props.updateField(res);
+                                    setTimeout(()=>{
+                                        this.props.updateMetricField(this.props.field);
+                                        this.props.updateBucketField(this.props.field)
+                                    },0)
+                                } else {
+                                    alert("获取Field网络错误");
+                                }
+                            })
+                    }
+                })
         }, 0)
     }
 
     changeType(e) {
+        const {location} = this.props;
         this.props.updateTypeValue(e.target.value);
         setTimeout(() => {
-            this.fetchContent();
-        },0)
+            if (location.pathname === "/app") {
+                this.fetchContent();
+                this.fetchField();
+            } else {
+                let {indexValue, typeValue} = this.props.indexType;
+                fetch('http://localhost:3000/getField?index=' + indexValue + '&type=' + typeValue)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((res) => {
+                        if (res.status !== 'error') {
+                            this.props.updateField(res);
+                            setTimeout(()=>{
+                                this.props.updateMetricField(this.props.field);
+                                this.props.updateBucketField(this.props.field)
+                            },0)
+                        } else {
+                            alert("获取Field网络错误");
+                        }
+                    })
+            }
+        }, 0)
     }
 
     render() {
@@ -102,7 +221,8 @@ class IndexType extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        indexType: state.indexType
+        indexType: state.indexType,
+        field: state.field
     }
 }
 
@@ -122,11 +242,21 @@ function mapDispatchToProps(dispatch) {
         },
         updateContent: (contentObj) => {
             dispatch(updateContent(contentObj))
-        }
+        },
+        updateField: (fieldObj) => {
+            dispatch(updateField((fieldObj)))
+        },
+        updateMetricField: (fieldObj) => {
+            dispatch(updateMetricField(fieldObj))
+        },
+        updateBucketField: (fieldObj => {
+            dispatch(updateBucketField(fieldObj))
+        })
+
     }
 }
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(IndexType)
+)(IndexType));

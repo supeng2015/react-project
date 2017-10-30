@@ -4,11 +4,11 @@
   display:flex;
 }
 .app-index-left{
-  color: #1c1c1c;
-  width: 18rem;
+  color: #fff;
+  background-color: #353d47;
+  width: 16rem;
   overflow: hidden;
   min-height: 100vh;
-  background: #eaeaea;
   nav ul{
     margin: 0 1rem;
     font-size: 0.8rem;
@@ -21,28 +21,41 @@
     border-radius: 3px;
   }
   .function-list{
-    margin: 1rem;
+    padding-top: 1rem;
     ul li{
-      margin: 0.5rem;
       a{
-        color: #5b5b5b;
+        display: block;
+        padding: 0.7rem 1.7rem;
+        color: #ffffff;
+        &:hover{
+          background-color: #626e7c;
+        }
+        span{
+          float: left;
+          width: 20px;
+          height: 20px;
+          margin-right: 20px;
+        }
       }
     }
   }
   .user-operation{ 
-  	height: 3rem;
-  	line-height: 3rem;
-  	.logo{
+  	height: 4rem;
+  	line-height: 4rem;
+    display:flex;
+    padding:0 1rem;
+    background-color: #67b792;
+    box-shadow: 0px 2px 20px #0a0c0e;
+    .logo{
       width: 3rem;
       height: 3rem;
+      padding: 0.5rem;
       border-radius: 50px;
       overflow: hidden;
       img{
-        width: 100%;	
-      }	
+        width: 100%;
+      }
     }
-    display:flex;
-    margin:1rem;
     .user-name{
       flex :1;  
     }
@@ -58,5 +71,18 @@
 	flex :1;
     min-height: 100vh;
     min-width: 0;
+    padding: 10px;
+    box-sizing: border-box;
 }
-
+.discover{
+  background: url("../images/menuIcon/discover.png") no-repeat center center;
+  background-size: 20px 20px;
+}
+.visualize{
+  background: url("../images/menuIcon/visualize.png") no-repeat center center;
+  background-size: 20px 20px;
+}
+.relationship{
+  background: url("../images/menuIcon/relationship.png") no-repeat center center;
+  background-size: 20px 20px;
+}

@@ -88,21 +88,20 @@ export const invalidateReddit = kibana => ({
 })
 export const fetchPosts = kibana => dispatch => {
     dispatch(requestPosts(kibana))
-    return fetch(`http://localhost:3000/kibana`)
+    return fetch('http://localhost:3000/kibana')
         .then(response => response.json())
         .then(json => dispatch(receivePosts(kibana, json)))
 }
 
-//Metrics2的Action
-export const addMetrics2 = (index, metricsData) => {
+// Metrics2值的Action
+export const addMetrics2 = (metricsData) => {
     return {
         type: 'ADD_METRICS2',
-        index,
         metricsData
     }
 }
 
-// bucket2的Action
+// bucket2值的Action
 export const changeBucketType = (index, bucketData) => {
     return {
         type: 'CHANGE_BUCKET_TYPE',
@@ -163,9 +162,62 @@ export const updateTypeArray = (typeArray) => {
     }
 };
 
+// 更新Content的action
 export const updateContent = (contentObj) => {
     return {
         type: 'UPDATE_CONTENT',
         contentObj
+    }
+};
+
+// 更新Field的action
+export const updateField = (fieldObj) => {
+    return {
+        type: 'UPDATE_FIELD',
+        fieldObj
+    }
+};
+
+// 更新metric结构的action
+export const updateMetricField = (fieldObj)=>{
+    return {
+        type: 'UPDATE_METRIC_FIELD',
+        fieldObj
+    }
+};
+
+export const addMetricConstructor = (fieldObj)=>{
+    return {
+        type: 'ADD_METRIC_CONSTRUCTOR',
+        fieldObj
+    }
+};
+
+export const delMetricConstructor = (index)=>{
+    return {
+        type: 'DEL_METRIC_CONSTRUCTOR',
+        index
+    }
+};
+
+// 更新bucket结构的action
+export const updateBucketField = (fieldObj)=>{
+    return {
+        type: 'UPDATE_BUCKET_FIELD',
+        fieldObj
+    }
+};
+
+export const addBucketConstructor = (fieldObj)=>{
+    return {
+        type: 'ADD_BUCKET_CONSTRUCTOR',
+        fieldObj
+    }
+};
+
+export const delBucketConstructor = (index)=>{
+    return {
+        type: 'DEL_BUCKET_CONSTRUCTOR',
+        index
     }
 };

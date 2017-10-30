@@ -3,6 +3,7 @@ export default function (type) {
         case "Date Histogram":
             return {
                 type: "Date Histogram",
+                typeName: "date_histogram",
                 field: "",
                 interval: "",
                 label: ""
@@ -10,6 +11,7 @@ export default function (type) {
         case "Histogram":
             return {
                 type: "Histogram",
+                typeName: "histogram",
                 field: "",
                 interval: "",
                 showEmpty: false,
@@ -18,6 +20,7 @@ export default function (type) {
         case "Range":
             return {
                 type: "Range",
+                typeName: "ranges",
                 field: "",
                 fromTo: [{from: 0, to: 0}],
                 label: ""
@@ -25,6 +28,7 @@ export default function (type) {
         case "Date Range":
             return {
                 type: "Date Range",
+                typeName: "date_range",
                 field: "",
                 fromTo: [{from: 0, to: 0}],
                 label: ""
@@ -32,6 +36,7 @@ export default function (type) {
         case "IPv4 Range":
             return {
                 type: "IPv4 Range",
+                typeName: "ip_ranges",
                 field: "",
                 fromTo: [{from: 0, to: 0}],
                 mask: [""],
@@ -40,6 +45,7 @@ export default function (type) {
         case "Terms":
             return {
                 type: "Terms",
+                typeName: "terms",
                 field: "",
                 orderBy: "",
                 order: "Descending",
@@ -49,11 +55,13 @@ export default function (type) {
         case "Filter":
             return {
                 type: "Filter",
+                typeName: "filter",
                 filter: [{name:"filter",value:""}]
             };
         case "Significant Terms":
             return {
                 type: "Significant Terms",
+                typeName: "significant_terms",
                 field: "",
                 size: "",
                 label: ""
@@ -61,6 +69,7 @@ export default function (type) {
         default:
             return {
                 type: "Date Histogram",
+                typeName: "date_histogram",
                 field: "",
                 interval: "",
                 label: ""

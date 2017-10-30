@@ -1,4 +1,6 @@
 import {combineReducers} from 'redux'
+import metricsConstructor from '../components/kibana/subKibana2/metricsConstructor'
+import bucketConstructor from '../components/kibana/subKibana2/bucketConstructor'
 
 const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT';
 const REQUEST_POSTS = 'REQUEST_POSTS';
@@ -106,8 +108,7 @@ const user=(state={},action)=>{
 
 
 //metrics2的reducer
-const metrics2 = (state = [{type: 'Count', label: ''}], action) => {
-
+const metrics2 = (state = [{type: 'Count', typeName: 'value_count', label: ''}], action) => {
     switch (action.type) {
         case 'MODIFY_METRICS2':
             const newState = [...state];
@@ -137,6 +138,7 @@ const metrics2 = (state = [{type: 'Count', label: ''}], action) => {
 // 新增bucket2的reducer
 const buckets2 = (state = [{
     type: "Date Histogram",
+    typeName: "date_histogram",
     field: "",
     interval: "",
     label: ""
@@ -189,6 +191,74 @@ const content = (state='',action) => {
     }
 };
 
+const field = (state={}, action) => {
+    switch (action.type){
+        case 'UPDATE_FIELD':
+            return action.fieldObj;
+        default:
+            return state;
+    }
+};
+
+// 动态添加Field
+function addField(constructor,field) {
+    const content = constructor.content;
+    for (let key in content) {
+        if (content[key]["field"] && content.hasOwnProperty(key)) {
+            content[key]["field"] = field;
+        }
+    }
+    return constructor;
+}
+
+// metrics的构造结构
+const constructorM = (state = [metricsConstructor()], action) => {
+    switch (action.type){
+        case 'UPDATE_METRIC_FIELD':
+            if(state[0]){
+                return [addField({...state[0]},action.fieldObj)];
+            }else{
+                return [addField(metricsConstructor(),action.fieldObj)];
+            }
+        case 'ADD_METRIC_CONSTRUCTOR':
+            if(state[0]){
+                return [...state, {...state[0]}];
+            }else{
+                return [addField(metricsConstructor(),action.fieldObj)];
+            }
+        case 'DEL_METRIC_CONSTRUCTOR':
+            return state.filter((item, index) => {
+                return action.index !== index
+            });
+        default:
+            return state;
+    }
+};
+
+// buckets的构造结构f
+const constructorB = (state = [bucketConstructor()], action) => {
+    switch (action.type){
+        case 'UPDATE_BUCKET_FIELD':
+            if(state[0]){
+                return [addField({...state[0]},action.fieldObj)];
+            }else{
+                return [addField(bucketConstructor(),action.fieldObj)];
+            }
+        case 'ADD_BUCKET_CONSTRUCTOR':
+            if (state[0]) {
+                return [...state, {...state[0]}];
+            } else {
+                return [addField(bucketConstructor(),action.fieldObj)];
+            }
+        case 'DEL_BUCKET_CONSTRUCTOR':
+            return state.filter((item, index) => {
+                return action.index !== index
+            });
+        default:
+            return state;
+    }
+};
+
 const rootReducer = combineReducers({
     user,
     postsByKibanaResult,
@@ -198,6 +268,9 @@ const rootReducer = combineReducers({
     buckets2,
     metrics2,
     indexType,
-    content
+    content,
+    field,
+    constructorM,
+    constructorB
 });
 export default rootReducer

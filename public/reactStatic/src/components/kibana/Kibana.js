@@ -12,7 +12,7 @@ class Kibana extends Component {
     componentDidMount() {    //组件装配前
         const {dispatch} = this.props;
         //dispatch(getpiaoGet('asd'))
-        dispatch(fetchPosts('kibana'))
+        // dispatch(fetchPosts('kibana'))
     }
 
     render() {
@@ -58,6 +58,8 @@ const mapStateToProps = state => {
         postsByKibanaResult: state.postsByKibanaResult
     }
 };
-Kibana = connect(mapStateToProps)(Kibana);
+Kibana = connect(
+    mapStateToProps
+)(Kibana);
 
 export default Kibana

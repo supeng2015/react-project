@@ -68,65 +68,71 @@ class Bucket extends React.Component{
     render(){
         let {index, types} = this.props;
         let bucket = this.props.buckets2[index];
-        let nowType = bucket.type;
-        const content = this.props.content[nowType];
+        let nowType = "";
+        let content = "";
+        // 解决当bucket不存在时的问题
+        if(this.props.buckets2.length > 0){
+            nowType = bucket.type;
+            content = this.props.content[nowType];
+        }
 
         return (
-            <div>
-                <div className="sidebar-item-title">bucket</div>
-                <ChangeInput title="Aggregation" data={types} nowType={bucket.type} changeHandle={this.changeType.bind(this)}/>
-                {
-                    content.field
-                    ? <DownInputGroup title="Field" data={this.filterField.bind(this)(content)} value={bucket.field}
-                                      changeHandle={(e)=>{this.props.modifyBucket(index, 'field', e.target.value)}}/> : ""
-                }
-                {
-                    content.interval
-                    ? (typeof(content.interval) === "object"
-                        ?  <DownInputGroup title="Interval" data={content.interval} value={bucket.interval}
-                                           changeHandle={(e)=>{this.props.modifyBucket(index, 'interval', e.target.value)}}/>
-                        :  <UpDownInputGroup title="Interval" data={content.interval} value={bucket.interval}
-                                             changeHandle={this.change.bind(this, 'interval')}/>)
-                    : ""
-                }
-                {
-                    content.showEmpty
-                    ? <label>
-                            <input type="checkbox" name="showEmpty" data={""} checked={bucket.showEmpty}
-                                   onChange={(e)=>{this.props.modifyBucket(index, 'showEmpty', e.target.checked)}}/>
-                            Show empty buckets
-                        </label>
-                    : ""
-                }
-                {
-                    nowType === "Range"
-                        ? <FromToInputNum index={index} name="fromTo" data={content.fromTo} value={bucket.fromTo}/>
-                        : (nowType === "Date Range"
-                            ? <FromToInput index={index} name="fromTo" data={content.fromTo} value={bucket.fromTo}/>
-                            : (nowType === "IPv4 Range"
-                                ? <FromToInputNumChange index={index} data={content.fromTo} value={bucket.fromTo}
-                                                        changeHandle={this.props.modifyBucket}/>
-                                : ""
-                           )
-                        )
-                }
-                {
-                    content.orderBy
-                        ? <OrderGroup index={index} data={content} value={bucket}
-                                      changeHandle={this.props.modifyBucket}/>: ""
-                }
-                {
-                    content.size && !content.order
-                        ? <UpDownInputGroup title="Size" data={content.size} value={bucket.size}
-                                            changeHandle={this.change.bind(this, 'size')}/> : ""
-                }
-                {
-                    content.label
-                    ? <NormalInput title="Custom Label" value={bucket.label}
-                                   changeHandle={this.change.bind(this, 'label')}/>
-                    : <FilterInputGroup index={index} value={bucket.filter} />
-                }
-            </div>
+            nowType
+            ? <div>
+                    <div className="sidebar-item-title">bucket</div>
+                    <ChangeInput title="Aggregation" data={types} nowType={nowType} changeHandle={this.changeType.bind(this)}/>
+                    {
+                        content.field
+                            ? <DownInputGroup title="Field" data={this.filterField.bind(this)(content)} value={bucket.field}
+                                              changeHandle={(e)=>{this.props.modifyBucket(index, 'field', e.target.value)}}/> : ""
+                    }
+                    {
+                        content.interval
+                            ? (typeof(content.interval) === "object"
+                            ?  <DownInputGroup title="Interval" data={content.interval} value={bucket.interval}
+                                               changeHandle={(e)=>{this.props.modifyBucket(index, 'interval', e.target.value)}}/>
+                            :  <UpDownInputGroup title="Interval" data={content.interval} value={bucket.interval}
+                                                 changeHandle={this.change.bind(this, 'interval')}/>)
+                            : ""
+                    }
+                    {
+                        content.showEmpty
+                            ? <label>
+                                <input type="checkbox" name="showEmpty" data={""} checked={bucket.showEmpty}
+                                       onChange={(e)=>{this.props.modifyBucket(index, 'showEmpty', e.target.checked)}}/>
+                                Show empty buckets
+                            </label>
+                            : ""
+                    }
+                    {
+                        nowType === "Range"
+                            ? <FromToInputNum index={index} name="fromTo" data={content.fromTo} value={bucket.fromTo}/>
+                            : (nowType === "Date Range"
+                                ? <FromToInput index={index} name="fromTo" data={content.fromTo} value={bucket.fromTo}/>
+                                : (nowType === "IPv4 Range"
+                                        ? <FromToInputNumChange index={index} data={content.fromTo} value={bucket.fromTo}
+                                                                changeHandle={this.props.modifyBucket}/>
+                                        : ""
+                                )
+                            )
+                    }
+                    {
+                        content.orderBy
+                            ? <OrderGroup index={index} data={content} value={bucket}
+                                          changeHandle={this.props.modifyBucket}/>: ""
+                    }
+                    {
+                        content.size && !content.order
+                            ? <UpDownInputGroup title="Size" data={content.size} value={bucket.size}
+                                                changeHandle={this.change.bind(this, 'size')}/> : ""
+                    }
+                    {
+                        content.label
+                            ? <NormalInput title="Custom Label" value={bucket.label}
+                                           changeHandle={this.change.bind(this, 'label')}/>
+                            : <FilterInputGroup index={index} value={bucket.filter} />
+                    }
+                </div> : <div/>
         )
     }
 }

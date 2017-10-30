@@ -6,6 +6,9 @@ import Auth from './user/Auth';
 import {Route, Link, Switch} from 'react-router-dom'
 import ChartListPage from "./kibana/charts/ChartListPage/ChartListPage";
 import IndexType from "./IndexType/IndexType";
+// import Discover from "../images/menuIcon/discover.png"
+// import Relationship from "../images/menuIcon/relationship.png"
+// import Visualize from "../images/menuIcon/visualize.png"
 
 class App extends Component {
     render() {
@@ -22,18 +25,13 @@ class App extends Component {
                         }, history)}>退出
                         </div>
                     </div>
-                    <nav>
-                        <ul>
-                            <li>功能</li>
-                        </ul>
-                    </nav>
                     <div className="function-list">
                         <ul>
-                            <li><Link to="/app">Discover</Link></li>
-                            <li><Link to="/app/visualize">Visualize</Link></li>
-                            <li><Link to="/app/123">Upload File</Link></li>
-                            <li><Link to="/app/234">Change Data</Link></li>
-                            <li><Link to="/app/345">About</Link></li>
+                            <li><Link to="/app"><span className="discover"/>Discover</Link></li>
+                            <li><Link to="/app/visualize"><span className="visualize"/>Visualize</Link></li>
+                            <li><Link to="/app/123"><span className="relationship"/>Relationship</Link></li>
+                            {/*<li><Link to="/app/234">Change Data</Link></li>*/}
+                            {/*<li><Link to="/app/345">About</Link></li>*/}
                         </ul>
                     </div>
                 </div>
