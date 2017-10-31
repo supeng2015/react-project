@@ -14,7 +14,6 @@ import Relationship from "./Relationship/Relationship";
 class App extends Component {
     render() {
         let {history,location} = this.props;
-        console.log(location.pathname);
         return (
             <div className="app-index">
                 {/*左边导航*/}
@@ -39,7 +38,9 @@ class App extends Component {
                 </div>
                 {/*右边内容*/}
                 <div className="app-index-right">
-                    <IndexType/>
+                    <div className={location.pathname === "/app" || location.pathname.indexOf("visualize") !== -1 ? "" : "f-dpnone"}>
+                        <IndexType/>
+                    </div>
                     <Switch>
                         <Route exact path="/app" component={HomePage}/>
                         <Route path="/app/visualize/:type" component={Kibana}/>

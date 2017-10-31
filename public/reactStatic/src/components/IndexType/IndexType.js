@@ -6,7 +6,7 @@ import TypeFilter from "./Type/TypeFilter";
 import {connect} from "react-redux";
 import {updateIndex, updateType, updateIndexArray, updateTypeArray, updateContent, updateField} from '../../actions'
 import {withRouter} from 'react-router-dom';
-import {updateBucketField, updateMetricField} from "../../actions/index";
+import {resetBucket2, resetMetrics2, updateBucketField, updateMetricField} from "../../actions/index";
 
 class IndexType extends React.Component {
     constructor(props) {
@@ -163,7 +163,9 @@ class IndexType extends React.Component {
                                     this.props.updateField(res);
                                     setTimeout(()=>{
                                         this.props.updateMetricField(this.props.field);
-                                        this.props.updateBucketField(this.props.field)
+                                        this.props.updateBucketField(this.props.field);
+                                        this.props.resetMetric();
+                                        this.props.resetBucket();
                                     },0)
                                 } else {
                                     alert("获取Field网络错误");
@@ -192,7 +194,9 @@ class IndexType extends React.Component {
                             this.props.updateField(res);
                             setTimeout(()=>{
                                 this.props.updateMetricField(this.props.field);
-                                this.props.updateBucketField(this.props.field)
+                                this.props.updateBucketField(this.props.field);
+                                this.props.resetMetric();
+                                this.props.resetBucket();
                             },0)
                         } else {
                             alert("获取Field网络错误");
@@ -251,7 +255,13 @@ function mapDispatchToProps(dispatch) {
         },
         updateBucketField: (fieldObj => {
             dispatch(updateBucketField(fieldObj))
-        })
+        }),
+        resetMetric: () => {
+            dispatch(resetBucket2())
+        },
+        resetBucket: () => {
+            dispatch(resetMetrics2())
+        }
 
     }
 }

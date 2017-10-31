@@ -1,18 +1,20 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import Bucket from './Bucket/Bucket'
 import {connect} from 'react-redux'
 import {
     addBucket2,
-    addMetrics2,
-    delMetrics2,
-    delBucket2,
-    addMetricsData,
-    updateMetricField,
-    addMetricConstructor,
-    delMetricConstructor,
-    updateBucketField,
     addBucketConstructor,
-    delBucketConstructor
+    addMetricConstructor,
+    addMetrics2,
+    addMetricsData,
+    delBucket2,
+    delBucketConstructor,
+    delMetricConstructor,
+    delMetrics2,
+    resetBucket2,
+    resetMetrics2,
+    updateBucketField,
+    updateMetricField
 } from "../../../actions/index";
 import Metrics from './Metrics/Metrics'
 import metricsData from './metricsData'
@@ -70,6 +72,11 @@ class SubKibana2 extends Component {
     delBucket(bucketIndex) {
         this.props.delBucketConstructor(bucketIndex);
         this.props.delBucket(bucketIndex);
+    }
+
+    resetData(){
+        this.props.resetMetric();
+        this.props.resetBucket();
     }
 
     submitData() {
@@ -229,6 +236,7 @@ class SubKibana2 extends Component {
                         <button onClick={this.addBucket.bind(this)}>Add Bucket</button>
                     </div>
                     <button className="button-primary" onClick={this.submitData.bind(this)}>Submit Data</button>
+                    <button className="button-primary" onClick={this.resetData.bind(this)}>Reset Data</button>
                 </div>
                 : <div>
                     <div className="form-item">Field加载中</div>
@@ -263,6 +271,12 @@ const mapDispatchToProps = (dispatch) => {
         delBucket: (index) => {
             dispatch(delBucket2(index))
         },
+        resetMetric: () => {
+            dispatch(resetBucket2())
+        },
+        resetBucket: () => {
+            dispatch(resetMetrics2())
+        },
         addMetricsData: (data) => {
             dispatch(addMetricsData(data));
         },
@@ -283,7 +297,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         delBucketConstructor: (index) => {
             dispatch(delBucketConstructor(index));
-        },
+        }
     }
 };
 

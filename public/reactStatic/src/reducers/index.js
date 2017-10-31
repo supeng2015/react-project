@@ -107,7 +107,7 @@ const user=(state={},action)=>{
 
 
 
-//metrics2的reducer
+// metrics2的reducer
 const metrics2 = (state = [{type: 'Count', typeName: 'value_count', label: ''}], action) => {
     switch (action.type) {
         case 'MODIFY_METRICS2':
@@ -130,6 +130,8 @@ const metrics2 = (state = [{type: 'Count', typeName: 'value_count', label: ''}],
         case 'DEL_METRICS2':
             state.splice(action.index,1);
             return state;
+        case 'RESET_METRICS2':
+            return [{type: 'Count', typeName: 'value_count', label: ''}];
         default:
             return state;
     }
@@ -162,6 +164,14 @@ const buckets2 = (state = [{
             return state.filter((item, index) => {
                 return action.index !== index
             });
+        case 'RESET_BUCKET2':
+            return [{
+                type: "Date Histogram",
+                typeName: "date_histogram",
+                field: "",
+                interval: "",
+                label: ""
+            }];
         default:
             return state
     }

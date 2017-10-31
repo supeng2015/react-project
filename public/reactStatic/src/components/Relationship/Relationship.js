@@ -5,18 +5,71 @@ import 'echarts/lib/chart/graph';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/legend';
-// import './dependency/macarons';
+import './dependency/macarons';
+import NormalInput from "../kibana/subKibana2/NormalInput/NormalInput";
 
 class Relationship extends React.Component {
     constructor(props) {
         super(props);
         this.state ={
-            title: {
-                text: 'ECharts 关系图'
+            option:{
+                title: {
+                    text: '展示关系图'
+                },
+                tooltip: {},
+                series: []
             },
-            tooltip: {},
-            series: []
+            keyword: ''
         }
+    }
+
+    search(){
+        let id = this.props.keyword;
+        fetch("http://localhost:3000/relationship?id=" + id)
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) =>{
+                let option = this.state.option;
+                let series = [{
+                    type: 'graph',
+                    layout: 'force',
+                    draggable: true,
+                    edgeSymbol: ['circle', 'arrow'],
+                    label: {
+                        normal: {
+                            show:true,
+                            formatter: '{c}'
+                        }
+                    },
+                    edgeLabel: {
+                        normal: {
+                            show:true,
+                            formatter: '{c}'
+                        }
+                    },
+                    force: {
+                        repulsion: 80,
+                        edgeLength: 200
+                    },
+                    symbolSize: 30,
+                    nodes: [],
+                    edges: []
+                }];
+                series[0].nodes = this.getNodes(res.node, 'id', 'name');
+                series[0].edges= this.getEdges(res.edge, 'source', 'target','property');
+                option.series = series;
+                this.setState({
+                    option
+                });
+                setTimeout(()=>{
+                    // 使用配置项和数据显示图表
+                    let dom = this.refs.chartDom;
+                    let myChart = echarts.init(dom, 'macarons');
+                    // let myChart = echarts.init(dom);
+                    myChart.setOption(this.state.option);
+                },0)
+            })
     }
 
     getNodes(nodesArr, nameKey, valueKey){
@@ -46,55 +99,66 @@ class Relationship extends React.Component {
     }
 
     componentDidMount(){
-        let id = "123456789";
-        fetch("http://localhost:3000/relationship?id=" + id)
-            .then((response) => {
-                return response.json();
-            })
-            .then((res) =>{
-                let series = [{
-                    type: 'graph',
-                    layout: 'force',
-                    draggable: true,
-                    edgeSymbol: ['circle', 'arrow'],
-                    label: {
-                        normal: {
-                            show:true,
-                            formatter: '{c}'
-                        }
-                    },
-                    edgeLabel: {
-                        normal: {
-                            show:true,
-                            formatter: '{c}'
-                        }
-                    },
-                    force: {
-                        repulsion: 80,
-                        edgeLength: 200
-                    },
-                    symbolSize: 30,
-                    nodes: [],
-                    edges: []
-                }];
-                series[0].nodes = this.getNodes(res.node, 'id', 'name');
-                series[0].edges= this.getEdges(res.edge, 'source', 'target','property');
-                this.setState({
-                    series
-                });
-                setTimeout(()=>{
-                    // 使用刚指定的配置项和数据显示图表
-                    let dom = this.refs.chartDom;
-                    // let myChart = echarts.init(dom, 'macarons');
-                    let myChart = echarts.init(dom);
-                    myChart.setOption(this.state);
-                },0)
-            })
+        // let id = "123456789";
+        // fetch("http://localhost:3000/relationship?id=" + id)
+        //     .then((response) => {
+        //         return response.json();
+        //     })
+        //     .then((res) =>{
+        //         let option = this.state.option;
+        //         let series = [{
+        //             type: 'graph',
+        //             layout: 'force',
+        //             draggable: true,
+        //             edgeSymbol: ['circle', 'arrow'],
+        //             label: {
+        //                 normal: {
+        //                     show:true,
+        //                     formatter: '{c}'
+        //                 }
+        //             },
+        //             edgeLabel: {
+        //                 normal: {
+        //                     show:true,
+        //                     formatter: '{c}'
+        //                 }
+        //             },
+        //             force: {
+        //                 repulsion: 80,
+        //                 edgeLength: 200
+        //             },
+        //             symbolSize: 30,
+        //             nodes: [],
+        //             edges: []
+        //         }];
+        //         series[0].nodes = this.getNodes(res.node, 'id', 'name');
+        //         series[0].edges= this.getEdges(res.edge, 'source', 'target','property');
+        //         option.series = series;
+        //         this.setState({
+        //             option
+        //         });
+        //         setTimeout(()=>{
+        //             // 使用配置项和数据显示图表
+        //             let dom = this.refs.chartDom;
+        //             let myChart = echarts.init(dom, 'macarons');
+        //             // let myChart = echarts.init(dom);
+        //             myChart.setOption(this.state.option);
+        //         },0)
+        //     })
     }
 
     render() {
         return (
-            <div ref="chartDom" style={{width: "100%", height: "600px"}}/>
+            <div>
+                <div className="container" style={{display: "flex"}}>
+                    <div style={{width:"50%"}}>
+                        <NormalInput title="Keyword" changeHandle={(e)=>{this.setState({keyword: e.target.value})}} value={this.state.keyword}/>
+                    </div>
+                    <button className="button-primary"  style={{margin:"24px 10px"}} onClick={this.search.bind(this)}>Search</button>
+                </div>
+
+                <div ref="chartDom" style={{width: "100%", height: "600px"}}/>
+            </div>
         )
     }
 }
