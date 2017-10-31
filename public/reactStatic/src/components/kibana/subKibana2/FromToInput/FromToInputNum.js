@@ -16,7 +16,7 @@ class FromToInputNum extends React.Component {
             e.persist();
             clearTimeout(flag);
             flag = setTimeout(() => {
-                let fromTo = this.props.buckets[index].fromTo;
+                let fromTo = this.props.buckets[index].ranges;
                 const newFromTo = fromTo.map((item, index)=>{
                    if(index === rangeIndex){
                        item[key] = e.target.value;
@@ -32,10 +32,10 @@ class FromToInputNum extends React.Component {
 
     changeHandle(rangeIndex, key, e){
         const {index, name} = this.props;
-        let fromTo = this.props.buckets[index].fromTo;
+        let fromTo = this.props.buckets[index].ranges;
         const newFromTo = fromTo.map((item, index)=>{
             if(index === rangeIndex){
-                item[key] = e.target.value;
+                item[key] = Number.parseInt(e.target.value);
                 return item
             }else{
                 return item
@@ -46,14 +46,14 @@ class FromToInputNum extends React.Component {
 
     addFromTo(){
         const {index, name} = this.props;
-        let fromTo = this.props.buckets[index].fromTo;
+        let fromTo = this.props.buckets[index].ranges;
         const newFromTo = [...fromTo,{from:0, to: 0}];
         this.props.modifyBucket(index, name, newFromTo);
     }
 
     deleteFromTo(rangeIndex){
         const {index, name} = this.props;
-        let fromTo = this.props.buckets[index].fromTo;
+        let fromTo = this.props.buckets[index].ranges;
         const newFromTo = fromTo.filter((item,index)=>{
             return index !== rangeIndex
         });
@@ -61,7 +61,7 @@ class FromToInputNum extends React.Component {
     }
 
     render() {
-        let fromTo = this.props.buckets[this.props.index].fromTo;
+        let fromTo = this.props.buckets[this.props.index].ranges;
         return (
             <div className="form-group">
                 <table className="form-group">

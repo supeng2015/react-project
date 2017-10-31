@@ -11,7 +11,7 @@ class Values extends Component {
     delPercent(percentIndex) {
         //console.log('called del');
         const {index, name} = this.props;
-        let Values = this.props.metrics[index].Values;
+        let Values = this.props.metrics[index].values;
         //console.log('metrics:: ' + newPercent);
         const newValues = Values.filter((item, index) => {
             return index !== percentIndex
@@ -21,14 +21,14 @@ class Values extends Component {
 
     addValue() {
         const {index, name} = this.props;
-        let Values = this.props.metrics[index].Values;
+        let Values = this.props.metrics[index].values;
         let newValue = [...Values, ''];
         this.props.modifyMetrics(index, name, newValue);
     }
 
     changeHandle(changeIndex, e) {
         const {index, name} = this.props;
-        let Values = this.props.metrics[index].Values;
+        let Values = this.props.metrics[index].values;
         let newValues = Values.map((item, index) => {
             if (index === changeIndex) {
                 item = e.target.value;
@@ -45,7 +45,7 @@ class Values extends Component {
     };
 
     render() {
-        let len = this.props.metrics[this.props.index].Values.length;
+        let len = this.props.metrics[this.props.index].values.length;
         return (
             <div className='form-group'>
                 <h5>{this.props.name}</h5>
@@ -55,7 +55,7 @@ class Values extends Component {
                     <tbody>
                     {
                         //根据metricsData的数据来确认value输入框的个数
-                        this.props.metrics[this.props.index].Values.map((data, index) => {
+                        this.props.metrics[this.props.index].values.map((data, index) => {
                             return (
                                 <tr key={index}>
                                     <td><input className='form-control' type="text" value={data}

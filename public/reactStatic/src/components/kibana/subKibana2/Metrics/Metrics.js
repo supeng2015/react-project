@@ -71,11 +71,11 @@ class Metrics extends Component {
                             <DownInputGroup title="Field" data={this.filterField.bind(this)(content)} value={metrics.field} changeHandle={this.change.bind(this, 'field')}/>
                     }
                     {
-                        content.Percents === undefined ? '' :
-                            <Percents name='Percents' index={index}/>
+                        content.percents === undefined ? '' :
+                            <Percents name='percents' index={index}/>
                     }
                     {
-                        content.Values === undefined ? '' : <Values name='Values' index={index}/>
+                        content.values === undefined ? '' : <Values name='values' index={index}/>
                     }
                     {
                         content.label

@@ -39,7 +39,7 @@ class Bucket extends React.Component{
 
     change(name, e){
         let {index} = this.props;
-        this.props.modifyBucket(index, name, e.target.value)
+        this.props.modifyBucket(index, name, Number.parseInt(e.target.value))
     }
 
     filterField(content){
@@ -51,7 +51,7 @@ class Bucket extends React.Component{
             if(field.hasOwnProperty(key)){
                 switch (type){
                     case "number":
-                        if(field[key] === "long" || field[key] === "int"){
+                        if(field[key] === "long" || field[key] === "integer"){
                             result.push(key);
                         }
                         break;
@@ -96,21 +96,21 @@ class Bucket extends React.Component{
                             : ""
                     }
                     {
-                        content.showEmpty
+                        content.min_doc_count
                             ? <label>
-                                <input type="checkbox" name="showEmpty" data={""} checked={bucket.showEmpty}
-                                       onChange={(e)=>{this.props.modifyBucket(index, 'showEmpty', e.target.checked)}}/>
+                                <input type="checkbox" name="showEmpty" data={""} checked={bucket.min_doc_count}
+                                       onChange={(e)=>{this.props.modifyBucket(index, 'min_doc_count', e.target.checked)}}/>
                                 Show empty buckets
                             </label>
                             : ""
                     }
                     {
                         nowType === "Range"
-                            ? <FromToInputNum index={index} name="fromTo" data={content.fromTo} value={bucket.fromTo}/>
+                            ? <FromToInputNum index={index} name="ranges" data={content.ranges} value={bucket.ranges}/>
                             : (nowType === "Date Range"
-                                ? <FromToInput index={index} name="fromTo" data={content.fromTo} value={bucket.fromTo}/>
+                                ? <FromToInput index={index} name="ranges" data={content.ranges} value={bucket.ranges}/>
                                 : (nowType === "IPv4 Range"
-                                        ? <FromToInputNumChange index={index} data={content.fromTo} value={bucket.fromTo}
+                                        ? <FromToInputNumChange index={index} data={content.ranges} value={bucket.ranges}
                                                                 changeHandle={this.props.modifyBucket}/>
                                         : ""
                                 )

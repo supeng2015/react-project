@@ -5,34 +5,34 @@ export default function () {
         content: {
             "Date Histogram": {
                 field: ["--data--"],
-                interval: ["--select a valid interval--", "Daily", "Monthly", "Yearly"],
+                interval: ["--select a valid interval--", "Millisecondly","Secnodly","Minutely", "Hourly", "Daily", "Weekly","Monthly", "Yearly"],
                 label: true,
                 fieldType: "date"
             },
             "Histogram": {
                 field: ["--number--", "bytes", "machine.ram", "phpmemory"],
                 interval: true,
-                showEmpty: true,
+                min_doc_count: true,
                 label: true,
                 fieldType: "number"
             },
             "Range": {
                 field: ["--number--", "bytes", "machine.ram", "phpmemory"],
-                fromTo: true,
+                ranges: true,
                 label: true,
                 fieldType: "number"
             },
             "Date Range": {
                 type: "Date Range",
                 field: ["--date--", "@timestamp", "relatedContent.article:modeified_time","relatedContent.article:published_time","utc_time"],
-                fromTo: true,
+                ranges: true,
                 label: true,
                 fieldType: "date"
             },
             "IPv4 Range": {
                 type: "IPv4 Range",
                 field: ["--IP--"],
-                fromTo: true,
+                ranges: true,
                 mask: true,
                 label: true,
                 fieldType: "ip"

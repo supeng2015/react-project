@@ -18,7 +18,7 @@ class FromToInputNumChange extends React.Component {
             this.setState({
                 isChange: true,
             });
-            this.props.changeHandle(index, 'fromTo', [{from:0,to:0}])
+            this.props.changeHandle(index, 'ranges', [{from:0,to:0}])
         }else{
             this.setState({
                 isChange: false,
@@ -37,7 +37,7 @@ class FromToInputNumChange extends React.Component {
                 {
                     this.state.isChange
                     ? <MaskInput index={index} name="mask"/>
-                    : <FromToInput index={index} name="fromTo"/>
+                    : <FromToInput index={index} name="ranges"/>
                 }
             </div>
         )

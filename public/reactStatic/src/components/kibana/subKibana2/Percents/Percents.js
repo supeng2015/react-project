@@ -11,7 +11,7 @@ class Percents extends Component {
     delPercent(percentIndex) {
         //console.log('called del');
         const {index, name} = this.props;
-        let Percent = this.props.metrics[index].Percents;
+        let Percent = this.props.metrics[index].percents;
         //console.log('metrics:: ' + newPercent);
         const newPercent = Percent.filter((item, index) => {
             return index !== percentIndex
@@ -21,7 +21,7 @@ class Percents extends Component {
 
     addPercent() {
         const {index, name} = this.props;
-        let Percent = this.props.metrics[index].Percents;
+        let Percent = this.props.metrics[index].percents;
         let len = Percent.length;
         //Percent.push(Percent[len-1]+1);
         let newPercent = [...Percent, Percent[len - 1] + 1];
@@ -30,7 +30,7 @@ class Percents extends Component {
 
     changeHandle(changeIndex, e) {
         const {index, name} = this.props;
-        let Percent = this.props.metrics[index].Percents;
+        let Percent = this.props.metrics[index].percents;
         let newPercent = Percent.map((item, index) => {
             if(index===changeIndex){
                 item=e.target.value;
@@ -52,7 +52,7 @@ class Percents extends Component {
                 <h5>{this.props.name}</h5>
                 <table>
                     <tbody>
-                    {this.props.metrics[this.props.index].Percents.map((data, index) => {
+                    {this.props.metrics[this.props.index].percents.map((data, index) => {
                         return (
                             <tr key={index}>
                                 <td><input type="text" value={data} className='form-control'

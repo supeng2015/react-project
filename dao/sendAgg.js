@@ -11,7 +11,7 @@ router.post('/', function (req, res, next) {
             json: JSON.stringify(data.json),
             index: data.index,
             type: data.type,
-            baseAgg: data.baseAgg
+            label: data.label
         });
         // console.log(JSON.stringify(data));
         request
@@ -34,7 +34,7 @@ router.post('/', function (req, res, next) {
             json: data,
             index: "test1",
             type: "test1",
-            baseAgg: "lable"
+            label: "lable"
         });
         res.send(JSON.stringify('{"56":"1","14":"1","26":"1","28":"1","50":"4","count":"213"}'));
     }

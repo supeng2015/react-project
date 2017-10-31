@@ -14,15 +14,15 @@ export default function (type) {
                 typeName: "histogram",
                 field: "",
                 interval: "",
-                showEmpty: false,
+                min_doc_count: false,
                 label: ""
             };
         case "Range":
             return {
                 type: "Range",
-                typeName: "ranges",
+                typeName: "range",
                 field: "",
-                fromTo: [{from: 0, to: 0}],
+                ranges: [{from: 0, to: 0}],
                 label: ""
             };
         case "Date Range":
@@ -30,15 +30,15 @@ export default function (type) {
                 type: "Date Range",
                 typeName: "date_range",
                 field: "",
-                fromTo: [{from: 0, to: 0}],
+                ranges: [{from: 0, to: 0}],
                 label: ""
             };
         case "IPv4 Range":
             return {
                 type: "IPv4 Range",
-                typeName: "ip_ranges",
+                typeName: "ip_range",
                 field: "",
-                fromTo: [{from: 0, to: 0}],
+                ranges: [{from: 0, to: 0}],
                 mask: [""],
                 label: ""
             };

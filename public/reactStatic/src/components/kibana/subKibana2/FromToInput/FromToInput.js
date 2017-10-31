@@ -16,7 +16,7 @@ class FromToInput extends React.Component {
             e.persist();
             clearTimeout(flag);
             flag = setTimeout(() => {
-                let fromTo = this.props.buckets[index].fromTo;
+                let fromTo = this.props.buckets[index].ranges;
                 const newFromTo = fromTo.map((item, index)=>{
                    if(index === rangeIndex){
                        item[key] = e.target.value;
@@ -32,7 +32,7 @@ class FromToInput extends React.Component {
 
     changeHandle(rangeIndex, key, e){
         const {index, name} = this.props;
-        let fromTo = this.props.buckets[index].fromTo;
+        let fromTo = this.props.buckets[index].ranges;
         const newFromTo = fromTo.map((item, index)=>{
             if(index === rangeIndex){
                 item[key] = e.target.value;
@@ -46,14 +46,14 @@ class FromToInput extends React.Component {
 
     addFromTo(){
         const {index, name} = this.props;
-        let fromTo = this.props.buckets[index].fromTo;
+        let fromTo = this.props.buckets[index].ranges;
         const newFromTo = [...fromTo,{from:0, to: 0}];
         this.props.modifyBucket(index, name, newFromTo);
     }
 
     deleteFromTo(rangeIndex){
         const {index, name} = this.props;
-        let fromTo = this.props.buckets[index].fromTo;
+        let fromTo = this.props.buckets[index].ranges;
         const newFromTo = fromTo.filter((item,index)=>{
             return index !== rangeIndex
         });
@@ -61,7 +61,7 @@ class FromToInput extends React.Component {
     }
 
     render() {
-        let fromTo = this.props.buckets[this.props.index].fromTo;
+        let fromTo = this.props.buckets[this.props.index].ranges;
         return (
             <div className="form-group">
                 <table className="form-group">
@@ -74,9 +74,9 @@ class FromToInput extends React.Component {
                         fromTo.map((item, index) => {
                             return (
                                 <tr key={index}>
-                                    <td><input type="number" className="form-control" min={0} value={fromTo[index].from}
+                                    <td><input type="text" className="form-control" min={0} value={fromTo[index].from}
                                                onChange={this.changeHandle.bind(this, index, 'from')}/></td>
-                                    <td><input type="number" className="form-control" min={0} value={fromTo[index].to}
+                                    <td><input type="text" className="form-control" min={0} value={fromTo[index].to}
                                                onChange={this.changeHandle.bind(this, index, 'to')}/></td>
                                     <td><Close onClick={this.deleteFromTo.bind(this, index)}/></td>
                                 </tr>

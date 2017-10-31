@@ -60,7 +60,7 @@ export default function(type){
                 type: 'Percentiles',
                 typeName: 'percentiles',
                 field: '',
-                Percents: [1, 5, 25, 50, 75, 95, 99],
+                percents: [50],
                 label: ''
             };
         case 'Percentile Ranks':
@@ -68,7 +68,7 @@ export default function(type){
                 type: 'Percentile Ranks',
                 typeName: 'percentile_ranks',
                 field: '',
-                Values: [],
+                values: [],
                 label: ''
             };
         default:

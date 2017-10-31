@@ -42,13 +42,13 @@ export default function () {
             },
             'Percentiles': {
                 field: ['--','age', 'number'],
-                Percents: '',
+                percents: '',
                 label: true,
                 fieldType: 'number'
             },
             'Percentile Ranks': {
                 field: ['--','age', 'number'],
-                Values: true,
+                values: true,
                 label: true,
                 fieldType: 'number'
             }

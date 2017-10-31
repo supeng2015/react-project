@@ -2,8 +2,17 @@ import React, {Component, PropTypes} from 'react';
 import Bucket from './Bucket/Bucket'
 import {connect} from 'react-redux'
 import {
-    addBucket2, addMetrics2, delMetrics2, delBucket2, addMetricsData,
-    updateMetricField,addMetricConstructor,delMetricConstructor, updateBucketField,addBucketConstructor,delBucketConstructor
+    addBucket2,
+    addMetrics2,
+    delMetrics2,
+    delBucket2,
+    addMetricsData,
+    updateMetricField,
+    addMetricConstructor,
+    delMetricConstructor,
+    updateBucketField,
+    addBucketConstructor,
+    delBucketConstructor
 } from "../../../actions/index";
 import Metrics from './Metrics/Metrics'
 import metricsData from './metricsData'
@@ -108,17 +117,17 @@ class SubKibana2 extends Component {
         console.log("metricsJson:" + JSON.stringify(metricsJson));
         console.log("bucketsJson:" + JSON.stringify(bucketsJson));
 
-        if(!metricsJson && bucketsJson){
+        if (!metricsJson && bucketsJson) {
             result.json = bucketsJson;
-            result.baseAgg =this.props.allBucketData[0].label;
-        }else if(metricsJson && !bucketsJson){
+            result.label = this.props.allBucketData[0].label;
+        } else if (metricsJson && !bucketsJson) {
             result.json = metricsJson;
-            result.baseAgg =this.props.metricsData[0].label;
-        }else{
+            result.label = this.props.metricsData[0].label;
+        } else {
             let labelName = this.props.allBucketData[0].label;
             bucketsJson.aggs[labelName].aggs = metricsJson.aggs;
             result.json = bucketsJson;
-            result.baseAgg = labelName;
+            result.label = labelName;
         }
         return result;
     }
@@ -127,9 +136,9 @@ class SubKibana2 extends Component {
     createJson(dateArray) {
         for (let i = 0; i < dateArray.length; i++) {
             // 如果数组长度为0或没有填写label标签
-            if(!dateArray[i] || !dateArray[i].label){
+            if (!dateArray[i] || !dateArray[i].label) {
                 return '';
-            }else{
+            } else {
                 let obj = {};
                 for (let key in dateArray[i]) {
                     if (dateArray[i].hasOwnProperty(key)) {
@@ -137,6 +146,46 @@ class SubKibana2 extends Component {
                             obj[key] = dateArray[i][key]
                         }
                     }
+                }
+                // Median类型固定属性
+                if (dateArray[i].type === "Median") {
+                    obj.percents = [50];
+                }
+                // Date Histogram类型固定属性
+                if (dateArray[i].type === "Date Histogram") {
+                    let intervalMapping = {
+                        Millisecondly: "1ms",
+                        Secnodly: "1s",
+                        Minutely: "1m",
+                        Hourly: "1h",
+                        Daily: "1d",
+                        Weekly: "1w",
+                        Monthly: "1M",
+                        Yearly: "1y",
+                    };
+                    obj.interval = intervalMapping[obj.interval];
+                    obj.min_doc_count = 1;
+                }
+                if (dateArray[i].type === "Histogram") {
+                    // obj.interval = Number.parseInt(obj.interval);
+                    obj.min_doc_count = obj.min_doc_count ? 0 : 1;
+                }
+                // 删除ranges或者mask
+                if(dateArray[i].type === "IPv4 Range"){
+                    if(obj.mask[0] === ""){
+                        delete obj.mask;
+                    }
+                }
+                // 去除orderby，添加_count或者_term
+                if(dateArray[i].type === "Terms"){
+                    let orderMapping = {Descending: "desc", Ascending: "asc"};
+                    let orderItemMapping = {"metric:Count":"_count","Custom Metric":"_term"};
+                    let order = orderMapping[obj.order];
+                    let item = orderItemMapping[obj.orderBy];
+
+                    obj["order"] = {};
+                    obj["order"][item] = order;
+                    delete obj.orderBy;
                 }
                 let result = {aggs: {[dateArray[i].label]: {[dateArray[i].typeName]: obj}}};
                 console.log("提取到的数据为:" + JSON.stringify(result));
@@ -220,19 +269,19 @@ const mapDispatchToProps = (dispatch) => {
         updateMetricField: (fieldObj) => {
             dispatch(updateMetricField(fieldObj))
         },
-        addMetricConstructor: (fieldObj)=>{
+        addMetricConstructor: (fieldObj) => {
             dispatch(addMetricConstructor(fieldObj));
         },
-        delMetricConstructor: (index)=>{
+        delMetricConstructor: (index) => {
             dispatch(delMetricConstructor(index));
         },
         updateBucketField: (fieldObj => {
             dispatch(updateBucketField(fieldObj))
         }),
-        addBucketConstructor: (fieldObj)=>{
+        addBucketConstructor: (fieldObj) => {
             dispatch(addBucketConstructor(fieldObj));
         },
-        delBucketConstructor: (index)=>{
+        delBucketConstructor: (index) => {
             dispatch(delBucketConstructor(index));
         },
     }

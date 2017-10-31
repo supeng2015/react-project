@@ -6,13 +6,15 @@ import Auth from './user/Auth';
 import {Route, Link, Switch} from 'react-router-dom'
 import ChartListPage from "./kibana/charts/ChartListPage/ChartListPage";
 import IndexType from "./IndexType/IndexType";
+import Relationship from "./Relationship/Relationship";
 // import Discover from "../images/menuIcon/discover.png"
 // import Relationship from "../images/menuIcon/relationship.png"
 // import Visualize from "../images/menuIcon/visualize.png"
 
 class App extends Component {
     render() {
-        let {history} = this.props;
+        let {history,location} = this.props;
+        console.log(location.pathname);
         return (
             <div className="app-index">
                 {/*左边导航*/}
@@ -29,7 +31,7 @@ class App extends Component {
                         <ul>
                             <li><Link to="/app"><span className="discover"/>Discover</Link></li>
                             <li><Link to="/app/visualize"><span className="visualize"/>Visualize</Link></li>
-                            <li><Link to="/app/123"><span className="relationship"/>Relationship</Link></li>
+                            <li><Link to="/app/relationship"><span className="relationship"/>Relationship</Link></li>
                             {/*<li><Link to="/app/234">Change Data</Link></li>*/}
                             {/*<li><Link to="/app/345">About</Link></li>*/}
                         </ul>
@@ -42,6 +44,7 @@ class App extends Component {
                         <Route exact path="/app" component={HomePage}/>
                         <Route path="/app/visualize/:type" component={Kibana}/>
                         <Route path="/app/visualize" component={ChartListPage}/>
+                        <Route path="/app/relationship" component={Relationship}/>
                         <Route component={Kibana}/>
                     </Switch>
                 </div>
