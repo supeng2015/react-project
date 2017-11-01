@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "webpack-dev-server --open --port 3600"
+    "dev": "webpack-dev-server --open --port 3600",
+    "dev-inner": "webpack-dev-server --open --port 3600 --host 11.1.4.207"
   },
   "dependencies": {
     "babel": "^6.5.2",

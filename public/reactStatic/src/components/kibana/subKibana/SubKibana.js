@@ -1,11 +1,10 @@
-import React, {Component, PropTypes} from 'react';
-import {addMetrics,removeMetrics,addBucket} from '../../../actions';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {addBucket, addMetrics} from '../../../actions';
+import {connect} from 'react-redux';
 import FaCaretRight from "react-icons/lib/fa/caret-right";
 import FaClose from "react-icons/lib/fa/close";
 import Metrics from "./Metrics";
 import Bucket from "./Bucket";
-import { Link } from 'react-router';
 
 class subKibana extends Component{
   addMetrics(){

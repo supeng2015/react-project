@@ -1,5 +1,6 @@
-import React, {Component, PropTypes} from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+
 class Histogram extends Component{
 
   render(){

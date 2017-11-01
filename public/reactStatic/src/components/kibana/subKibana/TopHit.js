@@ -1,6 +1,6 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {modefyMetrics} from '../../../actions';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 class TopHit extends Component{
   onChangeProperty(value,p){

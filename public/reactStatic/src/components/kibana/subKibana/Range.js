@@ -1,6 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {modefyBucket} from '../../../actions';
+
 class Range extends Component{
   constructor(){
     super(); 

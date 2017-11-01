@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {updateIndex, updateType, updateIndexArray, updateTypeArray, updateContent, updateField} from '../../actions'
 import {withRouter} from 'react-router-dom';
 import {resetBucket2, resetMetrics2, updateBucketField, updateMetricField} from "../../actions/index";
+import config from "../../config";
 
 class IndexType extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class IndexType extends React.Component {
     fetchField() {
         let {indexValue, typeValue} = this.props.indexType;
         // setTimeout(()=>{
-        fetch('http://localhost:3000/getField?index=' + indexValue + '&type=' + typeValue)
+        fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
             .then((response) => {
                 return response.json();
             })
@@ -35,7 +36,7 @@ class IndexType extends React.Component {
     fetchContent() {
         let {indexArray, typeValue} = this.props.indexType;
         // setTimeout(()=>{
-        fetch('http://localhost:3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
+        fetch('http://'+ config.nodejsIp +':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
             .then((response) => {
                 return response.json();
             })
@@ -51,7 +52,7 @@ class IndexType extends React.Component {
 
     // http请求，获取Type
     fetchType(indexValue) {
-        fetch('http://localhost:3000/getType?index=' + indexValue)
+        fetch('http://'+ config.nodejsIp +':3000/getType?index=' + indexValue)
             .then((response) => {
                 return response.json();
             })
@@ -70,7 +71,7 @@ class IndexType extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3000/getIndex')
+        fetch('http://'+ config.nodejsIp +':3000/getIndex')
             .then((response) => {
                 return response.json();
             })
@@ -87,7 +88,7 @@ class IndexType extends React.Component {
             .then(() => {
                 // this.fetchType(this.props.indexType.indexValue);
                 // this.fetchField()
-                fetch('http://localhost:3000/getType?index=' + this.props.indexType.indexValue)
+                fetch('http://'+ config.nodejsIp +':3000/getType?index=' + this.props.indexType.indexValue)
                     .then((response) => {
                         return response.json();
                     })
@@ -104,7 +105,7 @@ class IndexType extends React.Component {
                     .then(() => {
                         let {indexArray, typeValue} = this.props.indexType;
                         // setTimeout(()=>{
-                        fetch('http://localhost:3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
+                        fetch('http://'+ config.nodejsIp +':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
                             .then((response) => {
                                 return response.json();
                             })
@@ -130,7 +131,7 @@ class IndexType extends React.Component {
         setTimeout(() => {
             // this.fetchType(this.props.indexType.indexValue);
             // 获取Type
-            fetch('http://localhost:3000/getType?index=' + this.props.indexType.indexValue)
+            fetch('http://'+ config.nodejsIp +':3000/getType?index=' + this.props.indexType.indexValue)
                 .then((response) => {
                     return response.json();
                 })
@@ -153,7 +154,7 @@ class IndexType extends React.Component {
                     } else {
                         // 获取Field
                         let {indexValue, typeValue} = this.props.indexType;
-                        fetch('http://localhost:3000/getField?index=' + indexValue + '&type=' + typeValue)
+                        fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
                             .then((response) => {
                                 return response.json();
                             })
@@ -185,7 +186,7 @@ class IndexType extends React.Component {
                 this.fetchField();
             } else {
                 let {indexValue, typeValue} = this.props.indexType;
-                fetch('http://localhost:3000/getField?index=' + indexValue + '&type=' + typeValue)
+                fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
                     .then((response) => {
                         return response.json();
                     })

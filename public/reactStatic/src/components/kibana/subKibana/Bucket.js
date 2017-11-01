@@ -1,9 +1,10 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {removeBucket} from '../../../actions';
 import DateHistogram from "./DateHistogram";
 import Histogram from "./Histogram";
 import Range from "./Range";
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+
 class Bucket extends Component{
 	constructor(){
     super();

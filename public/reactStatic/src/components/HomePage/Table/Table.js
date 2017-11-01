@@ -5,40 +5,76 @@ class Table extends React.Component {
         super(props);
     }
 
+    defaultSort(){
+        return;
+    }
+
+    defaultClick(){
+        return ()=>{
+            return;
+        };
+    }
+
     render() {
         let {data} = this.props;
+        let sortHandle = this.props.sortHandle || this.defaultSort;
+        let clickHandle = this.props.clickHandle || this.defaultClick;
+        let hasTHeader = this.props.hasTHeader !== false;
+
         let keys = data ? data[0] : "";
 
         function generateTD(row) {
             let result = [];
             for (let i = 0; i < keys.length; i++) {
-                result.push(<td key={i}>{row[keys[i]]}</td>);
+                result.push(<td key={i} onClick={clickHandle(i)}>{row[keys[i]]}</td>);
+            }
+            return result;
+        }
+
+        function generateTDNoHead(row) {
+            let result = [];
+            for (let key in row) {
+                if(row.hasOwnProperty(key)){
+                    result.push(<td key={key}>{row[key]}</td>);
+                }
             }
             return result;
         }
 
         return (
             <table>
-                <thead>
-                <tr onClick={this.props.sortHandle}>
-                    {
-                        data && data[0] ? data[0].map((item, index) => {
-                            return <th key={index}>{item}</th>
-                        }) : ""
-                    }
-                </tr>
-                </thead>
+                {
+                    hasTHeader ?
+                    <thead>
+                        <tr onClick={sortHandle}>
+                            {
+                                data && data[0] ? data[0].map((item, index) => {
+                                    return <th key={index}>{item}</th>
+                                }) : ""
+                            }
+                        </tr>
+                    </thead> : <thead/>
+                }
                 <tbody>
                 {
-                    data && data[0] ? data.map((rows, index) => {
-                        if (index !== 0) {
-                            return (
-                                <tr key={index}>
-                                    {generateTD(rows)}
-                                </tr>
-                            )
-                        }
-                    }) : ""
+                    data && data[0] ?
+                        hasTHeader ?
+                            data.map((row, index) => {
+                                if (index !== 0) {
+                                    return (
+                                        <tr key={index} onClick={clickHandle}>
+                                            {generateTD(row)}
+                                        </tr>
+                                    )
+                                }
+                            }) : data.map((row, index) => {
+                                return (
+                                    <tr key={index} onClick={clickHandle(index)}>
+                                        {generateTDNoHead(row)}
+                                    </tr>
+                                )
+                            })
+                        : ""
                 }
                 </tbody>
             </table>

@@ -1,3 +1,5 @@
+import config from "../config";
+
 export const addMetrics = m => ({
     type: 'ADD_METRICS',
     m
@@ -31,7 +33,7 @@ const userInfo = (user) => ({
     user
 });
 export const fetchUserInfo = user => dispatch => {
-    return fetch(`http://localhost:3000/userInfo`)
+    return fetch(`http://'+ config.nodejsIp +':3000/userInfo`)
         .then(response => {
             return response.json()
         })
@@ -64,7 +66,7 @@ export const invalidateReddit = kibana => ({
 });
 export const fetchPosts = kibana => dispatch => {
     dispatch(requestPosts(kibana))
-    return fetch('http://localhost:3000/kibana')
+    return fetch('http://'+ config.nodejsIp +':3000/kibana')
         .then(response => response.json())
         .then(json => dispatch(receivePosts(kibana, json)))
 };

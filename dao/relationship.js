@@ -10,16 +10,21 @@ router.get("/", function (req, res, next) {
         let id = req.query.id;
         MongoClient.connect(url)
             .then((db) => {
-                let collection = db.collection("com_relation_schema");
+                // let collection = db.collection("com_relation_schema");
+                let collection = db.collection("com_invest_schema");
                 // collection.findOne({_id: ObjectId(id)})
-                collection.findOne({_id: id})
+                collection.find({company_name: new RegExp(id)})
+                    .toArray()
                     .then((docs) => {
                         res.send(docs);
                         db.close();
+                    },(err)=>{
+                        console.log(err);
                     })
             })
     }else{
-        res.send({
+        res.send([{
+            "company_name": "test",
             "node": [
                 {
                     "property": "\u4f01\u4e1a\u540d\u79f0",
@@ -119,7 +124,7 @@ router.get("/", function (req, res, next) {
                     "target": "2353606688"
                 }
             ]
-        });
+        }]);
     }
 });
 
