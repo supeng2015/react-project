@@ -55,6 +55,8 @@ class Bucket extends React.Component{
                             result.push(key);
                         }
                         break;
+                    case "all":
+                        result.push(key);
                     default:
                         if(field[key] === type){
                             result.push(key);

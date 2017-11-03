@@ -44,7 +44,7 @@ export default function () {
                 order: ["Descending", "Ascending"],
                 size: true,
                 label: true,
-                fieldType: "date"
+                fieldType: "all"
             },
             "Filter": {
                 type: "Filter",

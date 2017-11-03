@@ -21,6 +21,7 @@ import metricsData from './metricsData'
 import bucketData from './bucketData';
 import Close from 'react-icons/lib/fa/close'
 import 'whatwg-fetch'
+import config from "../../../config";
 
 class SubKibana2 extends Component {
     constructor(props) {

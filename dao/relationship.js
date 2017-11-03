@@ -10,8 +10,9 @@ router.get("/", function (req, res, next) {
         let id = req.query.id;
         MongoClient.connect(url)
             .then((db) => {
-                // let collection = db.collection("com_relation_schema");
-                let collection = db.collection("com_invest_schema");
+                // let collection = db.collection("com_invest_schema");
+                // let collection = db.collection("com_relation_schemaOftianyan");
+                let collection = db.collection("com_staff_relation_schema");
                 // collection.findOne({_id: ObjectId(id)})
                 collection.find({company_name: new RegExp(id)})
                     .toArray()
