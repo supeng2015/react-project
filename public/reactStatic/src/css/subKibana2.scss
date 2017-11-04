@@ -115,3 +115,12 @@ button{
 .box{
   margin-top: 20px;
 }
+#submit{
+  &:disabled{
+    background-color: #5d6e80;
+    &:hover{
+      background-color: #5d6e80;
+      cursor: not-allowed;
+    }
+  }
+}

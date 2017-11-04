@@ -26,22 +26,10 @@ import config from "../../../config";
 class SubKibana2 extends Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //     metricsArr: [],
-        //     bucketArr: []
-        // }
+        this.state = {
+            isSubmit: ""
+        }
     }
-
-    // // 动态添加Field
-    // addField(constructor) {
-    //     const content = constructor.content;
-    //     for (let key in content) {
-    //         if (content[key]["field"] && content.hasOwnProperty(key)) {
-    //             content[key]["field"] = this.props.field;
-    //         }
-    //     }
-    //     return constructor;
-    // }
 
     componentDidMount() {
         let {field} = this.props;
@@ -81,6 +69,9 @@ class SubKibana2 extends Component {
     }
 
     submitData() {
+        this.setState({
+            isSubmit: "disabled"
+        });
         let submitObj = this.mergeJson();
         submitObj.index = this.props.indexType.indexValue;
         submitObj.type = this.props.indexType.typeValue;
@@ -93,6 +84,9 @@ class SubKibana2 extends Component {
             body: JSON.stringify(submitObj)
         })
             .then((response) => {
+                this.setState({
+                    isSubmit: ""
+                });
                 return response.json();
             })
             .then((res) => {
@@ -132,10 +126,11 @@ class SubKibana2 extends Component {
             result.json = metricsJson;
             result.label = this.props.metricsData[0].label;
         } else {
-            let labelName = this.props.allBucketData[0].label;
-            bucketsJson.aggs[labelName].aggs = metricsJson.aggs;
+            let bucketLabelName = this.props.allBucketData[0].label;
+            let metricLabelName = this.props.metricsData[0].label;
+            bucketsJson.aggs[bucketLabelName].aggs = metricsJson.aggs;
             result.json = bucketsJson;
-            result.label = labelName;
+            result.label = metricLabelName;
         }
         return result;
     }
@@ -187,7 +182,7 @@ class SubKibana2 extends Component {
                 // 去除orderby，添加_count或者_term
                 if(dateArray[i].type === "Terms"){
                     let orderMapping = {Descending: "desc", Ascending: "asc"};
-                    let orderItemMapping = {"metric:Count":"_count","Custom Metric":"_term"};
+                    let orderItemMapping = {"metric:Count":"_count","Term":"_term"};
                     let order = orderMapping[obj.order];
                     let item = orderItemMapping[obj.orderBy];
 
@@ -203,6 +198,7 @@ class SubKibana2 extends Component {
     }
 
     render() {
+        let {isSubmit} = this.state;
         return (
             Object.keys(this.props.field).length
                 ? <div>
@@ -236,7 +232,7 @@ class SubKibana2 extends Component {
                         }
                         <button onClick={this.addBucket.bind(this)}>Add Bucket</button>
                     </div>
-                    <button className="button-primary" onClick={this.submitData.bind(this)}>Submit Data</button>
+                    <button id="submit" className="button-primary" onClick={this.submitData.bind(this)} disabled={isSubmit}>Submit Data</button>
                     <button className="button-primary" onClick={this.resetData.bind(this)}>Reset Data</button>
                 </div>
                 : <div>

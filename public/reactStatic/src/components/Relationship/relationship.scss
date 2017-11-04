@@ -18,3 +18,13 @@
     }
   }
 }
+#search{
+  margin:24px 10px;
+  &:disabled{
+    background-color: #5d6e80;
+    &:hover{
+      background-color: #5d6e80;
+      cursor: not-allowed;
+    }
+  }
+}

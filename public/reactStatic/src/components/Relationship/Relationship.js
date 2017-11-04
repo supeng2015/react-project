@@ -10,6 +10,7 @@ import NormalInput from "../kibana/subKibana2/NormalInput/NormalInput";
 import config from "../../config"
 import Table from "../HomePage/Table/Table";
 import './relationship.scss';
+import SearchComponent from "./SearchComponent/SearchComponent";
 
 class Relationship extends React.Component {
     constructor(props) {
@@ -47,22 +48,51 @@ class Relationship extends React.Component {
                 nodes: [],
                 edges: []
             }],
-            keyword: '',
-            res: ''
+            res: '',
+            message: ''
         }
     }
 
-    search(){
-        let id = this.state.keyword;
+    search(keyword){
+        let id = keyword;
         if(id){
+            this.setState({
+                isSearching: true,
+                message: "搜索中..."
+            });
             fetch("http://"+ config.nodejsIp +":3000/relationship?id=" + id)
                 .then((response) => {
                     return response.json();
                 })
                 .then((res) =>{
-                    this.setState({
-                        res
-                    })
+                    if(res[0] === "error"){
+                        this.setState({
+                            isSearching: false,
+                            message: "数据库连接异常！"
+                        });
+                    }else{
+                        let length = res.length;
+                        if(length !== 0){
+                            if(length === 100){
+                                this.setState({
+                                    res,
+                                    isSearching: false,
+                                    message: "搜索结果数量过多，该页仅显示" + length + "条"
+                                });
+                            }else{
+                                this.setState({
+                                    res,
+                                    isSearching: false,
+                                    message: "搜索到" + length + "条"
+                                });
+                            }
+                        }else{
+                            this.setState({
+                                isSearching: false,
+                                message: "未搜索到结果，请确认你的关键字！"
+                            });
+                        }
+                    }
                 })
         }else{
             alert("请输入搜索关键词！");
@@ -118,6 +148,7 @@ class Relationship extends React.Component {
     }
 
     render() {
+        let {isSearching} = this.state;
         let res = this.state.res;
         let data = "";
         if(res){
@@ -130,11 +161,9 @@ class Relationship extends React.Component {
         }
         return (
             <div className="result">
-                <div className="container" style={{display: "flex"}}>
-                    <div style={{width:"50%"}}>
-                        <NormalInput title="Keyword" changeHandle={(e)=>{this.setState({keyword: e.target.value})}} value={this.state.keyword}/>
-                    </div>
-                    <button className="button-primary"  style={{margin:"24px 10px"}} onClick={this.search.bind(this)}>Search</button>
+                <SearchComponent searchHandle={this.search.bind(this)}/>
+                <div className="container">
+                    <div>{this.state.message}</div>
                 </div>
                 <Table data={data} clickHandle={this.clickHandle.bind(this)} hasTHeader={false}/>
                 <div ref="chartDom" style={{width: "100%", height: "600px"}}/>
