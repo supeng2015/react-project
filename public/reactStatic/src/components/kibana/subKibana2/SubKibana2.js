@@ -63,7 +63,7 @@ class SubKibana2 extends Component {
         this.props.delBucket(bucketIndex);
     }
 
-    resetData(){
+    resetData() {
         this.props.resetMetric();
         this.props.resetBucket();
     }
@@ -76,7 +76,7 @@ class SubKibana2 extends Component {
         submitObj.index = this.props.indexType.indexValue;
         submitObj.type = this.props.indexType.typeValue;
         console.log("提交的数据为：" + JSON.stringify(submitObj));
-        fetch('http://'+ config.nodejsIp +':3000/sendAgg', {
+        fetch('http://' + config.nodejsIp + ':3000/sendAgg', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -137,6 +137,7 @@ class SubKibana2 extends Component {
 
     // 提取对应的数据
     createJson(dateArray) {
+        let resultJson = {aggs: {}};
         for (let i = 0; i < dateArray.length; i++) {
             // 如果数组长度为0或没有填写label标签
             if (!dateArray[i] || !dateArray[i].label) {
@@ -174,15 +175,15 @@ class SubKibana2 extends Component {
                     obj.min_doc_count = obj.min_doc_count ? 0 : 1;
                 }
                 // 删除ranges或者mask
-                if(dateArray[i].type === "IPv4 Range"){
-                    if(obj.mask[0] === ""){
+                if (dateArray[i].type === "IPv4 Range") {
+                    if (obj.mask[0] === "") {
                         delete obj.mask;
                     }
                 }
                 // 去除orderby，添加_count或者_term
-                if(dateArray[i].type === "Terms"){
+                if (dateArray[i].type === "Terms") {
                     let orderMapping = {Descending: "desc", Ascending: "asc"};
-                    let orderItemMapping = {"metric:Count":"_count","Term":"_term"};
+                    let orderItemMapping = {"metric:Count": "_count", "Term": "_term"};
                     let order = orderMapping[obj.order];
                     let item = orderItemMapping[obj.orderBy];
 
@@ -190,11 +191,15 @@ class SubKibana2 extends Component {
                     obj["order"][item] = order;
                     delete obj.orderBy;
                 }
-                let result = {aggs: {[dateArray[i].label]: {[dateArray[i].typeName]: obj}}};
-                console.log("提取到的数据为:" + JSON.stringify(result));
-                return result;
+
+                // 拼接所有数组中的内容
+                let labelName = dateArray[i].label;
+                let typeName = dateArray[i].typeName;
+                resultJson.aggs[labelName]={[typeName]: obj};
             }
         }
+        console.log("提取到的数据为:" + JSON.stringify(resultJson));
+        return resultJson;
     }
 
     render() {
@@ -232,7 +237,9 @@ class SubKibana2 extends Component {
                         }
                         <button onClick={this.addBucket.bind(this)}>Add Bucket</button>
                     </div>
-                    <button id="submit" className="button-primary" onClick={this.submitData.bind(this)} disabled={isSubmit}>Submit Data</button>
+                    <button id="submit" className="button-primary" onClick={this.submitData.bind(this)} disabled={isSubmit}>
+                        Submit Data
+                    </button>
                     <button className="button-primary" onClick={this.resetData.bind(this)}>Reset Data</button>
                 </div>
                 : <div>

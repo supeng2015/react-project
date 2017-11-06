@@ -9,27 +9,6 @@ class FromToInputNum extends React.Component {
         super(props);
     }
 
-    debounceChange() {
-        let flag = null;
-        const {index, name} = this.props;
-        return function (rangeIndex, key, e) {
-            e.persist();
-            clearTimeout(flag);
-            flag = setTimeout(() => {
-                let fromTo = this.props.buckets[index].ranges;
-                const newFromTo = fromTo.map((item, index)=>{
-                   if(index === rangeIndex){
-                       item[key] = e.target.value;
-                       return item
-                   }else{
-                       return item
-                   }
-                });
-                this.props.modifyBucket(index, name, newFromTo);
-            }, 500);
-        }
-    }
-
     changeHandle(rangeIndex, key, e){
         const {index, name} = this.props;
         let fromTo = this.props.buckets[index].ranges;

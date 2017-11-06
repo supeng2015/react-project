@@ -33,7 +33,7 @@ const userInfo = (user) => ({
     user
 });
 export const fetchUserInfo = user => dispatch => {
-    return fetch(`http://'+ config.nodejsIp +':3000/userInfo`)
+    return fetch('http://'+ config.nodejsIp +':3000/userInfo')
         .then(response => {
             return response.json()
         })

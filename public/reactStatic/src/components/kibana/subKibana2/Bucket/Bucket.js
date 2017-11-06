@@ -25,18 +25,6 @@ class Bucket extends React.Component{
         this.props.changeBucketType(this.props.index,bucketData(bucketType));
     }
 
-    debounceChange(){
-        let flag = null;
-        let {index} = this.props;
-        return function(name, e){
-            e.persist();
-            clearTimeout(flag);
-            flag = setTimeout(()=>{
-                this.props.modifyBucket(index, name, e.target.value)
-            },500)
-        }
-    }
-
     change(name, e){
         let {index} = this.props;
         this.props.modifyBucket(index, name, Number.parseInt(e.target.value))
@@ -45,7 +33,7 @@ class Bucket extends React.Component{
     filterField(content){
         let type = content.fieldType;
         let field = content.field;
-        console.log(field);
+        // console.log(field);
         let result = ["--" + content.fieldType + "--"];
         for(let key in field){
             if(field.hasOwnProperty(key)){
