@@ -4,10 +4,11 @@ import Type from "./Type/Type";
 import "./indexType.scss"
 import TypeFilter from "./Type/TypeFilter";
 import {connect} from "react-redux";
-import {updateIndex, updateType, updateIndexArray, updateTypeArray, updateContent, updateField} from '../../actions'
+import {updateContent, updateField, updateIndex, updateIndexArray, updateType, updateTypeArray} from '../../actions'
 import {withRouter} from 'react-router-dom';
 import {resetBucket2, resetMetrics2, updateBucketField, updateMetricField} from "../../actions/index";
 import config from "../../config";
+import "whatwg-fetch";
 
 class IndexType extends React.Component {
     constructor(props) {
@@ -17,108 +18,92 @@ class IndexType extends React.Component {
     // http请求，field
     fetchField() {
         let {indexValue, typeValue} = this.props.indexType;
-        fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
-            .then((response) => {
-                return response.json();
-            })
-            .then((res) => {
-                if (res.status !== 'error') {
-                    this.props.updateField(res);
-                } else {
-                    alert("获取Field网络错误");
-                }
-            });
+        return new Promise((resolve, reject)=>{
+            fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if (res.status !== 'error') {
+                        this.props.updateField(res);
+                        resolve();
+                    } else {
+                        alert("获取Field网络错误");
+                        reject();
+                    }
+                });
+        })
     }
 
     // http请求，获取content
     fetchContent() {
         let {indexArray, typeValue} = this.props.indexType;
-        fetch('http://'+ config.nodejsIp +':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
-            .then((response) => {
-                return response.json();
-            })
-            .then((res) => {
-                if (res.status !== 'error') {
-                    this.props.updateContent(res);
-                } else {
-                    alert("获取Content网络错误")
-                }
-            })
+        return new Promise((resolve, reject)=>{
+            fetch('http://'+ config.nodejsIp +':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if (res.status !== 'error') {
+                        this.props.updateContent(res);
+                        resolve();
+                    } else {
+                        alert("获取Content网络错误");
+                        reject();
+                    }
+                })
+        })
     }
 
     // http请求，获取Type
     fetchType(indexValue) {
-        fetch('http://'+ config.nodejsIp +':3000/getType?index=' + indexValue)
-            .then((response) => {
-                return response.json();
-            })
-            .then((res) => {
-                if (res.status !== 'error') {
-                    this.props.updateTypeArray(res);
-                    this.props.updateTypeValue(res[0]);
-                    return Promise.resolve("");
-                } else {
-                    alert("获取Type网络错误");
-                }
-            })
-            .then(() => {
-                this.fetchContent();
-            })
+        return new Promise((resolve, reject)=>{
+            fetch('http://'+ config.nodejsIp +':3000/getType?index=' + indexValue)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if (res.status !== 'error') {
+                        this.props.updateTypeArray(res);
+                        this.props.updateTypeValue(res[0]);
+                        resolve();
+                    } else {
+                        alert("获取Type网络错误");
+                        reject();
+                    }
+                })
+        })
+    }
+
+    fetchIndex(){
+        return new Promise((resolve, reject)=>{
+            fetch('http://'+ config.nodejsIp +':3000/getIndex')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if (res.status !== 'error') {
+                        this.props.updateIndexArray(res);
+                        this.props.updateIndexValue(res[0]);
+                        resolve()
+                    } else {
+                        alert("获取Index网络错误");
+                        reject();
+                    }
+                })
+        })
     }
 
     componentDidMount() {
-        // 获取Index
-        fetch('http://'+ config.nodejsIp +':3000/getIndex')
-            .then((response) => {
-                return response.json();
+        this.fetchIndex()
+            .then(()=>{
+                this.fetchType(this.props.indexType.indexValue);
             })
-            .then((res) => {
-                if (res.status !== 'error') {
-                    this.props.updateIndexArray(res);
-                    this.props.updateIndexValue(res[0]);
-                    return Promise.resolve("");
-                } else {
-                    alert("获取Index网络错误");
-                    return Promise.reject("");
-                }
+            .then(()=>{
+                this.fetchContent();
             })
-            .then(() => {
-                // 获取Type
-                fetch('http://'+ config.nodejsIp +':3000/getType?index=' + this.props.indexType.indexValue)
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then((res) => {
-                        if (res.status !== 'error') {
-                            this.props.updateTypeArray(res);
-                            this.props.updateTypeValue(res[0]);
-                            return Promise.resolve("");
-                        } else {
-                            alert("获取Type网络错误");
-                            return Promise.reject("");
-                        }
-                    })
-                    .then(() => {
-                        // 获取Content
-                        let {indexArray, typeValue} = this.props.indexType;
-                        fetch('http://'+ config.nodejsIp +':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
-                            .then((response) => {
-                                return response.json();
-                            })
-                            .then((res) => {
-                                if (res.status !== 'error') {
-                                    this.props.updateContent(res);
-                                    return Promise.resolve("");
-                                } else {
-                                    alert("获取Content网络错误");
-                                    return Promise.reject("");
-                                }
-                            })
-                            .then(()=>{
-                                // 获取Field
-                                this.fetchField();
-                            })
-                    })
+            .then(()=>{
+                this.fetchField();
             })
     }
 
@@ -127,20 +112,7 @@ class IndexType extends React.Component {
         this.props.updateIndexValue(e.target.value);
         setTimeout(() => {
             // 获取Type
-            fetch('http://'+ config.nodejsIp +':3000/getType?index=' + this.props.indexType.indexValue)
-                .then((response) => {
-                    return response.json();
-                })
-                .then((res) => {
-                    if (res.status !== 'error') {
-                        // 更新Type
-                        this.props.updateTypeArray(res);
-                        this.props.updateTypeValue(res[0]);
-                        return Promise.resolve("");
-                    } else {
-                        alert("获取Type网络错误");
-                    }
-                })
+            this.fetchType(this.props.indexType.indexValue)
                 .then(() => {
                     if (location.pathname === "/app") {
                         this.fetchContent();

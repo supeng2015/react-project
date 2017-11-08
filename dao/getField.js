@@ -20,13 +20,19 @@ router.get('/', function (req, res, next) {
     }else{
         switch (req.query.index){
             case "index1":
-                res.send({"date1":"date","date2":"date","age":"long","id":"long","ipv4":"ip","ipv6":"ip"});
+                setTimeout(()=>{
+                    res.send({"date1":"date","date2":"date","age":"long","id":"long","ipv4":"ip","ipv6":"ip"});
+                },1000);
                 break;
             case "index2":
-                res.send({"date21":"date","date22":"date","age2":"long","id2":"long","ipv4-2":"ip","ipv6-2":"ip"});
+                setTimeout(()=>{
+                    res.send({"date21":"date","date22":"date","age2":"long","id2":"long","ipv4-2":"ip","ipv6-2":"ip"});
+                },1000);
                 break;
             case "index3":
-                res.send({"date31":"date","date32":"date","age3":"long","id3":"long","ipv4-3":"ip","ipv6-3":"ip"});
+                setTimeout(()=>{
+                    res.send({"date31":"date","date32":"date","age3":"long","id3":"long","ipv4-3":"ip","ipv6-3":"ip"});
+                },1000);
                 break;
         }
     }

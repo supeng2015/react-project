@@ -27,7 +27,7 @@ class Bucket extends React.Component{
 
     change(name, e){
         let {index} = this.props;
-        this.props.modifyBucket(index, name, Number.parseInt(e.target.value))
+        this.props.modifyBucket(index, name, e.target.value)
     }
 
     filterField(content){

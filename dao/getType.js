@@ -18,13 +18,19 @@ router.get('/', function (req, res) {
     } else {
         switch(req.query.index){
             case 'index1':
-                res.send(['type1-1','type1-2','type1-3']);
+                setTimeout(()=>{
+                    res.send(['type1-1','type1-2','type1-3']);
+                },1500);
                 break;
             case 'index2':
-                res.send(['type2-1','type2-2','type2-3']);
+                setTimeout(()=>{
+                    res.send(['type2-1','type2-2','type2-3']);
+                }, 1500);
                 break;
             case 'index3':
-                res.send(['type3-1','type3-2','type3-3']);
+                setTimeout(()=>{
+                    res.send(['type3-1','type3-2','type3-3']);
+                }, 1500);
                 break;
         }
     }

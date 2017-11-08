@@ -16,7 +16,9 @@ router.get('/', function (req, res) {
                 }
             });
     }else{
-        res.send(["index1","index2","index3"]);
+        setTimeout(()=>{
+            res.send(["index1","index2","index3"]);
+        },1000);
     }
 });
 
