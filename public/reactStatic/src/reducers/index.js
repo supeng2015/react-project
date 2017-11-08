@@ -245,7 +245,7 @@ const constructorM = (state = [metricsConstructor()], action) => {
     }
 };
 
-// buckets的构造结构f
+// buckets的构造结构
 const constructorB = (state = [bucketConstructor()], action) => {
     switch (action.type){
         case 'UPDATE_BUCKET_FIELD':

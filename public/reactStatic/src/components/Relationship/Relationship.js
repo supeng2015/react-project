@@ -148,7 +148,6 @@ class Relationship extends React.Component {
     }
 
     render() {
-        let {isSearching} = this.state;
         let res = this.state.res;
         let data = "";
         if(res){

@@ -36,6 +36,8 @@ class SubKibana2 extends Component {
         if (Object.keys(field).length) {
             this.props.updateMetricField(field);
             this.props.updateBucketField(field);
+            this.props.resetMetric();
+            this.props.resetBucket();
         } else {
             alert("获取Field网络错误");
         }
@@ -113,11 +115,12 @@ class SubKibana2 extends Component {
         let result = {};
         let metricsData = this.props.metricsData;
         let bucketsData = this.props.allBucketData;
+
+        console.log("metricsData:" + JSON.stringify(metricsData));
+        console.log("bucketsData:" + JSON.stringify(bucketsData));
+
         let metricsJson = this.createJson(metricsData);
         let bucketsJson = this.createJson(bucketsData);
-
-        console.log("metricsJson:" + JSON.stringify(metricsJson));
-        console.log("bucketsJson:" + JSON.stringify(bucketsJson));
 
         if (!metricsJson && bucketsJson) {
             result.json = bucketsJson;
@@ -137,12 +140,15 @@ class SubKibana2 extends Component {
 
     // 提取对应的数据
     createJson(dateArray) {
+        // 如数组为空，则返回""
+        if(dateArray.length === 0){
+            return ""
+        }
+
         let resultJson = {aggs: {}};
         for (let i = 0; i < dateArray.length; i++) {
-            // 如果数组长度为0或没有填写label标签
-            if (!dateArray[i] || !dateArray[i].label) {
-                return '';
-            } else {
+            // 如果填写label标签才遍历
+            if (dateArray[i].label) {
                 let obj = {};
                 for (let key in dateArray[i]) {
                     if (dateArray[i].hasOwnProperty(key)) {
@@ -151,46 +157,9 @@ class SubKibana2 extends Component {
                         }
                     }
                 }
-                // Median类型固定属性
-                if (dateArray[i].type === "Median") {
-                    obj.percents = [50];
-                }
-                // Date Histogram类型固定属性
-                if (dateArray[i].type === "Date Histogram") {
-                    let intervalMapping = {
-                        Millisecondly: "1ms",
-                        Secnodly: "1s",
-                        Minutely: "1m",
-                        Hourly: "1h",
-                        Daily: "1d",
-                        Weekly: "1w",
-                        Monthly: "1M",
-                        Yearly: "1y",
-                    };
-                    obj.interval = intervalMapping[obj.interval];
-                    obj.min_doc_count = 1;
-                }
-                if (dateArray[i].type === "Histogram") {
-                    // obj.interval = Number.parseInt(obj.interval);
-                    obj.min_doc_count = obj.min_doc_count ? 0 : 1;
-                }
-                // 删除ranges或者mask
-                if (dateArray[i].type === "IPv4 Range") {
-                    if (obj.mask[0] === "") {
-                        delete obj.mask;
-                    }
-                }
-                // 去除orderby，添加_count或者_term
-                if (dateArray[i].type === "Terms") {
-                    let orderMapping = {Descending: "desc", Ascending: "asc"};
-                    let orderItemMapping = {"metric:Count": "_count", "Term": "_term"};
-                    let order = orderMapping[obj.order];
-                    let item = orderItemMapping[obj.orderBy];
 
-                    obj["order"] = {};
-                    obj["order"][item] = order;
-                    delete obj.orderBy;
-                }
+                // 对提取到的数据按特殊情况进行修正
+                this.dealWithData(dateArray[i].type, obj);
 
                 // 拼接所有数组中的内容
                 let labelName = dateArray[i].label;
@@ -200,6 +169,48 @@ class SubKibana2 extends Component {
         }
         console.log("提取到的数据为:" + JSON.stringify(resultJson));
         return resultJson;
+    }
+
+    // 对不同的数据做不同的处理
+    dealWithData(dataType, obj){
+        let func = {
+            "Median": function () {
+                obj.percents = [50];
+            },
+            "Date Histogram": function () {
+                let intervalMapping = {
+                    Millisecondly: "1ms",
+                    Secnodly: "1s",
+                    Minutely: "1m",
+                    Hourly: "1h",
+                    Daily: "1d",
+                    Weekly: "1w",
+                    Monthly: "1M",
+                    Yearly: "1y",
+                };
+                obj.interval = intervalMapping[obj.interval];
+                obj.min_doc_count = 1;
+            },
+            "Histogram": function () {
+                obj.min_doc_count = obj.min_doc_count ? 0 : 1;
+            },
+            "IPv4 Range": function () {
+                if (obj.mask[0] === "") {
+                    delete obj.mask;
+                }
+            },
+            "Terms": function () {
+                let orderMapping = {Descending: "desc", Ascending: "asc"};
+                let orderItemMapping = {"metric:Count": "_count", "Term": "_term"};
+                let order = orderMapping[obj.order];
+                let item = orderItemMapping[obj.orderBy];
+
+                obj["order"] = {};
+                obj["order"][item] = order;
+                delete obj.orderBy;
+            }
+        };
+        func[dataType] && func[dataType]();
     }
 
     render() {
@@ -276,10 +287,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(delBucket2(index))
         },
         resetMetric: () => {
-            dispatch(resetBucket2())
+            dispatch(resetMetrics2())
         },
         resetBucket: () => {
-            dispatch(resetMetrics2())
+            dispatch(resetBucket2())
         },
         addMetricsData: (data) => {
             dispatch(addMetricsData(data));

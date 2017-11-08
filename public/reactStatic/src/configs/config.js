@@ -32,7 +32,7 @@ const system = (() => {
     system = 'IOS'
   }
   return system
-})()
+})();
 const target = process.env.NODE_ENV !== 'production' ? '' : 'http://cangdu.org'; //目标网站
 export {
   target,

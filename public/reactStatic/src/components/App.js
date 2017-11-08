@@ -1,16 +1,13 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import ReactLogo from '../images/react.png';
 import Kibana from '../components/kibana/Kibana';
 import HomePage from './HomePage/HomePage';
 import Auth from './user/Auth';
-import {Route, Link, Switch} from 'react-router-dom'
+import {Link, Route, Switch} from 'react-router-dom'
 import ChartListPage from "./kibana/charts/ChartListPage/ChartListPage";
 import IndexType from "./IndexType/IndexType";
 import Relationship from "./Relationship/Relationship";
 import FileDownload from "./FileDownload/FileDownload";
-// import Discover from "../images/menuIcon/discover.png"
-// import Relationship from "../images/menuIcon/relationship.png"
-// import Visualize from "../images/menuIcon/visualize.png"
 
 class App extends Component {
     render() {
@@ -33,7 +30,6 @@ class App extends Component {
                             <li><Link to="/app/visualize"><span className="visualize"/>Visualize</Link></li>
                             <li><Link to="/app/relationship"><span className="relationship"/>Relationship</Link></li>
                             <li><Link to="/app/fileDownload"><span className="fileDownload"/>FileDownload</Link></li>
-                            {/*<li><Link to="/app/345">About</Link></li>*/}
                         </ul>
                     </div>
                 </div>

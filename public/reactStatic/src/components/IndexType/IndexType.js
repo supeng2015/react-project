@@ -17,7 +17,6 @@ class IndexType extends React.Component {
     // http请求，field
     fetchField() {
         let {indexValue, typeValue} = this.props.indexType;
-        // setTimeout(()=>{
         fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
             .then((response) => {
                 return response.json();
@@ -29,13 +28,11 @@ class IndexType extends React.Component {
                     alert("获取Field网络错误");
                 }
             });
-        // },0)
     }
 
     // http请求，获取content
     fetchContent() {
         let {indexArray, typeValue} = this.props.indexType;
-        // setTimeout(()=>{
         fetch('http://'+ config.nodejsIp +':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
             .then((response) => {
                 return response.json();
@@ -47,7 +44,6 @@ class IndexType extends React.Component {
                     alert("获取Content网络错误")
                 }
             })
-        // },0)
     }
 
     // http请求，获取Type
@@ -71,6 +67,7 @@ class IndexType extends React.Component {
     }
 
     componentDidMount() {
+        // 获取Index
         fetch('http://'+ config.nodejsIp +':3000/getIndex')
             .then((response) => {
                 return response.json();
@@ -86,8 +83,7 @@ class IndexType extends React.Component {
                 }
             })
             .then(() => {
-                // this.fetchType(this.props.indexType.indexValue);
-                // this.fetchField()
+                // 获取Type
                 fetch('http://'+ config.nodejsIp +':3000/getType?index=' + this.props.indexType.indexValue)
                     .then((response) => {
                         return response.json();
@@ -103,8 +99,8 @@ class IndexType extends React.Component {
                         }
                     })
                     .then(() => {
+                        // 获取Content
                         let {indexArray, typeValue} = this.props.indexType;
-                        // setTimeout(()=>{
                         fetch('http://'+ config.nodejsIp +':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
                             .then((response) => {
                                 return response.json();
@@ -119,6 +115,7 @@ class IndexType extends React.Component {
                                 }
                             })
                             .then(()=>{
+                                // 获取Field
                                 this.fetchField();
                             })
                     })
@@ -129,7 +126,6 @@ class IndexType extends React.Component {
         const {location} = this.props;
         this.props.updateIndexValue(e.target.value);
         setTimeout(() => {
-            // this.fetchType(this.props.indexType.indexValue);
             // 获取Type
             fetch('http://'+ config.nodejsIp +':3000/getType?index=' + this.props.indexType.indexValue)
                 .then((response) => {
@@ -146,12 +142,12 @@ class IndexType extends React.Component {
                     }
                 })
                 .then(() => {
-                    // 获取Content
-                    this.fetchContent();
                     if (location.pathname === "/app") {
                         this.fetchContent();
                         this.fetchField();
                     } else {
+                        // 获取Content
+                        this.fetchContent();
                         // 获取Field
                         let {indexValue, typeValue} = this.props.indexType;
                         fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)

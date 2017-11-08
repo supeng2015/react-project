@@ -5,7 +5,7 @@ import Login from '../components/user/Login';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    localStorage.isLogin!='false' ? (
+    localStorage.isLogin !== 'false' ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{
@@ -27,6 +27,6 @@ const RouteConfig = () => (
       </Switch>
     </div>
   </Router>
-)
+);
 export default RouteConfig
   

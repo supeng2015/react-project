@@ -8,5 +8,5 @@ const Auth = {
     localStorage.userInfo = null;
     setTimeout(cb(history), 100)
   }
-}
+};
 export default Auth

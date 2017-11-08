@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from 'react';
-import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
+import React, {Component} from 'react';
 import {fetchUserInfo} from '../../actions';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Auth from './Auth';
+
 class Login extends Component{
   doLogin(){
     let {userName,userPass} = this.refs;  
@@ -10,7 +10,7 @@ class Login extends Component{
     let user = {
       userName : userName.value,
       userPass : userPass.value 
-    }
+    };
     dispatch(fetchUserInfo(user))
   }
   componentWillReceiveProps(nextProps){
@@ -45,10 +45,10 @@ class Login extends Component{
   }
 }
 const mapStateToProps = state => {
-  const {user} = state
+  const {user} = state;
   return{
     user
   }
-}
-Login = connect(mapStateToProps)(Login)
+};
+Login = connect(mapStateToProps)(Login);
 export default Login
