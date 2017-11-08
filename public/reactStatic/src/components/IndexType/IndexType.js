@@ -181,6 +181,9 @@ class IndexType extends React.Component {
                 this.fetchContent();
                 this.fetchField();
             } else {
+                // 获取Content
+                this.fetchContent();
+                // 获取Field
                 let {indexValue, typeValue} = this.props.indexType;
                 fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
                     .then((response) => {
@@ -254,10 +257,10 @@ function mapDispatchToProps(dispatch) {
             dispatch(updateBucketField(fieldObj))
         }),
         resetMetric: () => {
-            dispatch(resetBucket2())
+            dispatch(resetMetrics2())
         },
         resetBucket: () => {
-            dispatch(resetMetrics2())
+            dispatch(resetBucket2())
         }
 
     }
