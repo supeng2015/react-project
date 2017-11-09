@@ -18,8 +18,8 @@ class IndexType extends React.Component {
     // http请求，field
     fetchField() {
         let {indexValue, typeValue} = this.props.indexType;
-        return new Promise((resolve, reject)=>{
-            fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
+        return new Promise((resolve, reject) => {
+            fetch('http://' + config.nodejsIp + ':3000/getField?index=' + indexValue + '&type=' + typeValue)
                 .then((response) => {
                     return response.json();
                 })
@@ -38,8 +38,8 @@ class IndexType extends React.Component {
     // http请求，获取content
     fetchContent() {
         let {indexArray, typeValue} = this.props.indexType;
-        return new Promise((resolve, reject)=>{
-            fetch('http://'+ config.nodejsIp +':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
+        return new Promise((resolve, reject) => {
+            fetch('http://' + config.nodejsIp + ':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
                 .then((response) => {
                     return response.json();
                 })
@@ -57,8 +57,8 @@ class IndexType extends React.Component {
 
     // http请求，获取Type
     fetchType(indexValue) {
-        return new Promise((resolve, reject)=>{
-            fetch('http://'+ config.nodejsIp +':3000/getType?index=' + indexValue)
+        return new Promise((resolve, reject) => {
+            fetch('http://' + config.nodejsIp + ':3000/getType?index=' + indexValue)
                 .then((response) => {
                     return response.json();
                 })
@@ -75,9 +75,9 @@ class IndexType extends React.Component {
         })
     }
 
-    fetchIndex(){
-        return new Promise((resolve, reject)=>{
-            fetch('http://'+ config.nodejsIp +':3000/getIndex')
+    fetchIndex() {
+        return new Promise((resolve, reject) => {
+            fetch('http://' + config.nodejsIp + ':3000/getIndex')
                 .then((response) => {
                     return response.json();
                 })
@@ -96,14 +96,14 @@ class IndexType extends React.Component {
 
     componentDidMount() {
         this.fetchIndex()
-            .then(()=>{
-                this.fetchType(this.props.indexType.indexValue);
-            })
-            .then(()=>{
-                this.fetchContent();
-            })
-            .then(()=>{
-                this.fetchField();
+            .then(() => {
+                this.fetchType(this.props.indexType.indexValue)
+                    .then(() => {
+                        this.fetchContent()
+                            .then(()=>{
+                                this.fetchField();
+                            })
+                    })
             })
     }
 
@@ -122,7 +122,7 @@ class IndexType extends React.Component {
                         this.fetchContent();
                         // 获取Field
                         let {indexValue, typeValue} = this.props.indexType;
-                        fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
+                        fetch('http://' + config.nodejsIp + ':3000/getField?index=' + indexValue + '&type=' + typeValue)
                             .then((response) => {
                                 return response.json();
                             })
@@ -130,12 +130,12 @@ class IndexType extends React.Component {
                                 // 更新Field
                                 if (res.status !== 'error') {
                                     this.props.updateField(res);
-                                    setTimeout(()=>{
+                                    setTimeout(() => {
                                         this.props.updateMetricField(this.props.field);
                                         this.props.updateBucketField(this.props.field);
                                         this.props.resetMetric();
                                         this.props.resetBucket();
-                                    },0)
+                                    }, 0)
                                 } else {
                                     alert("获取Field网络错误");
                                 }
@@ -157,19 +157,19 @@ class IndexType extends React.Component {
                 this.fetchContent();
                 // 获取Field
                 let {indexValue, typeValue} = this.props.indexType;
-                fetch('http://'+ config.nodejsIp +':3000/getField?index=' + indexValue + '&type=' + typeValue)
+                fetch('http://' + config.nodejsIp + ':3000/getField?index=' + indexValue + '&type=' + typeValue)
                     .then((response) => {
                         return response.json();
                     })
                     .then((res) => {
                         if (res.status !== 'error') {
                             this.props.updateField(res);
-                            setTimeout(()=>{
+                            setTimeout(() => {
                                 this.props.updateMetricField(this.props.field);
                                 this.props.updateBucketField(this.props.field);
                                 this.props.resetMetric();
                                 this.props.resetBucket();
-                            },0)
+                            }, 0)
                         } else {
                             alert("获取Field网络错误");
                         }

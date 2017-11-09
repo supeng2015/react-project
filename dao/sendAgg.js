@@ -11,7 +11,7 @@ router.post('/', function (req, res, next) {
             json: JSON.stringify(data.json),
             index: data.index,
             type: data.type,
-            label: data.label
+            labels: data.labels
         });
         // console.log(JSON.stringify(data));
         request

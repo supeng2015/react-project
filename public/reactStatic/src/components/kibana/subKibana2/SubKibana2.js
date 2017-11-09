@@ -124,16 +124,20 @@ class SubKibana2 extends Component {
 
         if (!metricsJson && bucketsJson) {
             result.json = bucketsJson;
-            result.label = this.props.allBucketData[0].label;
+            result.labels = [this.props.allBucketData[0].label];
         } else if (metricsJson && !bucketsJson) {
             result.json = metricsJson;
-            result.label = this.props.metricsData[0].label;
+            result.labels = [this.props.metricsData[0].label];
         } else {
             let bucketLabelName = this.props.allBucketData[0].label;
-            let metricLabelName = this.props.metricsData[0].label;
+            let metricData = this.props.metricsData;
             bucketsJson.aggs[bucketLabelName].aggs = metricsJson.aggs;
             result.json = bucketsJson;
-            result.label = metricLabelName;
+
+            result.labels = [];
+            for(let i = 0; i < metricsData.length; i++){
+                result.labels.push(metricData[i].label)
+            }
         }
         return result;
     }
@@ -141,7 +145,7 @@ class SubKibana2 extends Component {
     // 提取对应的数据
     createJson(dateArray) {
         // 如数组为空，则返回""
-        if(dateArray.length === 0){
+        if(dateArray.length === 0 || !dateArray[0].label){
             return ""
         }
 
