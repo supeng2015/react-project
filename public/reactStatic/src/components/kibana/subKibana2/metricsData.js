@@ -4,6 +4,7 @@ export default function(type){
             return {
                 type: 'Count',
                 typeName: 'value_count',
+                field: '',
                 label: ''
             };
         case 'Average':

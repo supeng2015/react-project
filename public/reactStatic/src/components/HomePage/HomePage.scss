@@ -38,3 +38,41 @@
     }
   }
 }
+.page-list{
+  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+}
+.page-list-item{
+  min-width:20px;
+  height: 20px;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #bebebe;
+  text-align: center;
+  &:hover{
+    color: #fff;
+    background-color: #00B7FF;
+    cursor: pointer;
+  }
+  &.active{
+    color: #fff;
+    background-color: #00B7FF;
+  }
+}
+.page-list-pre, .page-list-next{
+  min-width:20px;
+  height: 20px;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #bebebe;
+  text-align: center;
+  &:hover{
+    color: #fff;
+    background-color: #00B7FF;
+    cursor: pointer;
+  }
+  &.forbidden:hover{
+    cursor: not-allowed;
+  }
+}

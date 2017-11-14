@@ -6,7 +6,7 @@ import TypeFilter from "./Type/TypeFilter";
 import {connect} from "react-redux";
 import {updateContent, updateField, updateIndex, updateIndexArray, updateType, updateTypeArray} from '../../actions'
 import {withRouter} from 'react-router-dom';
-import {resetBucket2, resetMetrics2, updateBucketField, updateMetricField} from "../../actions/index";
+import {resetBucket2, resetMetrics2, updateBucketField, updateMetricField, updateTotalPage} from "../../actions/index";
 import config from "../../config";
 import "whatwg-fetch";
 
@@ -32,6 +32,25 @@ class IndexType extends React.Component {
                         reject();
                     }
                 });
+        })
+    }
+
+    fetchTotalPage(){
+        let {typeValue, indexValue} = this.props.indexType;
+        return new Promise((resolve, reject) => {
+            fetch('http://' + config.nodejsIp + ':3000/getTotalPage?indexes=' + indexValue + '&type=' + typeValue)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if (res.status !== 'error') {
+                        this.props.updateTotalPage(res);
+                        resolve();
+                    } else {
+                        alert("获取TotalPage网络错误");
+                        reject();
+                    }
+                })
         })
     }
 
@@ -99,6 +118,7 @@ class IndexType extends React.Component {
             .then(() => {
                 this.fetchType(this.props.indexType.indexValue)
                     .then(() => {
+                        this.fetchTotalPage();
                         this.fetchContent()
                             .then(()=>{
                                 this.fetchField();
@@ -116,10 +136,11 @@ class IndexType extends React.Component {
                 .then(() => {
                     if (location.pathname === "/app") {
                         this.fetchContent();
+                        this.fetchTotalPage();
                         this.fetchField();
                     } else {
                         // 获取Content
-                        this.fetchContent();
+                        // this.fetchContent();
                         // 获取Field
                         let {indexValue, typeValue} = this.props.indexType;
                         fetch('http://' + config.nodejsIp + ':3000/getField?index=' + indexValue + '&type=' + typeValue)
@@ -151,10 +172,11 @@ class IndexType extends React.Component {
         setTimeout(() => {
             if (location.pathname === "/app") {
                 this.fetchContent();
+                this.fetchTotalPage();
                 this.fetchField();
             } else {
                 // 获取Content
-                this.fetchContent();
+                // this.fetchContent();
                 // 获取Field
                 let {indexValue, typeValue} = this.props.indexType;
                 fetch('http://' + config.nodejsIp + ':3000/getField?index=' + indexValue + '&type=' + typeValue)
@@ -219,6 +241,9 @@ function mapDispatchToProps(dispatch) {
         updateContent: (contentObj) => {
             dispatch(updateContent(contentObj))
         },
+        updateTotalPage: (totalPage) => {
+            dispatch(updateTotalPage(totalPage))
+        },
         updateField: (fieldObj) => {
             dispatch(updateField((fieldObj)))
         },
@@ -234,7 +259,6 @@ function mapDispatchToProps(dispatch) {
         resetBucket: () => {
             dispatch(resetBucket2())
         }
-
     }
 }
 

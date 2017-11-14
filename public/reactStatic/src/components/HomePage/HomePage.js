@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import Table from "./Table/Table";
 import './HomePage.scss'
 import {updateContent} from "../../actions/index";
+import PageList from "./PageList/PageList";
+import config from "../../config";
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -11,6 +13,26 @@ class HomePage extends React.Component {
             preItem: 'default',
             preSort: 'default'
         }
+    }
+
+    // http请求，获取content
+    fetchContent(nowPage) {
+        let {indexArray, typeValue} = this.props.indexType;
+        return new Promise((resolve, reject) => {
+            fetch('http://' + config.nodejsIp + ':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue + '&page=' + nowPage)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if (res.status !== 'error') {
+                        this.props.updateContent(res);
+                        resolve();
+                    } else {
+                        alert("获取Content网络错误");
+                        reject();
+                    }
+                })
+        })
     }
 
     sortTable(e) {
@@ -26,14 +48,11 @@ class HomePage extends React.Component {
             if(this.state.preSort === 'asc'){
                 this.setState({preSort: 'desc'});
                 newContent = this.sortDESCFunction(this.props.content, sortItem);
-                console.log(1111);
             }else{
                 this.setState({preSort: 'asc'});
                 newContent = this.sortASCFunction(this.props.content, sortItem);
-                console.log(2222);
             }
         }
-        // console.log(newContent);
         this.props.updateContent(newContent);
     }
 
@@ -66,9 +85,11 @@ class HomePage extends React.Component {
     }
 
     render() {
+        let {content} = this.props;
         return (
             <div className="table-container">
-                <Table data={this.props.content} sortHandle={this.sortTable.bind(this)}/>
+                <Table data={content.content} sortHandle={this.sortTable.bind(this)}/>
+                <PageList totalPage={content.totalPage} clickHandle={this.fetchContent.bind(this)}/>
             </div>
         )
     }
@@ -76,7 +97,8 @@ class HomePage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        content: state.content
+        content: state.content,
+        indexType: state.indexType
     }
 }
 

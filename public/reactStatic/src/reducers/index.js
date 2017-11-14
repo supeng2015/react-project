@@ -108,7 +108,7 @@ const user=(state={},action)=>{
 
 
 // metrics2的reducer
-const metrics2 = (state = [{type: 'Count', typeName: 'value_count', label: ''}], action) => {
+const metrics2 = (state = [{type: 'Count', typeName: 'value_count', field: '', label: ''}], action) => {
     switch (action.type) {
         case 'MODIFY_METRICS2':
             const newState = [...state];
@@ -131,7 +131,7 @@ const metrics2 = (state = [{type: 'Count', typeName: 'value_count', label: ''}],
             state.splice(action.index,1);
             return state;
         case 'RESET_METRICS2':
-            return [{type: 'Count', typeName: 'value_count', label: ''}];
+            return [{type: 'Count', typeName: 'value_count', field: '', label: ''}];
         default:
             return state;
     }
@@ -192,10 +192,12 @@ const indexType = (state={indexValue:'',typeValue:'',indexArray:[],typeArray:[]}
     }
 };
 
-const content = (state='',action) => {
+const content = (state={content:"", totalPage: 0},action) => {
     switch (action.type){
         case 'UPDATE_CONTENT':
-            return action.contentObj;
+            return {...state, content: action.contentObj};
+        case 'UPDATE_TOTALPAGE':
+            return {...state, totalPage: action.totalPage};
         default:
             return state;
     }

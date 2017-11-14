@@ -38,9 +38,11 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/sendAgg', require("./dao/sendAgg"));
 app.use('/getAllData', require("./dao/getAllData"));
+app.use('/getTotalPage', require("./dao/getTotalPage"));
 app.use('/getField', require("./dao/getField"));
 app.use('/getIndex', require("./dao/getIndex"));
 app.use('/getType', require("./dao/getType"));
+app.use('/matchCompany', require("./dao/matchCompany"));
 app.use('/relationship', require("./dao/relationship"));
 
 // catch 404 and forward to error handler

@@ -4,6 +4,8 @@ export default function () {
         content: {
             'Count': {
                 label: true,
+                field: ['--','count1', 'count2'],
+                fieldType: 'all'
             },
             'Average': {
                 field: ['--','age', 'number'],

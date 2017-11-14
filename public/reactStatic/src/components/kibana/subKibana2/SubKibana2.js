@@ -66,6 +66,10 @@ class SubKibana2 extends Component {
     }
 
     resetData() {
+        //  调用该方法相当于重置metric 和 bucket 的结构
+        this.props.updateMetricField(this.props.field);
+        this.props.updateBucketField(this.props.field);
+        // 重置metric和bucket值
         this.props.resetMetric();
         this.props.resetBucket();
     }
@@ -136,7 +140,9 @@ class SubKibana2 extends Component {
 
             result.labels = [];
             for(let i = 0; i < metricsData.length; i++){
-                result.labels.push(metricData[i].label)
+                if(metricData[i].typeName !== "value_count"){
+                    result.labels.push(metricData[i].label)
+                }
             }
         }
         return result;
@@ -166,9 +172,17 @@ class SubKibana2 extends Component {
                 this.dealWithData(dateArray[i].type, obj);
 
                 // 拼接所有数组中的内容
-                let labelName = dateArray[i].label;
-                let typeName = dateArray[i].typeName;
-                resultJson.aggs[labelName]={[typeName]: obj};
+                if(dateArray.length > 1){
+                    let labelName = dateArray[i].label;
+                    let typeName = dateArray[i].typeName;
+                    if(typeName !== "value_count"){
+                        resultJson.aggs[labelName]={[typeName]: obj};
+                    }
+                }else{
+                    let labelName = dateArray[i].label;
+                    let typeName = dateArray[i].typeName;
+                    resultJson.aggs[labelName]={[typeName]: obj};
+                }
             }
         }
         console.log("提取到的数据为:" + JSON.stringify(resultJson));

@@ -183,6 +183,13 @@ export const updateContent = (contentObj) => {
     }
 };
 
+export const updateTotalPage = (totalPage) => {
+    return {
+        type: 'UPDATE_TOTALPAGE',
+        totalPage
+    }
+};
+
 // 更新Field的action
 export const updateField = (fieldObj) => {
     return {

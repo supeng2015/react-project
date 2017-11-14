@@ -28,3 +28,29 @@
     }
   }
 }
+#doubleRelationship{
+  width: 20px;
+  height: 20px;
+  margin: 30px 10px 0 10px;
+  background: url("../../images/otherIcon/doubleRelationship.png") no-repeat center center;
+  background-size: 20px 20px;
+}
+.search-container{
+  position: relative;
+}
+.search-list{
+  border: 1px solid #ecf0f1;
+  position: absolute;
+  top: 54px;
+  width: 100%;
+  box-sizing: border-box;
+  li{
+    padding: 5px 16px;
+    font-size: 14px;
+    &:hover{
+      background-color: #00B7FF;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+}

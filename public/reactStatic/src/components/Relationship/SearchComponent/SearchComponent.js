@@ -11,7 +11,19 @@ class SearchComponent extends React.Component {
     }
 
     search(){
+        this.setState({
+            isSearching: true,
+        });
         this.props.searchHandle(this.state.keyword)
+            .then(()=>{
+                this.setState({
+                    isSearching: false
+                })
+            })
+    }
+
+    changeKeyword(){
+        this.props.changeKeyword()
     }
 
     render() {
