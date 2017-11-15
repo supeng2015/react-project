@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const MongoClient = require("mongodb").MongoClient;
 const config = require("../config/config");
+const request = require('superagent');
 // const ObjectId = require("mongodb").ObjectId;
 
 const url = require('../config/config').mongodbUrl;
@@ -158,13 +159,19 @@ router.get("/byTwoName", function (req, res, next) {
 
             console.log(doc1);
             console.log(doc2);
+
             if (doc1.length === 0) {
-                doc1 = [{company_id: ''}];
+                doc1 = [{_id: idArray[0], company_id: ''}];
             }
             if (doc2.length === 0) {
-                doc2 = [{company_id: ''}];
+                doc2 = [{_id: idArray[1], company_id: ''}];
             }
-            return {id1: doc1[0]["company_id"], id2: doc2[0]["company_id"]}
+            return {
+                id1: doc1[0]["company_id"],
+                name1: doc1[0]["_id"],
+                id2: doc2[0]["company_id"],
+                name2: doc2[0]["_id"]
+            }
         };
 
         // 搜索两个公司的关系图
@@ -177,8 +184,17 @@ router.get("/byTwoName", function (req, res, next) {
         };
 
         // 当搜索不到id时，向Python后台请求数据
-        let searchIdFromPython = async function (companyName) {
-
+        let searchIdFromPython = function (companyName1, companyName2) {
+            return new Promise((resolve, reject) => {
+                request.get("http://192.168.2.136:9012/com=" + companyName1 + "and" + companyName2)
+                    .end((err, res1) => {
+                        if (err) {
+                            resolve({status: "error"});
+                        } else {
+                            resolve(res1);
+                        }
+                    })
+            })
         };
 
         searchTowId()
@@ -189,7 +205,14 @@ router.get("/byTwoName", function (req, res, next) {
 
                 // 只要有一个id不存在,就请求后台
                 if (!id1 || !id2) {
-                    res.send({status: 'error'})
+                    searchIdFromPython(result.name1, result.name2)
+                        .then((res) => {
+                            res.send(res);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            res.send({status: "error"});
+                        })
                 } else {
                     let newId = 0;
                     if (id1 < id2) {
@@ -202,7 +225,15 @@ router.get("/byTwoName", function (req, res, next) {
                         .then((result) => {
                             res.send(result);
                         })
+                        .catch((err) => {
+                            console.log(err);
+                            res.send({status: "error"});
+                        })
                 }
+            })
+            .catch((err) => {
+                console.log(err);
+                res.send({status: "error"});
             })
     } else {
 
@@ -236,6 +267,10 @@ router.get("/byTwoId", function (req, res, next) {
         searchRelationship(newId)
             .then((result) => {
                 res.send(result);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.send({status: "error"});
             })
     } else {
 

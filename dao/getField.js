@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
         let index = req.query.index;
         let type = req.query.type;
         request
-            .get('http://'+ config.remoteIP +'/RESTfulES/metadata?index=' + index + "&type=" + type)
+            .get('http://'+ config.remoteIP +'/metadata?index=' + index + "&type=" + type)
             .end(function (err, res1) {
                 if (err || !res1.ok) {
                     console.log(err);

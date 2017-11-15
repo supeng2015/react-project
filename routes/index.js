@@ -1,93 +1,98 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+const size = 10;
+let router = express.Router();
+let client = require("../util/myclient").client;
+
+//content
+router.get('/content', function(req, res) {
+    let index = req.query.index;
+    let type = req.query.type;
+    let page = req.query.page;
+    client.search({index:index,
+        type:type,from:(page-1)*size},
+        function (err, results) {
+        if (err) {
+            res.send({status: "error"});
+        }else {
+            let fields = [];
+            let content = [];
+            let hits = results.hits;
+            if (hits.length > 0) {
+                let source = results.hits[0]._source;
+                for (let field in source) {
+                    fields.push(field);
+                }
+            }
+            // console.log('fields:'+fields);
+            content.push(fields);
+            for (let i in hits) {
+                content.push(hits[i]._source);
+            }
+            res.send(content);
+        }
+    });
 });
-/*kibana*/
-router.get('/kibana',function(req,res,next){
-  res.json(
-    {"responses":[{"took":0,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":20,"max_score":0.0,"hits":[]},"status":200}]}
-  );  
-})
-/*userInfo*/
-router.get('/userInfo',function(req,res,next){
-  res.json({
-    status : true,
-    data:{
-      userName:"sp",
-      power:1 
-    }  
-  })  
-})
-/*testdate*/
-router.get('/artical',function(req,res,next){
-  res.json({data:[
-    {
-    	t:'The Moomins are back, voiced by Taron Egerton and Kate Winslet',
-      c:"Kate Winslet, Rosamund Pike and Taron Egerton are among the stars who will provide the voices for a brand new series featuring The Moomins.The beloved children's characters, which were created by Finnish author Tove Jansson, will return in 2019.Gone Girl star Pike will voice mother figure Moominmamma, while comic actor Matt Berry will be Moominpappa.",
-      i:"tt001.png",
-      h:"四级",
-      w:159,
-      r:86
-    },
-    {
-    	t:'Apple to Release Re-designed iPhone X on 10 Year Anniversary',
-      c:"Apple on Tuesday will unveil the new model of its popular iPhone, 10 years after then-CEO Steve Jobs showed the world the iPhone for the first time.Leaks of the iPhone’s design suggest it will feature a higher resolution display, wireless charging and facial recognition technology, among other improvements.The event Tuesday will take place at Apple’s “spaceship” office in California, though few actual details about the iPhone release are publicly available.",
-      i:"tt002.png",
-      h:"雅思 六级",
-      w:322,
-      r:76
-    },
-    {
-      t:'Appl to Release Re-designed iPhone X on 10 Year Anniversary',
-      c:"Apple on Tuesday will unveil the new model of its popular iPhone, 10 years after then-CEO Steve Jobs showed the world the iPhone for the first time.Leaks of the iPhone’s design suggest it will feature a higher resolution display, wireless charging and facial recognition technology, among other improvements.The event Tuesday will take place at Apple’s “spaceship” office in California, though few actual details about the iPhone release are publicly available.",
-      i:"tt002.png",
-      h:"雅思 六级",
-      w:322,
-      r:76
-    },
-    {
-      t:'App to Release Re-designed iPhone X on 10 Year Anniversary',
-      c:"Apple on Tuesday will unveil the new model of its popular iPhone, 10 years after then-CEO Steve Jobs showed the world the iPhone for the first time.Leaks of the iPhone’s design suggest it will feature a higher resolution display, wireless charging and facial recognition technology, among other improvements.The event Tuesday will take place at Apple’s “spaceship” office in California, though few actual details about the iPhone release are publicly available.",
-      i:"tt002.png",
-      h:"雅思 六级",
-      w:322,
-      r:76
-    },
-    {
-      t:'Ap to Release Re-designed iPhone X on 10 Year Anniversary',
-      c:"Apple on Tuesday will unveil the new model of its popular iPhone, 10 years after then-CEO Steve Jobs showed the world the iPhone for the first time.Leaks of the iPhone’s design suggest it will feature a higher resolution display, wireless charging and facial recognition technology, among other improvements.The event Tuesday will take place at Apple’s “spaceship” office in California, though few actual details about the iPhone release are publicly available.",
-      i:"tt002.png",
-      h:"雅思 六级",
-      w:322,
-      r:76
-    },
-    {
-      t:'A to Release Re-designed iPhone X on 10 Year Anniversary',
-      c:"Apple on Tuesday will unveil the new model of its popular iPhone, 10 years after then-CEO Steve Jobs showed the world the iPhone for the first time.Leaks of the iPhone’s design suggest it will feature a higher resolution display, wireless charging and facial recognition technology, among other improvements.The event Tuesday will take place at Apple’s “spaceship” office in California, though few actual details about the iPhone release are publicly available.",
-      i:"tt002.png",
-      h:"雅思 六级",
-      w:322,
-      r:76
-    },
-    {
-      t:'Appleasd to Release Re-designed iPhone X on 10 Year Anniversary',
-      c:"Apple on Tuesday will unveil the new model of its popular iPhone, 10 years after then-CEO Steve Jobs showed the world the iPhone for the first time.Leaks of the iPhone’s design suggest it will feature a higher resolution display, wireless charging and facial recognition technology, among other improvements.The event Tuesday will take place at Apple’s “spaceship” office in California, though few actual details about the iPhone release are publicly available.",
-      i:"tt002.png",
-      h:"雅思 六级",
-      w:322,
-      r:76
-    },
-    {
-      t:'Appleasdsad to Release Re-designed iPhone X on 10 Year Anniversary',
-      c:"Apple on Tuesday will unveil the new model of its popular iPhone, 10 years after then-CEO Steve Jobs showed the world the iPhone for the first time.Leaks of the iPhone’s design suggest it will feature a higher resolution display, wireless charging and facial recognition technology, among other improvements.The event Tuesday will take place at Apple’s “spaceship” office in California, though few actual details about the iPhone release are publicly available.",
-      i:"tt002.png",
-      h:"雅思 六级",
-      w:322,
-      r:76
+
+//indexes
+router.get('/indexes',function(req,res) {
+    let url = '/_cat/indices?v';
+    let data = [];
+    client._request(url,function (err,indexRes){
+        if (err) {
+            res.send({status: "error"});
+        }else {
+            let indices = indexRes.trim().split('\n');
+            let pos = 0;
+            for (let i in indices[0].split(/\s+/)) {
+                if ('index'.toLowerCase() === indices[0].split(/\s+/)[i]) {
+                    pos = i;
+                    break;
+                }
+            }
+            for (let j = 1; j < indices.length; j++) {
+                let index = indices[j].split(/\s+/);
+                if (data.indexOf(index[pos]) === -1 && index[pos] !== '.kibana')
+                    data.push(index[pos]);
+            }
+            res.send(data);
+        }
+    });
+});
+
+//@types
+router.get('/types',function (req, res) {
+    let index = req.query.index;
+    let set = [];
+    console.log(index);
+    client.getMapping(index,function (err, mappings) {
+    if (err) {
+        res.send({status: "error"});
+    }else {
+        let types = mappings[index].mappings;
+        for (let type in types){
+            if (type.toLowerCase() !== '_default_'.toLowerCase())
+                set.push(type);
+        }
+        res.send(set);
     }
-  ]})
-})
+    });
+});
+//totalPage
+router.get('/totalPage',function (req, res) { //http
+    let totalPage = 0;
+    let index = req.query.index;
+    let type = req.query.type;
+    client.count({index:index,type:type}, function (err, totalCount) { //es
+        if (err) {
+            res.send({status: "error"});
+        }else {
+            totalPage = Math.ceil(totalCount / size);
+            res.json(totalPage);
+        }
+    }
+    );
+});
+
+
 module.exports = router;

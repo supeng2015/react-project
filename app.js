@@ -5,7 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
+var myAggregation = require('./routes/myAggregation');
+
 var app = express();
 //app.use(testMid());
 //var testMiddleware = require('./process/testMiddleware')
@@ -34,14 +36,22 @@ app.use(express.static(path.join(__dirname)));
 // })
 
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/sendAgg', require("./dao/sendAgg"));
-app.use('/getAllData', require("./dao/getAllData"));
-app.use('/getTotalPage', require("./dao/getTotalPage"));
-app.use('/getField', require("./dao/getField"));
-app.use('/getIndex', require("./dao/getIndex"));
-app.use('/getType', require("./dao/getType"));
+// app.use('/', routes);
+// app.use('/users', users);
+
+// 获取ES的正式接口
+app.use('/index', routes);
+app.use('/', myAggregation);
+
+// 获取ES的转发接口
+// app.use('/sendAgg', require("./dao/sendAgg"));
+// app.use('/getAllData', require("./dao/getAllData"));
+// app.use('/getTotalPage', require("./dao/getTotalPage"));
+// app.use('/getField', require("./dao/getField"));
+// app.use('/getIndex', require("./dao/getIndex"));
+// app.use('/getType', require("./dao/getType"));
+
+// 获取关系图的api接口
 app.use('/matchCompany', require("./dao/matchCompany"));
 app.use('/relationship', require("./dao/relationship"));
 

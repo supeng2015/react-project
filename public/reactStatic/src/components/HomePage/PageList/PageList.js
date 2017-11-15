@@ -38,6 +38,30 @@ class PageList extends React.Component {
         }
     }
 
+    forwardToPage(e){
+        let nowPage = parseInt(e.target.value);
+        let {totalPage} = this.props;
+        if(e.keyCode === 13){
+            if(Number.isNaN(nowPage)){
+                alert("请输入数字页码！");
+            }
+            if(nowPage < 1){
+                nowPage = 1;
+                e.target.value = 1;
+            }
+            if(nowPage > totalPage){
+                nowPage = totalPage;
+                e.target.value = totalPage;
+            }
+
+            this.props.clickHandle(nowPage);
+            this.setState({
+                nowPage,
+                rows: Math.floor((nowPage-1)/10)
+            });
+        }
+    }
+
     render() {
         let {nowPage, listSize, rows} = this.state;
         let {totalPage} = this.props;
@@ -55,6 +79,7 @@ class PageList extends React.Component {
                     })
                 }
                 <div className={nowSize === listSize && pageEnd < totalPage ? "page-list-next" : "page-list-next forbidden"} onClick={this.nextPage.bind(this, nowSize)}>→</div>
+                <div id="forwardInput">跳转到：<input type="text" onKeyUp={this.forwardToPage.bind(this)}/>页/共{totalPage}页</div>
             </div> : <div/>
         )
     }

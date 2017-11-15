@@ -19,7 +19,7 @@ class HomePage extends React.Component {
     fetchContent(nowPage) {
         let {indexArray, typeValue} = this.props.indexType;
         return new Promise((resolve, reject) => {
-            fetch('http://' + config.nodejsIp + ':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue + '&page=' + nowPage)
+            fetch('http://' + config.nodejsIp + ':3000/index/content?index=' + indexArray.toString() + '&type=' + typeValue + '&page=' + nowPage)
                 .then((response) => {
                     return response.json();
                 })
@@ -43,14 +43,14 @@ class HomePage extends React.Component {
                 preItem: sortItem,
                 preSort: 'asc'
             });
-            newContent = this.sortASCFunction(this.props.content, sortItem);
+            newContent = this.sortASCFunction(this.props.content.content, sortItem);
         }else{
             if(this.state.preSort === 'asc'){
                 this.setState({preSort: 'desc'});
-                newContent = this.sortDESCFunction(this.props.content, sortItem);
+                newContent = this.sortDESCFunction(this.props.content.content, sortItem);
             }else{
                 this.setState({preSort: 'asc'});
-                newContent = this.sortASCFunction(this.props.content, sortItem);
+                newContent = this.sortASCFunction(this.props.content.content, sortItem);
             }
         }
         this.props.updateContent(newContent);

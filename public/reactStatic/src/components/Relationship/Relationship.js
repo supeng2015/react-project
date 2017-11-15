@@ -111,32 +111,33 @@ class Relationship extends React.Component {
                 return response.json()
             })
             .then((res) => {
-                let length = res.length;
-                if (length !== 0) {
-                    this.setState({
-                        res,
-                        message: "搜索完毕"
-                    });
-                    // 配置echarts
-                    let option = this.state.option;
-                    let series = [...this.state.defaultSeries];
-                    series[0].nodes = this.getNodes(res[0].node, 'id', 'name');
-                    series[0].edges = this.getEdges(res[0].edge, 'source', 'target', 'property');
-                    option.series = series;
-                    this.setState({
-                        option
-                    });
-                    setTimeout(() => {
-                        // 使用配置项和数据显示图表
-                        let dom = this.refs.chartDom;
-                        let myChart = echarts.init(dom, 'macarons');
-                        myChart.setOption(this.state.option);
-                    }, 0)
-                } else {
-                    this.setState({
-                        message: "未搜索到结果"
-                    });
-                }
+                console.log(res)
+                // let length = res.length;
+                // if (length !== 0) {
+                //     this.setState({
+                //         res,
+                //         message: "搜索完毕"
+                //     });
+                //     // 配置echarts
+                //     let option = this.state.option;
+                //     let series = [...this.state.defaultSeries];
+                //     series[0].nodes = this.getNodes(res[0].node, 'id', 'name');
+                //     series[0].edges = this.getEdges(res[0].edge, 'source', 'target', 'property');
+                //     option.series = series;
+                //     this.setState({
+                //         option
+                //     });
+                //     setTimeout(() => {
+                //         // 使用配置项和数据显示图表
+                //         let dom = this.refs.chartDom;
+                //         let myChart = echarts.init(dom, 'macarons');
+                //         myChart.setOption(this.state.option);
+                //     }, 0)
+                // } else {
+                //     this.setState({
+                //         message: "未搜索到结果"
+                //     });
+                // }
             })
     }
 
@@ -156,7 +157,7 @@ class Relationship extends React.Component {
                 let name1 = company1._id;
                 let name2 = company2._id;
 
-                // 如果没有id，至少我们还有公司名，用公司名查询吧
+                // 如果没有id，至少我们还有公司名，用公司名查询
                 if(name1 && name2){
                     resolve(this.fetchByTwoName(name1, name2))
                 }else{

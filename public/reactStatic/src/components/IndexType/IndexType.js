@@ -19,7 +19,7 @@ class IndexType extends React.Component {
     fetchField() {
         let {indexValue, typeValue} = this.props.indexType;
         return new Promise((resolve, reject) => {
-            fetch('http://' + config.nodejsIp + ':3000/getField?index=' + indexValue + '&type=' + typeValue)
+            fetch('http://' + config.nodejsIp + ':3000/metadata?index=' + indexValue + '&type=' + typeValue)
                 .then((response) => {
                     return response.json();
                 })
@@ -38,7 +38,7 @@ class IndexType extends React.Component {
     fetchTotalPage(){
         let {typeValue, indexValue} = this.props.indexType;
         return new Promise((resolve, reject) => {
-            fetch('http://' + config.nodejsIp + ':3000/getTotalPage?indexes=' + indexValue + '&type=' + typeValue)
+            fetch('http://' + config.nodejsIp + ':3000/index/totalPage?index=' + indexValue + '&type=' + typeValue)
                 .then((response) => {
                     return response.json();
                 })
@@ -55,10 +55,11 @@ class IndexType extends React.Component {
     }
 
     // http请求，获取content
-    fetchContent() {
+    fetchContent(page) {
         let {indexArray, typeValue} = this.props.indexType;
+        let nowPage = page || 1;
         return new Promise((resolve, reject) => {
-            fetch('http://' + config.nodejsIp + ':3000/getAllData?indexes=' + indexArray.toString() + '&type=' + typeValue)
+            fetch('http://' + config.nodejsIp + ':3000/index/content?index=' + indexArray.toString() + '&type=' + typeValue + '&page=' + nowPage)
                 .then((response) => {
                     return response.json();
                 })
@@ -77,7 +78,7 @@ class IndexType extends React.Component {
     // http请求，获取Type
     fetchType(indexValue) {
         return new Promise((resolve, reject) => {
-            fetch('http://' + config.nodejsIp + ':3000/getType?index=' + indexValue)
+            fetch('http://' + config.nodejsIp + ':3000/index/types?index=' + indexValue)
                 .then((response) => {
                     return response.json();
                 })
@@ -96,7 +97,7 @@ class IndexType extends React.Component {
 
     fetchIndex() {
         return new Promise((resolve, reject) => {
-            fetch('http://' + config.nodejsIp + ':3000/getIndex')
+            fetch('http://' + config.nodejsIp + ':3000/index/indexes')
                 .then((response) => {
                     return response.json();
                 })

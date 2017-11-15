@@ -5,11 +5,11 @@ const config = require("../config/config");
 
 router.get('/', function (req, res, next) {
     if(!config.isTest){
-        let indexes = req.query.indexes;
+        let indexes = req.query.index;
         let type = req.query.type;
         console.log(indexes);
         request
-            .get('http://'+ config.remoteIP +'/RESTfulES/index/totalPage?index=' + indexes +'&type=' + type)
+            .get('http://'+ config.remoteIP +'/index/totalPage?index=' + indexes +'&type=' + type)
             .end(function (err, res1) {
                 if (err || !res1.ok) {
                     console.log(err);

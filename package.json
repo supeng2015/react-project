@@ -17,6 +17,7 @@
     "debug": "~2.2.0",
     "echarts": "^3.7.2",
     "ejs": "~2.3.3",
+    "elastical": "0.0.13",
     "express": "~4.13.1",
     "file-loader": "^1.1.5",
     "jquery": "^3.2.1",

@@ -76,3 +76,14 @@
     cursor: not-allowed;
   }
 }
+#forwardInput{
+  height: 20px;
+  padding: 5px;
+  margin: 5px;
+  input{
+    width: 42px;
+    height: 20px;
+    outline: none;
+    margin: 0 5px;
+  }
+}

@@ -5,12 +5,12 @@ const config = require("../config/config");
 
 router.get('/', function (req, res, next) {
     if(!config.isTest){
-        let indexes = req.query.indexes;
+        let indexes = req.query.index;
         let type = req.query.type;
         let page = req.query.page || 1;
         console.log(indexes);
         request
-            .get('http://'+ config.remoteIP +'/RESTfulES/index/content?index=' + indexes +'&type=' + type + '&page=' + page)
+            .get('http://'+ config.remoteIP +'/index/content?index=' + indexes +'&type=' + type + '&page=' + page)
             // .get('http://192.168.2.249:8080/RESTfulES/index/content?indexes=test2,.kibana,index1,test1&type=test1')
             .end(function (err, res1) {
                 if (err || !res1.ok) {

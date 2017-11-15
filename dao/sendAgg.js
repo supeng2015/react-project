@@ -7,15 +7,17 @@ const config = require('../config/config');
 router.post('/', function (req, res, next) {
     if (!config.isTest) {
         let data = req.body;
-        let data2 = queryString.stringify({
-            json: JSON.stringify(data.json),
-            index: data.index,
-            type: data.type,
-            labels: data.labels
-        });
+        // let data2 = queryString.stringify({
+        //     json: JSON.stringify(data.json),
+        //     index: data.index,
+        //     type: data.type,
+        //     labels: data.labels
+        // });
         // console.log(JSON.stringify(data));
+        console.log(data.labels);
         request
-            .get('http://' + config.remoteIP + '/RESTfulES/agg?' + data2)
+            .post('http://' + config.remoteIP + '/agg')
+            .send(data)
             // .get('http://' + config.remoteIP + '/RESTfulES/agg?json=%7B%22aggs%22%3A%7B%22123%22%3A%7B%22value_count%22%3A%7B%22field%22%3A%22pkg_size%22%7D%7D%7D%7D&index=rf&type=rftest&baseAgg=123')
             // .get('http://' + config.remoteIP + '/RESTfulES/agg?json=%7B%22aggs%22%3A%7B%22123%22%3A%7B%22value_count%22%3A%7B%7D%7D%7D&index=rf&type=rftest&baseAgg=123')
             // .get('http://' + config.remoteIP + '/RESTfulES/agg?json=%7B%22aggs%22%3A%7B%22123%22%3A%7B%22value_count%22%3A%7B%7D%7D%7D&index=rf&type=rftest&baseAgg=123')

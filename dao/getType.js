@@ -6,7 +6,7 @@ const config = require('../config/config');
 router.get('/', function (req, res) {
     if (!config.isTest) {
         request
-            .get('http://' + config.remoteIP + '/RESTfulES/index/types?index=' + req.query.index)
+            .get('http://' + config.remoteIP + '/index/types?index=' + req.query.index)
             .end(function (err, res1) {
                 if (err || !res1.ok) {
                     console.log(err);

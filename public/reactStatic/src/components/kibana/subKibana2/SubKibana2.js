@@ -82,7 +82,7 @@ class SubKibana2 extends Component {
         submitObj.index = this.props.indexType.indexValue;
         submitObj.type = this.props.indexType.typeValue;
         console.log("提交的数据为：" + JSON.stringify(submitObj));
-        fetch('http://' + config.nodejsIp + ':3000/sendAgg', {
+        fetch('http://' + config.nodejsIp + ':3000/agg', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
