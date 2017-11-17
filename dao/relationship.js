@@ -185,13 +185,17 @@ router.get("/byTwoName", function (req, res, next) {
 
         // 当搜索不到id时，向Python后台请求数据
         let searchIdFromPython = function (companyName1, companyName2) {
+            console.log(companyName1, companyName2);
             return new Promise((resolve, reject) => {
-                request.get("http://192.168.2.136:9012/com=" + companyName1 + "and" + companyName2)
+                request.get("http://"+ config.pythonIP +"/com=" + encodeURI(companyName1) + "and" + encodeURI(companyName2))
+                // request.get("localhost:8000")
                     .end((err, res1) => {
                         if (err) {
+                            console.log(err);
                             resolve({status: "error"});
                         } else {
-                            resolve(res1);
+                            // console.log(res1.text);
+                            resolve([JSON.parse(res1.text)]);
                         }
                     })
             })
@@ -206,8 +210,8 @@ router.get("/byTwoName", function (req, res, next) {
                 // 只要有一个id不存在,就请求后台
                 if (!id1 || !id2) {
                     searchIdFromPython(result.name1, result.name2)
-                        .then((res) => {
-                            res.send(res);
+                        .then((result) => {
+                            res.send(result);
                         })
                         .catch((err) => {
                             console.log(err);

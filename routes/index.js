@@ -4,6 +4,11 @@ const size = 10;
 let router = express.Router();
 let client = require("../util/myclient").client;
 
+//默认
+router.get('/', function (req, res) {
+    res.send({connect: 1});
+});
+
 //content
 router.get('/content', function(req, res) {
     let index = req.query.index;

@@ -64,17 +64,64 @@ class Relationship extends React.Component {
     }
 
     fetchByTwoId(id1, id2){
-        fetch("http://" + config.nodejsIp + ":3000/relationship/byTwoId?id=" + id1 + "," + id2)
-            .then((response) => {
-                return response.json();
-            })
-            .then((res) => {
-                if (res[0] === "error") {
-                    this.setState({
-                        isSearching: false,
-                        message: "数据库连接异常！"
-                    });
-                } else {
+        this.setState({
+            message: "搜索中..."
+        });
+        return new Promise((resolve, reject) => {
+            fetch("http://" + config.nodejsIp + ":3000/relationship/byTwoId?id=" + id1 + "," + id2)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if (res[0] === "error") {
+                        this.setState({
+                            message: "数据库连接异常！"
+                        });
+                    } else {
+                        let length = res.length;
+                        if (length !== 0) {
+                            this.setState({
+                                res,
+                                message: "搜索完毕"
+                            });
+                            // 配置echarts
+                            let option = this.state.option;
+                            let series = [...this.state.defaultSeries];
+                            series[0].nodes = this.getNodes(res[0].node, 'id', 'name');
+                            series[0].edges = this.getEdges(res[0].edge, 'source', 'target', 'property');
+                            option.series = series;
+                            this.setState({
+                                option
+                            });
+                            setTimeout(() => {
+                                // 使用配置项和数据显示图表
+                                let dom = this.refs.chartDom;
+                                let myChart = echarts.init(dom, 'macarons');
+                                myChart.setOption(this.state.option);
+                                resolve();
+                            }, 0)
+                        } else {
+                            this.setState({
+                                message: "未搜索到结果"
+                            });
+                            resolve();
+                        }
+                    }
+                })
+        })
+    }
+
+    fetchByTwoName(name1, name2){
+        this.setState({
+            message: "搜索中..."
+        });
+        return new Promise((resolve, reject) => {
+            fetch("http://" + config.nodejsIp + ":3000/relationship/byTwoName?id=" + name1 + "," + name2)
+                .then((response) => {
+                    return response.json()
+                })
+                .then((res) => {
+                    console.log(res);
                     let length = res.length;
                     if (length !== 0) {
                         this.setState({
@@ -95,50 +142,16 @@ class Relationship extends React.Component {
                             let dom = this.refs.chartDom;
                             let myChart = echarts.init(dom, 'macarons');
                             myChart.setOption(this.state.option);
+                            resolve()
                         }, 0)
                     } else {
                         this.setState({
                             message: "未搜索到结果"
                         });
+                        resolve();
                     }
-                }
-            })
-    }
-
-    fetchByTwoName(name1, name2){
-        fetch("http://" + config.nodejsIp + ":3000/relationship/byTwoName?id=" + name1 + "," + name2)
-            .then((response) => {
-                return response.json()
-            })
-            .then((res) => {
-                console.log(res)
-                // let length = res.length;
-                // if (length !== 0) {
-                //     this.setState({
-                //         res,
-                //         message: "搜索完毕"
-                //     });
-                //     // 配置echarts
-                //     let option = this.state.option;
-                //     let series = [...this.state.defaultSeries];
-                //     series[0].nodes = this.getNodes(res[0].node, 'id', 'name');
-                //     series[0].edges = this.getEdges(res[0].edge, 'source', 'target', 'property');
-                //     option.series = series;
-                //     this.setState({
-                //         option
-                //     });
-                //     setTimeout(() => {
-                //         // 使用配置项和数据显示图表
-                //         let dom = this.refs.chartDom;
-                //         let myChart = echarts.init(dom, 'macarons');
-                //         myChart.setOption(this.state.option);
-                //     }, 0)
-                // } else {
-                //     this.setState({
-                //         message: "未搜索到结果"
-                //     });
-                // }
-            })
+                })
+        })
     }
 
     // company1,company2 对象 {_id:公司名,company_id:公司Id}

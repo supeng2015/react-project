@@ -14,6 +14,9 @@ class DoubleSearch extends React.Component {
 
     search(){
         let {company1, company2} = this.state;
+        this.setState({
+            isSearching: true
+        });
         this.props.searchHandle(company1, company2)
             .then(()=>{
                 this.setState({

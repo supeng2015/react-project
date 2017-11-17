@@ -1,11 +1,12 @@
 let elasticsearch = require('elastical');
-let getConf = require("./getConf");
-let client = new elasticsearch.Client({
-    host: getConf().host,
-    port:getConf().port,
+let config = require("../config/config");
+
+let client = new elasticsearch.Client(config.kibanaConf.host,{
+    port: config.kibanaConf.port,
     log: 'trace',
-    curlDebug:getConf().curlDebug
+    curlDebug: config.kibanaConf.curlDebug
 });
+console.log(config.kibanaConf.host);   //测试
 
 module.exports = {
    client
